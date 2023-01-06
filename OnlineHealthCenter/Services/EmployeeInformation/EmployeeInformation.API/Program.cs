@@ -1,3 +1,5 @@
+using EmployeeInformation.API.Repositories;
+using EmployeeInformation.API.Repositories.Interfaces;
 using EmployeeInformation.Data;
 using EmployeeInformation.Repositories;
 
@@ -7,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IEmployeeInformationContext, EmployeeInformationContext>();
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
+builder.Services.AddScoped<INurseRepository, NurseRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

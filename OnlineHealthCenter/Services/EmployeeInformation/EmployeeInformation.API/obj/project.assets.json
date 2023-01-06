@@ -1092,11 +1092,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Faks\\Master\\RS2\\OnlineHealthCenter\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
+      "projectUniqueName": "D:\\Faks\\Master\\Project\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
       "projectName": "EmployeeInformation.API",
-      "projectPath": "D:\\Faks\\Master\\RS2\\OnlineHealthCenter\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
+      "projectPath": "D:\\Faks\\Master\\Project\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
       "packagesPath": "C:\\Users\\Sara Matic\\.nuget\\packages\\",
-      "outputPath": "D:\\Faks\\Master\\RS2\\OnlineHealthCenter\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\obj\\",
+      "outputPath": "D:\\Faks\\Master\\Project\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

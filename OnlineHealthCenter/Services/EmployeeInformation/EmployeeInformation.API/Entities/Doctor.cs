@@ -5,7 +5,6 @@ namespace EmployeeInformation.Entities
 {
     public class Doctor
     {
-
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         public string FirstName { get; set; }
@@ -15,6 +14,5 @@ namespace EmployeeInformation.Entities
         public string Biography { get; set; }
         public string ImageFile { get; set; }
         public decimal Mark { get; set; }
-
     }
 }

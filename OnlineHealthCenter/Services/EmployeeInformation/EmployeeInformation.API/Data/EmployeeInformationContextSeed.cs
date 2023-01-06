@@ -5,18 +5,14 @@ namespace EmployeeInformation.Data
 {
     public class EmployeeInformationContextSeed
     {
-
         public static void SeedDoctor(IMongoCollection<Doctor> doctorCollection)
         {
-
             var exist = doctorCollection.Find(p => true).Any();
             if (!exist)
             {
                 doctorCollection.InsertMany(DoctorPreconfigured());
             }
-
         }
-
         public static void SeedNurse(IMongoCollection<Nurse> nurseCollection)
         {
             var exist = nurseCollection.Find(p => true).Any();
@@ -25,7 +21,6 @@ namespace EmployeeInformation.Data
                 nurseCollection.InsertMany(NursePreconfigured());
             }
         }
-
         private static IEnumerable<Doctor> DoctorPreconfigured()
         {
             return new List<Doctor>()
@@ -41,7 +36,6 @@ namespace EmployeeInformation.Data
                     ImageFile = "alan-stern.png",
                     Mark = 0
                 },
-
                 new Doctor
                 {
                     Id = "602d2149e773f2a3990b47f6",
@@ -53,7 +47,6 @@ namespace EmployeeInformation.Data
                     ImageFile = "david-sowa.png",
                     Mark = 0
                 },
-
                 new Doctor
                 {
                     Id = "602d2149e773f2a3990b47f7",
@@ -65,7 +58,6 @@ namespace EmployeeInformation.Data
                     ImageFile = "george-green.png",
                     Mark = 0
                 },
-
                  new Doctor
                 {
                     Id = "602d2149e773f2a3990b47f8",
@@ -77,7 +69,6 @@ namespace EmployeeInformation.Data
                     ImageFile = "edward-fry.png",
                     Mark = 0
                 },
-
                  new Doctor
                 {
                     Id = "602d2149e773f2a3990b47f9",
@@ -88,12 +79,9 @@ namespace EmployeeInformation.Data
                     Biography = "Hadley Wilson, MD, FACC, is an interventional cardiologist and executive vice chair at Sanger Heart and Vascular Institute in North Carolina, where he previously served as chief of cardiology for more than 13 years. He has published more than 75 articles with interests spanning STEMI systems of care, stent technologies and devices for coronary intervention, left main stenting, chronic total occlusions, anticoagulation and antiplatelet therapies, structural and valvular heart disease, appropriate public reporting of PCI outcomes and quality improvement projects for systems of care, and clinician well-being.\r\n\r\nRead More\r\n",
                     ImageFile = "hadley-wilson.png",
                     Mark = 0
-                }
-
-
+                 }
             };
         }
-
         private static IEnumerable<Nurse> NursePreconfigured()
         {
             return new List<Nurse>
@@ -105,7 +93,6 @@ namespace EmployeeInformation.Data
                     LastName = "Green",
                     ImageFile = "anna-green.png"
                 },
-
                 new Nurse
                 {
                     Id = "602d2149e773f2a3990b47f1",
@@ -113,7 +100,6 @@ namespace EmployeeInformation.Data
                     LastName = "Gray",
                     ImageFile = "rachel-gray.png"
                 },
-
                 new Nurse
                 {
                     Id = "602d2149e773f2a3990b47f2",
