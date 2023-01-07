@@ -1,14 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "WmYDWDZa9dtJONnymLKG9g6BOwROOKsqhVocmjF7fghKBMkLCgJSrUDVj/5bhBSxX3dsPFtc9uj00iPcpyHa2A==",
+  "dgSpecHash": "/Z31M4EJohNK/Mk4oUVnWz1DpU4VY8xT9/FeZBIPX3XCssCXemVsznHs5rG/Kqby3a8+7Yru6ZpwRAC/F140Xg==",
   "success": true,
-  "projectFilePath": "D:\\Faks\\Master\\Project\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
+  "projectFilePath": "D:\\Faks\\Master\\OnlineClinicV1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Sara Matic\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\Sara Matic\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "C:\\Users\\Sara Matic\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\2.0.0\\microsoft.extensions.logging.abstractions.2.0.0.nupkg.sha512",
     "C:\\Users\\Sara Matic\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
     "C:\\Users\\Sara Matic\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Sara Matic\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.17.0\\microsoft.visualstudio.azure.containers.tools.targets.1.17.0.nupkg.sha512",
     "C:\\Users\\Sara Matic\\.nuget\\packages\\microsoft.win32.registry\\5.0.0\\microsoft.win32.registry.5.0.0.nupkg.sha512",
     "C:\\Users\\Sara Matic\\.nuget\\packages\\mongodb.bson\\2.18.0\\mongodb.bson.2.18.0.nupkg.sha512",
     "C:\\Users\\Sara Matic\\.nuget\\packages\\mongodb.driver\\2.18.0\\mongodb.driver.2.18.0.nupkg.sha512",
