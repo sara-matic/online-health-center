@@ -12,5 +12,9 @@ namespace EmployeeInformation.API.Repositories.Interfaces
         Task<Doctor> GetDoctorById(string id);
         Task<IEnumerable<Doctor>> GetDoctorByMedicalSpecialty(string medicalSpecialty);
         Task<IEnumerable<Doctor>> GetDoctorByTitle(string title);
+        Task AddDoctor(Doctor doctor);
+        Task<bool> UpdateDoctor(Doctor doctor);
+        Task<bool> UpdateMark(string id, decimal mark);
+        Task<bool> DeleteDoctor(string id);
     }
 }
