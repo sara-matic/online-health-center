@@ -6,14 +6,13 @@ namespace EmployeeInformation.Controllers
 {
     [ApiController]
     [Route("api/v1/[controller]")]
-    public class EmployeeInformationController : ControllerBase
+    public class DoctorController : ControllerBase
     {
         private readonly IDoctorRepository doctorRepository;
-        private readonly INurseRepository nurseRepository;
-        public EmployeeInformationController(IDoctorRepository doctorRepository, INurseRepository nurseRepository)
+
+        public DoctorController(IDoctorRepository doctorRepository)
         {
             this.doctorRepository = doctorRepository ?? throw new ArgumentNullException(nameof(doctorRepository));
-            this.nurseRepository = nurseRepository ?? throw new ArgumentNullException(nameof(nurseRepository));
         }
 
         [Route("[action]")]
@@ -25,9 +24,8 @@ namespace EmployeeInformation.Controllers
             return Ok(doctors);
         }
 
-        [Route("[action]/{id}")]
-        [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Doctor>), StatusCodes.Status200OK)]
+        [HttpGet("GetDoctorById/{id}", Name = "GetDoctor")]
+        [ProducesResponseType(typeof(Doctor), StatusCodes.Status200OK)]
         public async Task<ActionResult<Doctor>> GetDoctorById(string id)
         {
             var doctor = await this.doctorRepository.GetDoctorById(id);
@@ -53,21 +51,39 @@ namespace EmployeeInformation.Controllers
         }
 
         [Route("[action]")]
-        [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Nurse>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<Nurse>>> GetNurses()
+        [HttpPost]
+        [ProducesResponseType(typeof(IEnumerable<Doctor>), StatusCodes.Status201Created)]
+        public async Task<ActionResult<Doctor>> AddDoctor([FromBody] Doctor doctor)
         {
-            var nurses = await this.nurseRepository.GetNurses();
-            return Ok(nurses);
+            await this.doctorRepository.AddDoctor(doctor);
+            return CreatedAtRoute("GetDoctor", new { id = doctor.Id }, doctor);
+        }
+
+        [Route("[action]")]
+        [HttpPut]
+        [ProducesResponseType(typeof(Doctor), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateDoctor([FromBody] Doctor doctor)
+        {
+            var result = await this.doctorRepository.UpdateDoctor(doctor);
+            return Ok(result);
+        }
+
+        [Route("[action]")]
+        [HttpPut]
+        [ProducesResponseType(typeof(Doctor), StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateMark(string id, decimal mark)
+        {
+            var result = await this.doctorRepository.UpdateMark(id, mark);
+            return Ok(result);
         }
 
         [Route("[action]/{id}")]
-        [HttpGet]
-        [ProducesResponseType(typeof(Nurse), StatusCodes.Status200OK)]
-        public async Task<ActionResult<Nurse>> GetNurseById(string id)
+        [HttpDelete]
+        [ProducesResponseType(typeof(Doctor), StatusCodes.Status200OK)]
+        public async Task<IActionResult> DeleteDoctor(string id)
         {
-            var nurse = await this.nurseRepository.GetNurseById(id);
-            return Ok(nurse);
+            var result = await this.doctorRepository.DeleteDoctor(id);
+            return Ok(result);
         }
     }
 }

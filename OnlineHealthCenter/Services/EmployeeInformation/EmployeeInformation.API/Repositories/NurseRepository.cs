@@ -21,5 +21,14 @@ namespace EmployeeInformation.API.Repositories
         {
             return await this.context.Nurses.Find(p => p.Id == id).FirstOrDefaultAsync();  
         }
+        public async Task AddNurse(Nurse nurse)
+        {
+            await this.context.Nurses.InsertOneAsync(nurse);
+        }
+        public async Task<bool> DeleteNurse(string id)
+        {
+            var result =await this.context.Nurses.DeleteOneAsync(p => p.Id == id);
+            return result.IsAcknowledged && result.DeletedCount > 0;
+        }
     }
 }

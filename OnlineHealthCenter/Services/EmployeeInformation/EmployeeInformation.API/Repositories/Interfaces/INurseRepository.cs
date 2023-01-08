@@ -6,5 +6,7 @@ namespace EmployeeInformation.API.Repositories.Interfaces
     {
         Task<IEnumerable<Nurse>> GetNurses();
         Task<Nurse> GetNurseById(string id);
+        Task AddNurse(Nurse nurse);
+        Task<bool> DeleteNurse(string id);
     }
 }
