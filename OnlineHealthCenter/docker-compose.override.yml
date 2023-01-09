@@ -1,8 +1,8 @@
 version: '3.4'
 
 services:
-  employeedb:
-    container_name: employeedb
+  mongodbcontainer:
+    container_name: mongodbcontainer
     restart: always
     ports:
       - "27017:27017"
@@ -13,8 +13,8 @@ services:
     container_name: employeeinformation.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "DatabaseSettings:ConnectionString=mongodb://employeedb:27017"
+      - "DatabaseSettings:ConnectionString=mongodb://mongodbcontainer:27017"
     depends_on:
-      - employeedb
+      - mongodbcontainer
     ports:
       - "8000:80"
