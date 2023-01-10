@@ -1123,11 +1123,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Lenovo\\Desktop\\RS2-HC-WorhSpace\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
+      "projectUniqueName": "C:\\Users\\Lenovo\\Desktop\\RS2-HC-V1-WS\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
       "projectName": "EmployeeInformation.API",
-      "projectPath": "C:\\Users\\Lenovo\\Desktop\\RS2-HC-WorhSpace\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
+      "projectPath": "C:\\Users\\Lenovo\\Desktop\\RS2-HC-V1-WS\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
       "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Lenovo\\Desktop\\RS2-HC-WorhSpace\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\obj\\",
+      "outputPath": "C:\\Users\\Lenovo\\Desktop\\RS2-HC-V1-WS\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
