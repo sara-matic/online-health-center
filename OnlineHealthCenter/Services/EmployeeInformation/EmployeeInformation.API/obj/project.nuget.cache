@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "cCgSr+TojP/dgUHyDjEr2+A41zA140sAqNYjU8VHsJWXFVYHHmHuuokdpfPHGAlPA4q2WAhi6YhLDunrDAdhkw==",
+  "dgSpecHash": "Y5cmDgtdFgZTgFMDEadEN2BqHyZzo+WAjF6+ifRAxuJNlzf5cVGDQGoUQ+uB+nfBiI5+QsmcxMp2/VnhMkVmAg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Lenovo\\Desktop\\RS2-HC-WorhSpace\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
+  "projectFilePath": "C:\\Users\\Lenovo\\Desktop\\RS2-HC-V1-WS\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Lenovo\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",
     "C:\\Users\\Lenovo\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",

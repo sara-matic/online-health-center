@@ -10,5 +10,11 @@ services:
       context: .
       dockerfile: Services/EmployeeInformation/EmployeeInformation.API/Dockerfile
 
+  discounts.api:
+    image: ${DOCKER_REGISTRY-}discountsapi
+    build:
+      context: .
+      dockerfile: Services/Discounts/Discounts.API/Dockerfile
+
 volumes:
   mongo_data:

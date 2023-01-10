@@ -18,3 +18,13 @@ services:
       - mongodbcontainer
     ports:
       - "8000:80"
+
+  discounts.api:
+    container_name: discounts.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://mongodbcontainer:27017"
+    depends_on:
+      - mongodbcontainer
+    ports:
+      - "8001:80"
