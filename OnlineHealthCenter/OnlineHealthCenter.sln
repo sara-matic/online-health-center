@@ -13,9 +13,13 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Discounts", "Discounts", "{44CD5210-079E-4FBA-B3AA-648F9E078666}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discount.Common", "Services\Discounts\Discount.Common\Discount.Common.csproj", "{EECE8FB3-250C-4365-A2B0-645EABCF4838}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discount.Common", "Services\Discounts\Discount.Common\Discount.Common.csproj", "{EECE8FB3-250C-4365-A2B0-645EABCF4838}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Discounts.API", "Services\Discounts\Discounts.API\Discounts.API.csproj", "{7E1B6802-7879-471D-B65C-B00FA8A4A310}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Discounts.API", "Services\Discounts\Discounts.API\Discounts.API.csproj", "{7E1B6802-7879-471D-B65C-B00FA8A4A310}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Impressions", "Impressions", "{3584BFCA-AFC5-4987-AB03-1A79F7587E1F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Impressions.API", "Services\Impressions\Impressions.API\Impressions.API.csproj", "{9926587D-7A20-4876-9B6F-DBC04966C8A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,10 @@ Global
 		{7E1B6802-7879-471D-B65C-B00FA8A4A310}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E1B6802-7879-471D-B65C-B00FA8A4A310}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E1B6802-7879-471D-B65C-B00FA8A4A310}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9926587D-7A20-4876-9B6F-DBC04966C8A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9926587D-7A20-4876-9B6F-DBC04966C8A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9926587D-7A20-4876-9B6F-DBC04966C8A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9926587D-7A20-4876-9B6F-DBC04966C8A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +57,8 @@ Global
 		{44CD5210-079E-4FBA-B3AA-648F9E078666} = {B73F4640-0564-4E8F-A5FB-624030B182B6}
 		{EECE8FB3-250C-4365-A2B0-645EABCF4838} = {44CD5210-079E-4FBA-B3AA-648F9E078666}
 		{7E1B6802-7879-471D-B65C-B00FA8A4A310} = {44CD5210-079E-4FBA-B3AA-648F9E078666}
+		{3584BFCA-AFC5-4987-AB03-1A79F7587E1F} = {B73F4640-0564-4E8F-A5FB-624030B182B6}
+		{9926587D-7A20-4876-9B6F-DBC04966C8A6} = {3584BFCA-AFC5-4987-AB03-1A79F7587E1F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F3F1FC98-752A-4F50-BEF7-E8B242E527A4}
