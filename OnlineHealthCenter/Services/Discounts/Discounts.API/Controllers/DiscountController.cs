@@ -32,8 +32,54 @@ namespace Discounts.API.Controllers
         public async Task<ActionResult<int?>> GetDiscountBySpecialty(string patientId, string specialty)
         {
             var coupon = await this.discountRepository.GetDiscountBySpecialty(patientId, specialty);
-
             return coupon == null ? NotFound(null) : Ok(coupon);
+        }
+
+        [Route("[action]")]
+        [HttpPost]
+        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateDiscount([FromBody] CreateCouponDTO createCouponDTO)
+        {
+            bool couponIdAlreadyExists = (await this.discountRepository.GetDiscountById(createCouponDTO.Id)) != null;
+            bool couponExists = couponIdAlreadyExists || (await this.discountRepository.GetAllPatientsDiscounts(createCouponDTO.PatientId))
+                .Any(coupon => coupon.Specialty == createCouponDTO.Specialty);
+
+            if (couponExists)
+                return BadRequest();
+
+            await this.discountRepository.CreateDiscount(createCouponDTO);
+            return Ok();
+        }
+
+        [Route("[action]")]
+        [HttpPut]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<bool>> UpdateDiscount([FromBody] UpdateCouponDTO updateDiscountDTO)
+        {
+            bool couponExists = await this.discountRepository.GetDiscountBySpecialty(updateDiscountDTO.PatientId, updateDiscountDTO.Specialty) != null;
+
+            if (!couponExists)
+                return BadRequest();
+
+            bool updateActionResult = await this.discountRepository.UpdateDiscount(updateDiscountDTO);
+            return Ok(updateActionResult);
+        }
+
+        [Route("[action]")]
+        [HttpDelete]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<bool>> DeleteDiscount(string patientId, string specialty)
+        {
+            bool couponExists = await this.discountRepository.GetDiscountBySpecialty(patientId, specialty) != null;
+
+            if (!couponExists)
+                return BadRequest();
+
+            bool deleteResultAction = await this.discountRepository.DeleteDiscount(patientId, specialty);
+            return Ok(deleteResultAction);
         }
     }
 }
