@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj": {}
+    "C:\\Users\\Lenovo\\Desktop\\health-center-v2\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj": {}
   },
   "projects": {
-    "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj": {
+    "C:\\Users\\Lenovo\\Desktop\\health-center-v2\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
+        "projectUniqueName": "C:\\Users\\Lenovo\\Desktop\\health-center-v2\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
         "projectName": "EmployeeInformation.API",
-        "projectPath": "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
-        "packagesPath": "C:\\Users\\Sara Matic\\.nuget\\packages\\",
-        "outputPath": "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\obj\\",
+        "projectPath": "C:\\Users\\Lenovo\\Desktop\\health-center-v2\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
+        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Lenovo\\Desktop\\health-center-v2\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Sara Matic\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -63,8 +59,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -76,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }

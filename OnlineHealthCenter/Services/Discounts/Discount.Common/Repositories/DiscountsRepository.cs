@@ -1,4 +1,5 @@
-﻿using Discount.Common.Data.Interfaces;
+﻿using AutoMapper;
+using Discount.Common.Data.Interfaces;
 using Discount.Common.DTOs;
 using Discount.Common.Entities;
 using Discount.Common.Repositories.Interfaces;
@@ -10,22 +11,24 @@ namespace Discount.Common.Repositories
     internal class DiscountsRepository : IDiscountsRepository
     {
         private readonly IDiscountsContext context;
+        private readonly IMapper mapper;
 
-        public DiscountsRepository(IDiscountsContext context)
+        public DiscountsRepository(IDiscountsContext context, IMapper mapper)
         {
             this.context = context ?? throw new ArgumentNullException(nameof(context));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public async Task<IEnumerable<CouponDTO>> GetAllPatientsDiscounts(string patientId)
         {
             var coupons = await this.context.Discounts.Find(discount => discount.PatientId == patientId).ToListAsync();
-            return coupons.Select(coupon => new CouponDTO { Id = coupon.Id, PatientId = coupon.PatientId, Specialty = coupon.Specialty, AmoundInPercentage = coupon.AmoundInPercentage });
+            return this.mapper.Map<IEnumerable<CouponDTO>>(coupons);
         }
 
         public async Task<CouponDTO> GetDiscountById(string discountId)
         {
             var discountQueryResult = (await this.context.Discounts.Find(discount => discount.Id == discountId).ToListAsync()).FirstOrDefault();
-            return discountQueryResult == null ? null : new CouponDTO { Id = discountQueryResult.Id, PatientId = discountQueryResult.PatientId, Specialty = discountQueryResult.Specialty, AmoundInPercentage = discountQueryResult.AmoundInPercentage };
+            return discountQueryResult == null ? null : this.mapper.Map<CouponDTO>((Coupon)discountQueryResult);
         }
 
         public async Task<int?> GetDiscountBySpecialty(string patientId, string specialty)
@@ -35,13 +38,7 @@ namespace Discount.Common.Repositories
         }
         public async Task CreateDiscount(CreateCouponDTO createDiscountDTO)
         {
-            await this.context.Discounts.InsertOneAsync(new Coupon
-            {
-                Id = createDiscountDTO.Id,
-                PatientId = createDiscountDTO.PatientId,
-                Specialty = createDiscountDTO.Specialty,
-                AmoundInPercentage = createDiscountDTO.AmoundInPercentage
-            });
+            await this.context.Discounts.InsertOneAsync(this.mapper.Map<Coupon>(createDiscountDTO));
         }
 
         public async Task<bool> DeleteDiscount(string patientId, string specialty)
@@ -55,15 +52,9 @@ namespace Discount.Common.Repositories
             var couponForUpdate = (await this.context.Discounts.FindAsync(coupon => coupon.PatientId == updateDiscountDTO.PatientId && coupon.Specialty == updateDiscountDTO.Specialty))
                 .First();
 
-            var updateActionResult = await this.context.Discounts.ReplaceOneAsync(
-                coupon => coupon.Id == couponForUpdate.Id,
-                new Coupon
-                {
-                    Id = couponForUpdate.Id,
-                    PatientId = updateDiscountDTO.PatientId,
-                    Specialty = updateDiscountDTO.Specialty,
-                    AmoundInPercentage = updateDiscountDTO.AmoundInPercentage
-                });
+            couponForUpdate.AmoundInPercentage = updateDiscountDTO.AmoundInPercentage;
+
+            var updateActionResult = await this.context.Discounts.ReplaceOneAsync(coupon => coupon.Id == couponForUpdate.Id, couponForUpdate);
 
             return updateActionResult.IsAcknowledged && updateActionResult.ModifiedCount > 0; 
         }
