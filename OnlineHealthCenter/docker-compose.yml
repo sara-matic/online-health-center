@@ -16,5 +16,11 @@ services:
       context: .
       dockerfile: Services/Discounts/Discounts.API/Dockerfile
 
+  impressions.api:
+    image: ${DOCKER_REGISTRY-}impressionsapi
+    build:
+      context: .
+      dockerfile: Services/Impressions/Impressions.API/Dockerfile
+
 volumes:
   mongo_data:
