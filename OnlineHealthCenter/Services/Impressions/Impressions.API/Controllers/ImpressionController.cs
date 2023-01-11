@@ -19,7 +19,7 @@ namespace Impression.API.Controllers
         [ProducesResponseType(typeof(IEnumerable<PatientReview>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<PatientReview>>> GetImpressions()
         {
-            var impressions = await impressionRepository.GetImpressions();
+            var impressions = await this.impressionRepository.GetImpressions();
             return Ok(impressions);
         }
     }

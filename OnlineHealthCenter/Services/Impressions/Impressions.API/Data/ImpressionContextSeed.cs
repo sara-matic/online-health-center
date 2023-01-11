@@ -14,6 +14,7 @@ namespace Impression.API.Data
                 impressionsCollection.InsertMany(ImpressionsPreconfigured());
             }
         }
+
         private static IEnumerable<PatientReview> ImpressionsPreconfigured()
         {
             return new List<PatientReview>()

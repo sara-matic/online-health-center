@@ -13,6 +13,7 @@ namespace Impression.API.Data
             this.Impressions = database.GetCollection<PatientReview>("Impressions");
             ImpressionContextSeed.SeedImpression(Impressions);
         }
+
         public IMongoCollection<PatientReview> Impressions { get; }
     }
 }
