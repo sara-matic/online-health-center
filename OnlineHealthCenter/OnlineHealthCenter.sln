@@ -21,9 +21,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Impressions", "Impressions"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Impressions.API", "Services\Impressions\Impressions.API\Impressions.API.csproj", "{9926587D-7A20-4876-9B6F-DBC04966C8A6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scheduling", "Scheduling", "{19F6B4FC-950F-410F-BFD3-6406028362DD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Appointments", "Appointments", "{19F6B4FC-950F-410F-BFD3-6406028362DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduling.Domain", "Services\Appointments\Appointments.Domain\Scheduling.Domain.csproj", "{345D812B-B2A5-4B58-A027-DB98CFB7484C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Appointments.Domain", "Services\Appointments\Appointments.Domain\Appointments.Domain.csproj", "{345D812B-B2A5-4B58-A027-DB98CFB7484C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
