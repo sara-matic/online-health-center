@@ -22,5 +22,12 @@ services:
       context: .
       dockerfile: Services/Impressions/Impressions.API/Dockerfile
 
+  reports.api:
+    image: ${DOCKER_REGISTRY-}reportsapi
+    build:
+      context: .
+      dockerfile: Services/Reports/Report.API/Dockerfile
+
 volumes:
   mongo_data:
+
