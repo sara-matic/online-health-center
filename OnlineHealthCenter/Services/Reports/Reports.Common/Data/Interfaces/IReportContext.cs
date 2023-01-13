@@ -1,7 +1,7 @@
 ﻿using MongoDB.Driver;
-using Reports.API.Entities;
+using Reports.Common.Entities;
 
-namespace Reports.API.Data
+namespace Reports.Common.Data
 {
     public interface IReportContext
     {

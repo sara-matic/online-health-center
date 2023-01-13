@@ -1,7 +1,8 @@
-﻿using MongoDB.Driver;
-using Reports.API.Entities;
+﻿using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
+using Reports.Common.Entities;
 
-namespace Reports.API.Data
+namespace Reports.Common.Data
 {
     public class ReportContext : IReportContext
     {
@@ -10,9 +11,8 @@ namespace Reports.API.Data
             var client = new MongoClient(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
             var database = client.GetDatabase("ReportDB");
 
-            Reports = database.GetCollection<Report>("Reports");
-            // TODO : Da li mi treba seed?
-            ReportContextSeed.SeedData(Reports);
+            this.Reports = database.GetCollection<Report>("Reports");
+            ReportContextSeed.SeedData(this.Reports);
         }
 
         public IMongoCollection<Report> Reports { get; }
