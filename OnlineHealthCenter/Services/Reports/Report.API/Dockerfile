@@ -7,6 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Services/Reports/Report.API/Reports.API.csproj", "Services/Reports/Report.API/"]
+COPY ["Services/Reports/Reports.Common/Reports.Common.csproj", "Services/Reports/Reports.Common/"]
 RUN dotnet restore "Services/Reports/Report.API/Reports.API.csproj"
 COPY . .
 WORKDIR "/src/Services/Reports/Report.API"

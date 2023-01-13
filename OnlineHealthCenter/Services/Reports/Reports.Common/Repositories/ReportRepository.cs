@@ -1,11 +1,11 @@
 ﻿using MongoDB.Driver;
-using Reports.API.Data;
-using Reports.API.Entities;
-using Reports.API.Repositories.Interfaces;
+using Reports.Common.Data;
+using Reports.Common.Entities;
+using Reports.Common.Repositories.Interfaces;
 
-namespace Reports.API.Repositories
+namespace Reports.Common.Repositories
 {
-    public class ReportRepository : IReportRepository
+    internal class ReportRepository : IReportRepository
     {
         private readonly IReportContext context;
 
@@ -29,9 +29,14 @@ namespace Reports.API.Repositories
             return await this.context.Reports.Find(report => report.DoctorId == doctorId).ToListAsync();
         }
 
-        public async Task<IEnumerable<Report>> GetReportsByDoctorAndPatientId(string doctorId, string patientId)
+        public async Task<IEnumerable<Report>> GetReportsByPatientAndDoctorId(string patientId, string doctorId)
         {
-            return await this.context.Reports.Find(report => report.DoctorId == doctorId &&  report.PatientId == patientId).ToListAsync();
+            return await this.context.Reports.Find(report =>  report.PatientId == patientId && report.DoctorId == doctorId).ToListAsync();
+        }
+
+        public async Task<Report> GetReportByIdAndTime(string patientId, string doctorId, DateTime createdTime)
+        {
+            return await this.context.Reports.Find(report => report.PatientId == patientId && report.DoctorId == doctorId && report.CreatedTime == createdTime).FirstOrDefaultAsync();
         }
 
         public async Task CreateReport(Report report)
