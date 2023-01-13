@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Reports.API.Entities;
-using Reports.API.Repositories.Interfaces;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using Reports.Common.DTOs;
+using Reports.Common.Entities;
+using Reports.Common.Repositories.Interfaces;
 
 namespace Reports.API.Controllers
 {
@@ -9,48 +11,50 @@ namespace Reports.API.Controllers
     public class ReportController : ControllerBase
     {
         private readonly IReportRepository repository;
+        private readonly IMapper mapper;
 
-        public ReportController(IReportRepository repository)
+        public ReportController(IReportRepository repository, IMapper mapper)
         {
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [Route("[action]/{patientId}")]
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Report>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(IEnumerable<Report>), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<Report>>> GetReportsByJmbg(string patientId)
+        [ProducesResponseType(typeof(IEnumerable<ReportDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<ReportDTO>>> GetReportsByPatientId(string patientId)
         {
             var reports = await this.repository.GetReportsByPatientId(patientId);
-            return reports == null ? NotFound(null) : Ok(reports);
+            return reports == null || !reports.Any() ? NotFound() : Ok(mapper.Map<IEnumerable<ReportDTO>>(reports));
         }
 
         [Route("[action]/{doctorId}")]
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Report>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(IEnumerable<Report>), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<Report>>> GetReportsByDoctorId(string doctorId)
+        [ProducesResponseType(typeof(IEnumerable<ReportDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<ReportDTO>>> GetReportsByDoctorId(string doctorId)
         {
             var reports = await this.repository.GetReportsByDoctorId(doctorId);
-            return reports == null ? NotFound(null) : Ok(reports);
+            return reports == null || !reports.Any() ? NotFound() : Ok(mapper.Map<IEnumerable<ReportDTO>>(reports));
         }
 
         [Route("[action]/{doctorId}/{patientId}")]
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Report>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(IEnumerable<Report>), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<IEnumerable<Report>>> GetReportsByIdAndJMBG(string doctorId, string patientId)
+        [ProducesResponseType(typeof(IEnumerable<ReportDTO>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<ReportDTO>>> GetReportsByPatientAndDoctorId(string patientId, string doctorId)
         {
-            var reports = await this.repository.GetReportsByDoctorAndPatientId(doctorId, patientId);
-            return reports == null ? NotFound(null) : Ok(reports);
+            var reports = await this.repository.GetReportsByPatientAndDoctorId(patientId, doctorId);
+            return reports == null || !reports.Any() ? NotFound() : Ok(mapper.Map<IEnumerable<ReportDTO>>(reports));
         }
 
         [Route("[action]")]
         [HttpPost]
         [ProducesResponseType(typeof(void), StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateReport([FromBody] Report report)
+        public async Task<IActionResult> CreateReport([FromBody] CreateReportDTO createReportDTO)
         {
-            await this.repository.CreateReport(report);
+            await this.repository.CreateReport(this.mapper.Map<Report>(createReportDTO));
             return Ok();
         }
 
@@ -58,14 +62,14 @@ namespace Reports.API.Controllers
         [HttpDelete]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<bool>> DeleteReport(Guid id)
+        public async Task<ActionResult<bool>> DeleteReport(string patientId, string doctorId, DateTime createdTime)
         {
-            var report = await this.repository.GetReportById(id);
+            var report = await this.repository.GetReportByIdAndTime(patientId, doctorId, createdTime);
 
             if (report == null)
                 return BadRequest();
 
-            return Ok(await this.repository.DeleteReport(id));
+            return Ok(await this.repository.DeleteReport(report.Id));
         }
     }
 }

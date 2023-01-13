@@ -1,4 +1,4 @@
-﻿namespace Reports.API.Entities
+﻿namespace Reports.Common.Entities
 {
     public class Report
     {
