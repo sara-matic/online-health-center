@@ -39,3 +39,13 @@ services:
     ports:
       - "8002:80"
 
+  reports.api:
+    container_name: reports.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://mongodbcontainer:27017"
+    depends_on:
+      - mongodbcontainer
+    ports:
+      - "8003:80"
+
