@@ -1,5 +1,7 @@
-﻿using EmployeeInformation.API.Repositories.Interfaces;
-using EmployeeInformation.Entities;
+﻿using AutoMapper;
+using EmployeeInformation.Common.DTOs.DoctorDTOs;
+using EmployeeInformation.Common.Entities;
+using EmployeeInformation.Common.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeInformation.Controllers
@@ -9,79 +11,103 @@ namespace EmployeeInformation.Controllers
     public class DoctorController : ControllerBase
     {
         private readonly IDoctorRepository doctorRepository;
+        private readonly IMapper mapper;
 
-        public DoctorController(IDoctorRepository doctorRepository)
+        public DoctorController(IDoctorRepository doctorRepository, IMapper mapper)
         {
             this.doctorRepository = doctorRepository ?? throw new ArgumentNullException(nameof(doctorRepository));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [Route("[action]")]
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Doctor>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctors()
+        [ProducesResponseType(typeof(IEnumerable<DoctorDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<DoctorDto>>> GetDoctors()
         {
             var doctors = await this.doctorRepository.GetDoctors();
-            return Ok(doctors);
+            return doctors == null || !doctors.Any() ? NotFound() : Ok(this.mapper.Map<IEnumerable<DoctorDto>>(doctors));
         }
 
         [HttpGet("GetDoctorById/{id}", Name = "GetDoctor")]
-        [ProducesResponseType(typeof(Doctor), StatusCodes.Status200OK)]
-        public async Task<ActionResult<Doctor>> GetDoctorById(string id)
+        [ProducesResponseType(typeof(DoctorDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<DoctorDto>> GetDoctorById(Guid id)
         {
             var doctor = await this.doctorRepository.GetDoctorById(id);
-            return Ok(doctor);
+            return doctor == null ? NotFound() : Ok(this.mapper.Map<DoctorDto>(doctor));
         }
 
         [Route("[action]/{medicalSpecialty}")]
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Doctor>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctorByMedicalSpecialty(string medicalSpecialty)
+        [ProducesResponseType(typeof(IEnumerable<DoctorDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<DoctorDto>>> GetDoctorByMedicalSpecialty(string medicalSpecialty)
         {
             var doctors = await this.doctorRepository.GetDoctorByMedicalSpecialty(medicalSpecialty);
-            return Ok(doctors);
+            return doctors == null || !doctors.Any() ? NotFound() : Ok(this.mapper.Map<IEnumerable<DoctorDto>>(doctors));
         }
 
         [Route("[action]/{title}")]
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Doctor>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<Doctor>>> GetDoctorByTitle(string title)
+        [ProducesResponseType(typeof(IEnumerable<DoctorDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<DoctorDto>>> GetDoctorByTitle(string title)
         {
             var doctors = await this.doctorRepository.GetDoctorByTitle(title);
-            return Ok(doctors);
+            return doctors == null || !doctors.Any() ? NotFound() : Ok(this.mapper.Map<IEnumerable<DoctorDto>>(doctors));
         }
 
         [Route("[action]")]
         [HttpPost]
-        [ProducesResponseType(typeof(IEnumerable<Doctor>), StatusCodes.Status201Created)]
-        public async Task<ActionResult<Doctor>> AddDoctor([FromBody] Doctor doctor)
+        [ProducesResponseType(typeof(void), StatusCodes.Status201Created)]
+        public async Task<IActionResult> AddDoctor([FromBody] CreateDoctorDto createDoctorDto)
         {
-            await this.doctorRepository.AddDoctor(doctor);
-            return CreatedAtRoute("GetDoctor", new { id = doctor.Id }, doctor);
+            await this.doctorRepository.AddDoctor(this.mapper.Map<Doctor>(createDoctorDto));
+            return Ok();
         }
 
         [Route("[action]")]
         [HttpPut]
-        [ProducesResponseType(typeof(Doctor), StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateDoctor([FromBody] Doctor doctor)
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateDoctor([FromBody] UpdateDoctorDto updateDoctorDto)
         {
-            var result = await this.doctorRepository.UpdateDoctor(doctor);
+            var doctorExists = await this.GetDoctorById(updateDoctorDto.Id) != null;
+            if(!doctorExists)
+            {
+                return BadRequest();
+            }
+            var result = await this.doctorRepository.UpdateDoctor(this.mapper.Map<Doctor>(updateDoctorDto));
             return Ok(result);
         }
 
         [Route("[action]")]
         [HttpPut]
-        [ProducesResponseType(typeof(Doctor), StatusCodes.Status200OK)]
-        public async Task<IActionResult> UpdateMark(string id, decimal mark)
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateMark(Guid id, decimal mark)
         {
+            var doctorExists = await this.doctorRepository.GetDoctorById(id) != null;
+            if(!doctorExists)
+            {
+                return BadRequest();
+            }
             var result = await this.doctorRepository.UpdateMark(id, mark);
             return Ok(result);
         }
 
         [Route("[action]/{id}")]
         [HttpDelete]
-        [ProducesResponseType(typeof(Doctor), StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteDoctor(string id)
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteDoctor(Guid id)
         {
+            var doctorExists = await this.doctorRepository.GetDoctorById(id) != null;
+            if(!doctorExists)
+            {
+                return BadRequest();
+            }
             var result = await this.doctorRepository.DeleteDoctor(id);
             return Ok(result);
         }

@@ -1,7 +1,7 @@
-﻿using EmployeeInformation.Entities;
+﻿using EmployeeInformation.Common.Entities;
 using MongoDB.Driver;
 
-namespace EmployeeInformation.Data
+namespace EmployeeInformation.Common.Data
 {
     public class EmployeeInformationContextSeed
     {
@@ -27,7 +27,7 @@ namespace EmployeeInformation.Data
             {
                 new Doctor
                 {
-                    Id = "602d2149e773f2a3990b47f5",
+                    Id = Guid.NewGuid(),
                     FirstName = "Alan",
                     LastName = "Stern",
                     MedicalSpecialty = "Cardiology",
@@ -38,7 +38,7 @@ namespace EmployeeInformation.Data
                 },
                 new Doctor
                 {
-                    Id = "602d2149e773f2a3990b47f6",
+                    Id = Guid.NewGuid(),
                     FirstName = "David",
                     LastName = "Sowa",
                     MedicalSpecialty = "Gynecology",
@@ -49,7 +49,7 @@ namespace EmployeeInformation.Data
                 },
                 new Doctor
                 {
-                    Id = "602d2149e773f2a3990b47f7",
+                    Id = Guid.NewGuid(),
                     FirstName = "George",
                     LastName = "Green",
                     MedicalSpecialty = "Pulmonology",
@@ -60,7 +60,7 @@ namespace EmployeeInformation.Data
                 },
                  new Doctor
                 {
-                    Id = "602d2149e773f2a3990b47f8",
+                    Id = Guid.NewGuid(),
                     FirstName = "Edward",
                     LastName = "Fry",
                     MedicalSpecialty = "Cardiology",
@@ -71,7 +71,7 @@ namespace EmployeeInformation.Data
                 },
                  new Doctor
                 {
-                    Id = "602d2149e773f2a3990b47f9",
+                    Id = Guid.NewGuid(),
                     FirstName = "Hadley",
                     LastName = "Wilson",
                     MedicalSpecialty = "Cardiology",
@@ -88,21 +88,21 @@ namespace EmployeeInformation.Data
             {
                 new Nurse
                 {
-                    Id = "602d2149e773f2a3990b47fa",
+                    Id = Guid.NewGuid(),
                     FirstName = "Anna",
                     LastName = "Green",
                     ImageFile = "anna-green.png"
                 },
                 new Nurse
                 {
-                    Id = "602d2149e773f2a3990b47f1",
+                    Id = Guid.NewGuid(),
                     FirstName = "Rachel",
                     LastName = "Gray",
                     ImageFile = "rachel-gray.png"
                 },
                 new Nurse
                 {
-                    Id = "602d2149e773f2a3990b47f2",
+                    Id = Guid.NewGuid(),
                     FirstName = "Page",
                     LastName = "Jones",
                     ImageFile = "page-jones.png"

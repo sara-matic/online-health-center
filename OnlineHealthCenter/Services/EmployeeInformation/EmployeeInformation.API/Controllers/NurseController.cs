@@ -1,5 +1,7 @@
-﻿using EmployeeInformation.API.Repositories.Interfaces;
-using EmployeeInformation.Entities;
+﻿using AutoMapper;
+using EmployeeInformation.Common.DTOs.NurseDTOs;
+using EmployeeInformation.Common.Entities;
+using EmployeeInformation.Common.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeInformation.API.Controllers
@@ -9,42 +11,53 @@ namespace EmployeeInformation.API.Controllers
     public class NurseController : ControllerBase
     {
         private readonly INurseRepository nurseRepository;
-        public NurseController(INurseRepository nurseRepository)
+        private readonly IMapper mapper;
+
+        public NurseController(INurseRepository nurseRepository, IMapper mapper)
         {
             this.nurseRepository = nurseRepository ?? throw new ArgumentNullException(nameof(nurseRepository));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         [Route("[action]")]
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<Nurse>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<Nurse>>> GetNurses()
+        [ProducesResponseType(typeof(IEnumerable<NurseDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<NurseDto>>> GetNurses()
         {
             var nurses = await this.nurseRepository.GetNurses();
-            return Ok(nurses);
+            return nurses == null || !nurses.Any() ? NotFound() : Ok(this.mapper.Map<IEnumerable<NurseDto>>(nurses));
         }
 
         [HttpGet("GetNurseById/{id}", Name = "GetNurse")]
-        [ProducesResponseType(typeof(Nurse), StatusCodes.Status200OK)]
-        public async Task<ActionResult<Nurse>> GetNurseById(string id)
+        [ProducesResponseType(typeof(NurseDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<NurseDto>> GetNurseById(Guid id)
         {
             var nurse = await this.nurseRepository.GetNurseById(id);
-            return Ok(nurse);
+            return nurse == null ? NotFound() : Ok(this.mapper.Map<NurseDto>(nurse));
         }
 
         [Route("[action]")]
         [HttpPost]
-        [ProducesResponseType(typeof(IEnumerable<Nurse>), StatusCodes.Status201Created)]
-        public async Task<ActionResult<Nurse>> AddNurse([FromBody] Nurse nurse)
+        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        public async Task<IActionResult> AddNurse([FromBody] CreateNurseDto createNurseDto)
         {
-            await this.nurseRepository.AddNurse(nurse);
-            return CreatedAtRoute("GetNurse", new { id = nurse.Id }, nurse);
+            await this.nurseRepository.AddNurse(this.mapper.Map<Nurse>(createNurseDto));
+            return Ok();
         }
 
         [Route("[action]/{id}")]
         [HttpDelete]
         [ProducesResponseType(typeof(Nurse), StatusCodes.Status200OK)]
-        public async Task<IActionResult> DeleteNurse(string id)
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteNurse(Guid id)
         {
+            var nurseExists = await this.nurseRepository.GetNurseById(id) != null;
+            if(!nurseExists)
+            {
+                return BadRequest();
+            }
             var result = await this.nurseRepository.DeleteNurse(id);
             return Ok(result);
         }
