@@ -1,7 +1,7 @@
-﻿using EmployeeInformation.Entities;
+﻿using EmployeeInformation.Common.Entities;
 using MongoDB.Driver;
 
-namespace EmployeeInformation.Data
+namespace EmployeeInformation.Common.Data
 {
     public interface IEmployeeInformationContext
     {

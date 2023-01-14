@@ -1,7 +1,8 @@
-﻿using EmployeeInformation.Entities;
+﻿using EmployeeInformation.Common.Entities;
+using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 
-namespace EmployeeInformation.Data
+namespace EmployeeInformation.Common.Data
 {
     public class EmployeeInformationContext : IEmployeeInformationContext
     {
