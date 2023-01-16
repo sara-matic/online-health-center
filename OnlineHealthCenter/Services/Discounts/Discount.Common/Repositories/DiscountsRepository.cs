@@ -34,7 +34,7 @@ namespace Discount.Common.Repositories
         public async Task<int?> GetDiscountBySpecialty(string patientId, string specialty)
         {
             var discountQueryResult = await this.context.Discounts.Find(discount => discount.PatientId == patientId && discount.Specialty == specialty).ToListAsync();
-            return discountQueryResult.FirstOrDefault()?.AmoundInPercentage;
+            return discountQueryResult.FirstOrDefault()?.AmountInPercentage;
         }
         public async Task CreateDiscount(CreateCouponDTO createDiscountDTO)
         {
@@ -52,7 +52,7 @@ namespace Discount.Common.Repositories
             var couponForUpdate = (await this.context.Discounts.FindAsync(coupon => coupon.PatientId == updateDiscountDTO.PatientId && coupon.Specialty == updateDiscountDTO.Specialty))
                 .First();
 
-            couponForUpdate.AmoundInPercentage = updateDiscountDTO.AmoundInPercentage;
+            couponForUpdate.AmountInPercentage = updateDiscountDTO.AmountInPercentage;
 
             var updateActionResult = await this.context.Discounts.ReplaceOneAsync(coupon => coupon.Id == couponForUpdate.Id, couponForUpdate);
 
