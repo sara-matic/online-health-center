@@ -9,7 +9,7 @@ namespace Discount.Common.Entities
         public string Id { get; set; }
         public string PatientId { get; set; }
         public string Specialty { get; set; }
-        public int AmoundInPercentage { get; set; }
+        public int AmountInPercentage { get; set; }
 
     }
 }

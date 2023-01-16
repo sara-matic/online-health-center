@@ -4,6 +4,6 @@
     {
         public string PatientId { get; set; }
         public string Specialty { get; set; }
-        public int AmoundInPercentage { get; set; }
+        public int AmountInPercentage { get; set; }
     }
 }

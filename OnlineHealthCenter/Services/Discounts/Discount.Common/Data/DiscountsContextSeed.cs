@@ -21,7 +21,7 @@ namespace Discount.Common.Data
                 Id = "604d2149e773f2a3990b47f1",
                 PatientId = "2107885523340",
                 Specialty = "Cardiology",
-                AmoundInPercentage = 30
+                AmountInPercentage = 30
             };
 
             yield return new Coupon
@@ -29,7 +29,7 @@ namespace Discount.Common.Data
                 Id = "605d2149e773f2a3990b47f2",
                 PatientId = "1906885523341",
                 Specialty = "Pulmology",
-                AmoundInPercentage = 40
+                AmountInPercentage = 40
             };
 
             yield return new Coupon
@@ -37,7 +37,7 @@ namespace Discount.Common.Data
                 Id = "606d2149e773f2a3990b47f3",
                 PatientId = "1906885523341",
                 Specialty = "Gynecology",
-                AmoundInPercentage = 50
+                AmountInPercentage = 50
             };
 
             yield return new Coupon
@@ -45,7 +45,7 @@ namespace Discount.Common.Data
                 Id = "607d2149e773f2a3990b47f4",
                 PatientId = "02058999226342",
                 Specialty = "Pulmonology",
-                AmoundInPercentage = 50
+                AmountInPercentage = 50
             };
         }
     }
