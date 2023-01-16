@@ -73,8 +73,8 @@ namespace EmployeeInformation.Controllers
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateDoctor([FromBody] UpdateDoctorDto updateDoctorDto)
         {
-            var doctorExists = await this.GetDoctorById(updateDoctorDto.Id) != null;
-            if(!doctorExists)
+            var doctorExists = await this.GetDoctorById(updateDoctorDto.Id);
+            if (doctorExists == null)
             {
                 return BadRequest();
             }
@@ -88,8 +88,8 @@ namespace EmployeeInformation.Controllers
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateMark(Guid id, decimal mark)
         {
-            var doctorExists = await this.doctorRepository.GetDoctorById(id) != null;
-            if(!doctorExists)
+            var doctorExists = await this.doctorRepository.GetDoctorById(id);
+            if (doctorExists == null)
             {
                 return BadRequest();
             }
@@ -103,8 +103,8 @@ namespace EmployeeInformation.Controllers
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteDoctor(Guid id)
         {
-            var doctorExists = await this.doctorRepository.GetDoctorById(id) != null;
-            if(!doctorExists)
+            var doctorExists = await this.doctorRepository.GetDoctorById(id);
+            if (doctorExists == null)
             {
                 return BadRequest();
             }
