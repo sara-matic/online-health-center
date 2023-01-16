@@ -53,8 +53,8 @@ namespace EmployeeInformation.API.Controllers
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteNurse(Guid id)
         {
-            var nurseExists = await this.nurseRepository.GetNurseById(id) != null;
-            if(!nurseExists)
+            var nurseExists = await this.nurseRepository.GetNurseById(id);
+            if (nurseExists == null)
             {
                 return BadRequest();
             }
