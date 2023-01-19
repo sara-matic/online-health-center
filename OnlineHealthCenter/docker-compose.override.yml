@@ -9,6 +9,17 @@ services:
     volumes:
       - mongo_data:/data/db
 
+  mssql:
+    container_name: mssql
+    environment:
+      - SA_PASSWORD=aBX90#keq2Y3
+      - ACCEPT_EULA=Y
+    restart: always
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql/data
+
   employeeinformation.api:
     container_name: employeeinformation.api
     environment:
