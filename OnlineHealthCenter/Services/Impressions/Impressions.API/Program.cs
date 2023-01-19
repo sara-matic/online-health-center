@@ -1,14 +1,12 @@
-using Impression.API.Data;
-using Impression.API.Repositories;
-using Impression.API.Repositories.Interfaces;
+using Impressions.Common.Data;
+using Impressions.Common.Extensions;
+using Impressions.Common.Repositories;
+using Impressions.Common.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
-builder.Services.AddScoped<IImpressionContext, ImpressionContext>();
-builder.Services.AddScoped<IImpressionRepository, ImpressionRepository>();
-
+builder.Services.AddImpressionsExtensions();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
