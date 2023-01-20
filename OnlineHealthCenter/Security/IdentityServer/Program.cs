@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAuthentication();
 builder.Services.ConfigurePersistence(builder.Configuration);
 builder.Services.ConfigureIdentity();
+builder.Services.ConfigureMiscellaneousServices();
 
 var app = builder.Build();
 
