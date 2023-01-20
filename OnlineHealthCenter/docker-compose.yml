@@ -4,6 +4,9 @@ services:
   mongodbcontainer:
     image: mongo
 
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
   employeeinformation.api:
     image: ${DOCKER_REGISTRY-}employeeinformationapi
     build:
@@ -30,4 +33,4 @@ services:
 
 volumes:
   mongo_data:
-
+  mssql_data:
