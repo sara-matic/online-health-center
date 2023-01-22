@@ -1,7 +1,6 @@
 using EmployeeInformation.Common.Repositories;
 using EmployeeInformation.Common.Repositories.Interfaces;
 using EmployeeInformation.Common.Data;
-using EmployeeInformation.Common.Repositories;
 using EmployeeInformation.Common.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
