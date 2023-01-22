@@ -34,5 +34,20 @@ namespace IdentityServer.Repositories
 
             return false;
         }
+
+        public async Task<User?> GetUserByUsername(string username)
+        {
+            return await this.userManager.FindByNameAsync(username);
+        }
+
+        public async Task<bool> CheckUserPassword(User user, string password)
+        {
+            return await this.userManager.CheckPasswordAsync(user, password);
+        }
+
+        public async Task<IEnumerable<string>> GetUserRoles(User user)
+        {
+            return await this.userManager.GetRolesAsync(user);
+        }
     }
 }
