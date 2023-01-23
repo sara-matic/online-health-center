@@ -9,5 +9,6 @@ namespace IdentityServer.Repositories.Interfaces
         Task<User?> GetUserByUsername(string username);
         Task<bool> CheckUserPassword(User user, string password);
         Task<IEnumerable<string>> GetUserRoles(User user);
+        Task<IEnumerable<User>> GetAllUsers();
     }
 }

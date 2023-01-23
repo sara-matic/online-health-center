@@ -58,7 +58,8 @@ namespace IdentityServer.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.UserName)
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id)
             };
 
             var roles = await this.repository.GetUserRoles(user);

@@ -2,6 +2,7 @@
 using IdentityServer.Entities;
 using IdentityServer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdentityServer.Repositories
 {
@@ -48,6 +49,11 @@ namespace IdentityServer.Repositories
         public async Task<IEnumerable<string>> GetUserRoles(User user)
         {
             return await this.userManager.GetRolesAsync(user);
+        }
+
+        public async Task<IEnumerable<User>> GetAllUsers()
+        {
+            return await this.userManager.Users.ToListAsync();
         }
     }
 }
