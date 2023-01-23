@@ -60,3 +60,13 @@ services:
     ports:
       - "8003:80"
 
+  impressions.grpc:
+    container_name: impressions.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://mongodbcontainer:27017"
+    depends_on:
+      - mongodbcontainer
+    ports:
+      - "8004:80"
+
