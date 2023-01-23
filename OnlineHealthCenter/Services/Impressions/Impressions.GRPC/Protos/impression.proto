@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option csharp_namespace = "Impressions.GRPC.Protos";
+
+service ImpressionProtoService {
+	rpc GetDoctorsMark(GetDoctorsMarkRequest) returns (GetDoctorsMarkResponse);
+}
+
+message GetDoctorsMarkRequest {
+	string id = 1;
+}
+
+message GetDoctorsMarkResponse {
+	double mark = 2;
+}

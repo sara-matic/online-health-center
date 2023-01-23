@@ -31,6 +31,13 @@ services:
       context: .
       dockerfile: Services/Reports/Report.API/Dockerfile
 
+  impressions.grpc:
+    image: ${DOCKER_REGISTRY-}impressionsgrpc
+    build:
+      context: .
+      dockerfile: Services/Impressions/Impressions.GRPC/Dockerfile
+
 volumes:
   mongo_data:
   mssql_data:
+
