@@ -22,7 +22,7 @@ namespace Impressions.GRPC.Services
         {
             var impressions = await this.impressionRepository.GetImpressionsByDoctorId(request.Id);
 
-            if (impressions == null || !impressions.Any())
+            if (impressions == null)
             {
                 throw new RpcException(new Status(StatusCode.NotFound, $"Impression with DoctorID = {request.Id} is not found"));
             }

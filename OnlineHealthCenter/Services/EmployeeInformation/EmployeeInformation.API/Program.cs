@@ -1,13 +1,17 @@
 using EmployeeInformation.Common.Repositories;
 using EmployeeInformation.Common.Repositories.Interfaces;
 using EmployeeInformation.Common.Data;
-using EmployeeInformation.Common.Repositories;
 using EmployeeInformation.Common.Extensions;
+using Impressions.GRPC.Protos;
+using EmployeeInformation.API.GrpcServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddEmployeeInformationExtensions();
+builder.Services.AddGrpcClient<ImpressionProtoService.ImpressionProtoServiceClient>(
+    options => options.Address = new Uri(builder.Configuration["GrpcSettings:ImpressionUrl"]));
+builder.Services.AddScoped<ImpressionGrpcService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
