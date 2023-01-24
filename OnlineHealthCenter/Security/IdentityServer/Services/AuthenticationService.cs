@@ -1,10 +1,13 @@
-﻿using IdentityServer.DTOs;
+﻿using IdentityServer.Data;
+using IdentityServer.DTOs;
 using IdentityServer.Entities;
 using IdentityServer.Repositories.Interfaces;
 using IdentityServer.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace IdentityServer.Services
@@ -33,8 +36,17 @@ namespace IdentityServer.Services
         public async Task<AuthenticationModel> CreateAuthenticationModel(User user)
         {
             var accessToken = await CreateAccessToken(user);
+            var refreshToken = await CreateRefreshToken();
 
-            return new AuthenticationModel { AccessToken = accessToken };
+            await this.repository.AddRefreshTokenToUser(user, refreshToken);
+
+            return new AuthenticationModel { AccessToken = accessToken, RefreshToken = refreshToken.Token };
+        }
+
+        public async Task RemoveRefreshToken(User user, string refreshToken)
+        {
+            await this.repository.RemoveRefreshTokenFromUser(user, refreshToken);
+            await this.repository.RemoveRefreshTokenFromDb(refreshToken);
         }
 
         private async Task<string> CreateAccessToken(User user)
@@ -85,6 +97,23 @@ namespace IdentityServer.Services
             );
 
             return token;
+        }
+
+        private async Task<RefreshToken> CreateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using var rng = RandomNumberGenerator.Create();
+            rng.GetBytes(randomNumber);
+
+            var refreshToken = new RefreshToken
+            {
+                Token = Convert.ToBase64String(randomNumber),
+                ExpiryTime = DateTime.Now.AddDays(Convert.ToDouble(this.configuration.GetValue<string>("RefreshTokenExpires")))
+            };
+
+            await this.repository.AddRefreshTokenToDb(refreshToken);
+
+            return refreshToken;
         }
     }
 }

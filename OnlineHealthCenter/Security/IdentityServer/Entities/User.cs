@@ -6,5 +6,6 @@ namespace IdentityServer.Entities
     {
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
+        public List<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     }
 }
