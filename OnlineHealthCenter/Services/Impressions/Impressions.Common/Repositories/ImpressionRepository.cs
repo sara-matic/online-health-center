@@ -66,6 +66,11 @@ namespace Impressions.Common.Repositories
         public async Task<decimal> GetDoctorsMark(string doctorId)
         {
             var impressions = await this.GetImpressionsByDoctorId(doctorId);
+
+            if (!impressions.Any())
+            {
+                return 0;
+            }
             return impressions.Average(p => p.Mark);
         }
     }
