@@ -3,10 +3,12 @@ using IdentityServer.Controllers.Base;
 using IdentityServer.DTOs;
 using IdentityServer.Entities;
 using IdentityServer.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityServer.Controllers
 {
+    [Authorize(Roles = "Nurse")]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class StaffRegistrationController : RegistrationControllerBase<StaffRegistrationController>

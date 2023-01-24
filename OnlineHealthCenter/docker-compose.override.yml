@@ -62,6 +62,16 @@ services:
     ports:
       - "8003:80"
 
+  identityserver:
+    container_name: identityserver
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:IdentityConnectionString=Server=mssql;TrustServerCertificate=True;Database=IdentityDb;User Id=sa;Password=aBX90#keq2Y3;"
+    depends_on:
+      - mssql
+    ports:
+      - "4000:80"
+
   impressions.grpc:
     container_name: impressions.grpc
     environment:
@@ -71,4 +81,3 @@ services:
       - mongodbcontainer
     ports:
       - "8004:80"
-

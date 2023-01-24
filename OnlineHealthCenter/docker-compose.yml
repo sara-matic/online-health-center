@@ -31,6 +31,12 @@ services:
       context: .
       dockerfile: Services/Reports/Report.API/Dockerfile
 
+  identityserver:
+    image: ${DOCKER_REGISTRY-}identityserver
+    build:
+      context: .
+      dockerfile: Security/IdentityServer/Dockerfile
+
   impressions.grpc:
     image: ${DOCKER_REGISTRY-}impressionsgrpc
     build:
