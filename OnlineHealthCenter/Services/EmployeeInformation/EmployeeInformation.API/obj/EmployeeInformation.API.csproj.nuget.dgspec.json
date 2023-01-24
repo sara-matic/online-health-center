@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\anapa\\Desktop\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj": {}
+    "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\anapa\\Desktop\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj": {
+    "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\anapa\\Desktop\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
+        "projectUniqueName": "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
         "projectName": "EmployeeInformation.API",
-        "projectPath": "C:\\Users\\anapa\\Desktop\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
-        "packagesPath": "C:\\Users\\anapa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\anapa\\Desktop\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\obj\\",
+        "projectPath": "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\EmployeeInformation.API.csproj",
+        "packagesPath": "C:\\Users\\Sara Matic\\.nuget\\packages\\",
+        "outputPath": "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.API\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\anapa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Sara Matic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,8 +32,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\anapa\\Desktop\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.Common\\EmployeeInformation.Common.csproj": {
-                "projectPath": "C:\\Users\\anapa\\Desktop\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.Common\\EmployeeInformation.Common.csproj"
+              "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.Common\\EmployeeInformation.Common.csproj": {
+                "projectPath": "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.Common\\EmployeeInformation.Common.csproj"
               }
             }
           }
@@ -88,21 +92,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\anapa\\Desktop\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.Common\\EmployeeInformation.Common.csproj": {
+    "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.Common\\EmployeeInformation.Common.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\anapa\\Desktop\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.Common\\EmployeeInformation.Common.csproj",
+        "projectUniqueName": "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.Common\\EmployeeInformation.Common.csproj",
         "projectName": "EmployeeInformation.Common",
-        "projectPath": "C:\\Users\\anapa\\Desktop\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.Common\\EmployeeInformation.Common.csproj",
-        "packagesPath": "C:\\Users\\anapa\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\anapa\\Desktop\\online-health-center\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.Common\\obj\\",
+        "projectPath": "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.Common\\EmployeeInformation.Common.csproj",
+        "packagesPath": "C:\\Users\\Sara Matic\\.nuget\\packages\\",
+        "outputPath": "D:\\Faks\\1\\OnlineHealthCenter\\Services\\EmployeeInformation\\EmployeeInformation.Common\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\anapa\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Sara Matic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -165,7 +173,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
