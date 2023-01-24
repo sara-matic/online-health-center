@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using EmployeeInformation.API.GrpcServices;
 using EmployeeInformation.Common.DTOs.DoctorDTOs;
 using EmployeeInformation.Common.Entities;
 using EmployeeInformation.Common.Repositories.Interfaces;
+using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeInformation.Controllers
@@ -12,11 +14,15 @@ namespace EmployeeInformation.Controllers
     {
         private readonly IDoctorRepository doctorRepository;
         private readonly IMapper mapper;
+        private readonly ImpressionGrpcService impressionGrpcService;
+        private readonly ILogger<DoctorController> _logger;
 
-        public DoctorController(IDoctorRepository doctorRepository, IMapper mapper)
+        public DoctorController(IDoctorRepository doctorRepository, IMapper mapper, ImpressionGrpcService impressionGrpcService, ILogger<DoctorController> logger)
         {
             this.doctorRepository = doctorRepository ?? throw new ArgumentNullException(nameof(doctorRepository));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            this.impressionGrpcService = impressionGrpcService ?? throw new ArgumentNullException(nameof(impressionGrpcService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [Route("[action]")]
@@ -35,7 +41,23 @@ namespace EmployeeInformation.Controllers
         public async Task<ActionResult<DoctorDto>> GetDoctorById(Guid id)
         {
             var doctor = await this.doctorRepository.GetDoctorById(id);
-            return doctor == null ? NotFound() : Ok(this.mapper.Map<DoctorDto>(doctor));
+            
+            if (doctor == null)
+            {
+                return NotFound();
+            }
+            
+            try
+            {
+                var result = await this.impressionGrpcService.GetDoctorsMark(id.ToString());
+                doctor.Mark = (decimal)result.Mark;
+            }
+            catch (RpcException e)
+            {
+                _logger.LogInformation("Error while retrieving mark for DoctorID {id}: {message}", doctor.Id, e.Message);
+            }
+            
+            return Ok(this.mapper.Map<DoctorDto>(doctor));
         }
 
         [Route("[action]/{medicalSpecialty}")]
