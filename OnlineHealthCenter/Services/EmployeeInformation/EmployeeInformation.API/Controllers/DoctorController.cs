@@ -5,6 +5,7 @@ using EmployeeInformation.Common.Entities;
 using EmployeeInformation.Common.Repositories.Interfaces;
 using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
+using System.Numerics;
 
 namespace EmployeeInformation.Controllers
 {
@@ -32,7 +33,26 @@ namespace EmployeeInformation.Controllers
         public async Task<ActionResult<IEnumerable<DoctorDto>>> GetDoctors()
         {
             var doctors = await this.doctorRepository.GetDoctors();
-            return doctors == null || !doctors.Any() ? NotFound() : Ok(this.mapper.Map<IEnumerable<DoctorDto>>(doctors));
+
+            if (doctors == null)
+            {
+                return NotFound();
+            }
+
+            foreach (var d in doctors)
+            {
+                try
+                {
+                    var result = await this.impressionGrpcService.GetDoctorsMark(d.Id.ToString());
+                    d.Mark = (decimal)result.Mark;
+                }
+                catch (RpcException e)
+                {
+                    _logger.LogInformation("Error while retrieving mark for DoctorID {id}: {message}", d.Id, e.Message);
+                }
+            }
+
+            return Ok(this.mapper.Map<IEnumerable<DoctorDto>>(doctors));
         }
 
         [HttpGet("GetDoctorById/{id}", Name = "GetDoctor")]
@@ -41,12 +61,12 @@ namespace EmployeeInformation.Controllers
         public async Task<ActionResult<DoctorDto>> GetDoctorById(Guid id)
         {
             var doctor = await this.doctorRepository.GetDoctorById(id);
-            
+
             if (doctor == null)
             {
                 return NotFound();
             }
-            
+
             try
             {
                 var result = await this.impressionGrpcService.GetDoctorsMark(id.ToString());
@@ -56,7 +76,7 @@ namespace EmployeeInformation.Controllers
             {
                 _logger.LogInformation("Error while retrieving mark for DoctorID {id}: {message}", doctor.Id, e.Message);
             }
-            
+
             return Ok(this.mapper.Map<DoctorDto>(doctor));
         }
 
@@ -67,7 +87,26 @@ namespace EmployeeInformation.Controllers
         public async Task<ActionResult<IEnumerable<DoctorDto>>> GetDoctorByMedicalSpecialty(string medicalSpecialty)
         {
             var doctors = await this.doctorRepository.GetDoctorByMedicalSpecialty(medicalSpecialty);
-            return doctors == null || !doctors.Any() ? NotFound() : Ok(this.mapper.Map<IEnumerable<DoctorDto>>(doctors));
+
+            if (doctors == null)
+            {
+                return NotFound();
+            }
+
+            foreach (var d in doctors)
+            {
+                try
+                {
+                    var result = await this.impressionGrpcService.GetDoctorsMark(d.Id.ToString());
+                    d.Mark = (decimal)result.Mark;
+                }
+                catch (RpcException e)
+                {
+                    _logger.LogInformation("Error while retrieving mark for DoctorID {id}: {message}", d.Id, e.Message);
+                }
+            }
+
+            return Ok(this.mapper.Map<IEnumerable<DoctorDto>>(doctors));
         }
 
         [Route("[action]/{title}")]
@@ -77,7 +116,26 @@ namespace EmployeeInformation.Controllers
         public async Task<ActionResult<IEnumerable<DoctorDto>>> GetDoctorByTitle(string title)
         {
             var doctors = await this.doctorRepository.GetDoctorByTitle(title);
-            return doctors == null || !doctors.Any() ? NotFound() : Ok(this.mapper.Map<IEnumerable<DoctorDto>>(doctors));
+
+            if (doctors == null)
+            {
+                return NotFound();
+            }
+
+            foreach (var d in doctors)
+            {
+                try
+                {
+                    var result = await this.impressionGrpcService.GetDoctorsMark(d.Id.ToString());
+                    d.Mark = (decimal)result.Mark;
+                }
+                catch (RpcException e)
+                {
+                    _logger.LogInformation("Error while retrieving mark for DoctorID {id}: {message}", d.Id, e.Message);
+                }
+            }
+
+            return Ok(this.mapper.Map<IEnumerable<DoctorDto>>(doctors));
         }
 
         [Route("[action]")]
@@ -96,10 +154,12 @@ namespace EmployeeInformation.Controllers
         public async Task<IActionResult> UpdateDoctor([FromBody] UpdateDoctorDto updateDoctorDto)
         {
             var doctorExists = await this.GetDoctorById(updateDoctorDto.Id);
+
             if (doctorExists == null)
             {
                 return BadRequest();
             }
+
             var result = await this.doctorRepository.UpdateDoctor(this.mapper.Map<Doctor>(updateDoctorDto));
             return Ok(result);
         }
@@ -111,10 +171,12 @@ namespace EmployeeInformation.Controllers
         public async Task<IActionResult> UpdateMark(Guid id, decimal mark)
         {
             var doctorExists = await this.doctorRepository.GetDoctorById(id);
+
             if (doctorExists == null)
             {
                 return BadRequest();
             }
+
             var result = await this.doctorRepository.UpdateMark(id, mark);
             return Ok(result);
         }
@@ -126,10 +188,12 @@ namespace EmployeeInformation.Controllers
         public async Task<IActionResult> DeleteDoctor(Guid id)
         {
             var doctorExists = await this.doctorRepository.GetDoctorById(id);
+
             if (doctorExists == null)
             {
                 return BadRequest();
             }
+
             var result = await this.doctorRepository.DeleteDoctor(id);
             return Ok(result);
         }

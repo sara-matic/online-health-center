@@ -26,7 +26,13 @@ namespace EmployeeInformation.API.Controllers
         public async Task<ActionResult<IEnumerable<NurseDto>>> GetNurses()
         {
             var nurses = await this.nurseRepository.GetNurses();
-            return nurses == null || !nurses.Any() ? NotFound() : Ok(this.mapper.Map<IEnumerable<NurseDto>>(nurses));
+
+            if (nurses == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(this.mapper.Map<IEnumerable<NurseDto>>(nurses));
         }
 
         [HttpGet("GetNurseById/{id}", Name = "GetNurse")]
@@ -35,7 +41,13 @@ namespace EmployeeInformation.API.Controllers
         public async Task<ActionResult<NurseDto>> GetNurseById(Guid id)
         {
             var nurse = await this.nurseRepository.GetNurseById(id);
-            return nurse == null ? NotFound() : Ok(this.mapper.Map<NurseDto>(nurse));
+
+            if(nurse== null)
+            {
+                return NotFound();
+            }
+
+            return Ok(this.mapper.Map<NurseDto>(nurse));
         }
 
         [Route("[action]")]
@@ -54,10 +66,12 @@ namespace EmployeeInformation.API.Controllers
         public async Task<IActionResult> DeleteNurse(Guid id)
         {
             var nurseExists = await this.nurseRepository.GetNurseById(id);
+
             if (nurseExists == null)
             {
                 return BadRequest();
             }
+
             var result = await this.nurseRepository.DeleteNurse(id);
             return Ok(result);
         }
