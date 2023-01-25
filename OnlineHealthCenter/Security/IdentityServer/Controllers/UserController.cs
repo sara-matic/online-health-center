@@ -30,11 +30,10 @@ namespace IdentityServer.Controllers
             return Ok(this.mapper.Map<IEnumerable<UserDetailsDTO>>(users));
         }
 
-        [Authorize(Roles = "Patient,Doctor,Nurse")]
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(UserDetailsDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<UserDetailsDTO>> GetUser()
+        public async Task<ActionResult<UserDetailsDTO>> GetLoggedInUser()
         {
             var username = User.FindFirst(ClaimTypes.Name).Value;
             var user = await this.repository.GetUserByUsername(username);
@@ -74,6 +73,28 @@ namespace IdentityServer.Controllers
             }
 
             await this.repository.DeleteUser(user);
+
+            return Ok();
+        }
+
+        [HttpPost("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDTO changePasswordDTO)
+        {
+            var username = User.FindFirst(ClaimTypes.Name).Value;
+            var user = await this.repository.GetUserByUsername(username);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var changedPassword = await this.repository.ChangePassword(user, changePasswordDTO.OldPassword, changePasswordDTO.NewPassword);
+            if (!changedPassword)
+            {
+                return Forbid();
+            }
 
             return Ok();
         }
