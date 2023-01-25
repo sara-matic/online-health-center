@@ -71,6 +71,7 @@ namespace Impressions.Common.Repositories
             {
                 return 0;
             }
+
             return impressions.Average(p => p.Mark);
         }
     }

@@ -8,6 +8,7 @@ namespace Impressions.Common.Data
         public static void SeedImpression(IMongoCollection<Impression> impressionsCollection)
         {
             var exist = impressionsCollection.Find(p => true).Any();
+
             if (!exist)
             {
                 impressionsCollection.InsertMany(ImpressionsPreconfigured());

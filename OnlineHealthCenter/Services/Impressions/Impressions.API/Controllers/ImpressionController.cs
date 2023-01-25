@@ -26,7 +26,13 @@ namespace Impressions.API.Controllers
         public async Task<ActionResult<IEnumerable<ImpressionDto>>> GetImpressions()
         {
             var impressions = await this.impressionRepository.GetImpressions();
-            return impressions == null || !impressions.Any() ? NotFound() : Ok(this.mapper.Map<IEnumerable<ImpressionDto>>(impressions));
+
+            if (impressions == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(this.mapper.Map<IEnumerable<ImpressionDto>>(impressions));
         }
 
         [Route("[action]")]
@@ -36,7 +42,13 @@ namespace Impressions.API.Controllers
         public async Task<ActionResult<IEnumerable<ImpressionIdentityDto>>> GetImpressionsWithId()
         {
             var impressions = await this.impressionRepository.GetImpressions();
-            return impressions == null || !impressions.Any() ? NotFound() : Ok(this.mapper.Map<IEnumerable<ImpressionIdentityDto>>(impressions));
+
+            if (impressions == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(this.mapper.Map<IEnumerable<ImpressionIdentityDto>>(impressions));
         }
 
         [Route("[action]/{id}")]
@@ -46,7 +58,13 @@ namespace Impressions.API.Controllers
         public async Task<ActionResult<ImpressionIdentityDto>> GetImpressionById(Guid id)
         {
             var impression = await this.impressionRepository.GetImpressionById(id);
-            return impression == null ? NotFound() : Ok(this.mapper.Map<ImpressionIdentityDto>(impression));
+
+            if (impression == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(this.mapper.Map<ImpressionIdentityDto>(impression));
         }
 
         [Route("[action]/{id}")]
@@ -56,7 +74,13 @@ namespace Impressions.API.Controllers
         public async Task<ActionResult<IEnumerable<ImpressionDto>>> GetImpressionsByDoctorId(string id)
         {
             var impressions = await this.impressionRepository.GetImpressionsByDoctorId(id);
-            return impressions == null || !impressions.Any() ? NotFound() : Ok(this.mapper.Map<IEnumerable<ImpressionDto>>(impressions));
+            
+            if (impressions == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(this.mapper.Map<IEnumerable<ImpressionDto>>(impressions));
         }
 
         [Route("[action]/{id}")]
@@ -66,7 +90,13 @@ namespace Impressions.API.Controllers
         public async Task<ActionResult<IEnumerable<ImpressionDto>>> GetImpressionsByPatientId(string id)
         {
             var impressions = await this.impressionRepository.GetImpressionsByPatientId(id);
-            return impressions == null || !impressions.Any() ? NotFound() : Ok(this.mapper.Map<IEnumerable<ImpressionDto>>(impressions));
+
+            if (impressions == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(this.mapper.Map<IEnumerable<ImpressionDto>>(impressions));
         }
 
         [Route("[action]")]
@@ -76,7 +106,13 @@ namespace Impressions.API.Controllers
         public async Task<ActionResult<ImpressionDto>> GetImpressionByIdAndTime(string patientId, string doctorId, DateTime impressionDateTime)
         {
             var impression = await this.impressionRepository.GetImpressionByIdAndTime(patientId, doctorId, impressionDateTime);
-            return impression == null ? NotFound() : Ok(this.mapper.Map<ImpressionDto>(impression));
+
+            if (impression == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(this.mapper.Map<ImpressionDto>(impression));
         }
 
         [Route("[action]/{id}")]
@@ -86,10 +122,12 @@ namespace Impressions.API.Controllers
         public async Task<ActionResult<decimal>> GetDoctorsMark(string id)
         {
             var impressions = await this.impressionRepository.GetImpressionsByDoctorId(id);
-            if (!impressions.Any())
+
+            if (impressions == null)
             {
                 return NotFound();
             }
+
             return Ok(await this.impressionRepository.GetDoctorsMark(id));
         }
 
@@ -109,11 +147,13 @@ namespace Impressions.API.Controllers
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateImpression([FromBody] UpdateImpressionDto updateImpressionDto)
         {
-            var impressionExists = await this.impressionRepository.GetImpressionByIdAndTime(updateImpressionDto.PatientID, updateImpressionDto.DoctorID, updateImpressionDto.ImpressionDateTime);
-            if (impressionExists == null)
+            var impression = await this.impressionRepository.GetImpressionByIdAndTime(updateImpressionDto.PatientID, updateImpressionDto.DoctorID, updateImpressionDto.ImpressionDateTime);
+
+            if (impression == null)
             {
                 return BadRequest();
             }
+
             var result = await this.impressionRepository.UpdateImpression(this.mapper.Map<Impression>(updateImpressionDto));
             return Ok(result);
         }
@@ -124,12 +164,14 @@ namespace Impressions.API.Controllers
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteImpression(string patientId, string doctorId, DateTime impressionDateTime)
         {
-            var impressionExists = await this.impressionRepository.GetImpressionByIdAndTime(patientId, doctorId, impressionDateTime);
-            if (impressionExists == null)
+            var impression = await this.impressionRepository.GetImpressionByIdAndTime(patientId, doctorId, impressionDateTime);
+
+            if (impression == null)
             {
                 return BadRequest();
             }
-            var result = await this.impressionRepository.DeleteImpression(impressionExists.Id);
+
+            var result = await this.impressionRepository.DeleteImpression(impression.Id);
             return Ok(result);
         }
         
@@ -139,11 +181,13 @@ namespace Impressions.API.Controllers
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> DeleteImpressionById(Guid id)
         {
-            var impressionExists = await this.impressionRepository.GetImpressionById(id);
-            if (impressionExists == null)
+            var impression = await this.impressionRepository.GetImpressionById(id);
+
+            if (impression == null)
             {
                 return BadRequest();
             }
+
             var result = await this.impressionRepository.DeleteImpression(id);
             return Ok(result);
         }
