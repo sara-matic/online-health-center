@@ -15,6 +15,6 @@ namespace Impressions.Common.Data
             ImpressionContextSeed.SeedImpression(Impressions);
         }
 
-        public IMongoCollection<Entities.Impression> Impressions { get; }
+        public IMongoCollection<Impression> Impressions { get; }
     }
 }
