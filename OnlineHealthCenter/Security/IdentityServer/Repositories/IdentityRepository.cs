@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IdentityServer.Repositories
 {
-    public class IdentityRepository : IIdentityRepository
+    internal class IdentityRepository : IIdentityRepository
     {
         private readonly UserManager<User> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
@@ -91,6 +91,12 @@ namespace IdentityServer.Repositories
         public async Task DeleteUser(User user)
         {
             await this.userManager.DeleteAsync(user);
+        }
+
+        public async Task<bool> ChangePassword(User user, string oldPassword, string newPassword)
+        {
+            var result = await this.userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+            return result.Succeeded;
         }
     }
 }
