@@ -26,7 +26,8 @@ namespace Reports.API.Controllers
         [Route("[action]/{patientId}")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ReportDTO>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<ReportDTO>>> GetReportsByPatientId(string patientId)
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier).Value != patientId)
@@ -38,12 +39,12 @@ namespace Reports.API.Controllers
             return reports == null || !reports.Any() ? NotFound() : Ok(mapper.Map<IEnumerable<ReportDTO>>(reports));
         }
 
-        [Authorize(Roles = "Doctor")]
-        [Authorize(Roles = "Nurse")]
+        [Authorize(Roles = "Doctor,Nurse")]
         [Route("[action]/{doctorId}")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ReportDTO>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<ReportDTO>>> GetReportsByDoctorId(string doctorId)
         {
             if (User.FindFirst(ClaimTypes.Role).Value == "Doctor" && User.FindFirst(ClaimTypes.NameIdentifier).Value != doctorId)
@@ -55,12 +56,12 @@ namespace Reports.API.Controllers
             return reports == null || !reports.Any() ? NotFound() : Ok(mapper.Map<IEnumerable<ReportDTO>>(reports));
         }
 
-        [Authorize(Roles = "Patient")]
-        [Authorize(Roles = "Doctor")]
+        [Authorize(Roles = "Patient,Doctor")]
         [Route("[action]/{doctorId}/{patientId}")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ReportDTO>), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<ReportDTO>>> GetReportsByPatientAndDoctorId(string patientId, string doctorId)
         {
             if (User.FindFirst(ClaimTypes.Role).Value == "Patient" && User.FindFirst(ClaimTypes.NameIdentifier).Value != patientId)
@@ -79,7 +80,8 @@ namespace Reports.API.Controllers
         [Authorize(Roles = "Doctor")]
         [Route("[action]")]
         [HttpPost]
-        [ProducesResponseType(typeof(void), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> CreateReport([FromBody] CreateReportDTO createReportDTO)
         {
             if (User.FindFirst(ClaimTypes.NameIdentifier).Value != createReportDTO.DoctorId)
@@ -95,7 +97,7 @@ namespace Reports.API.Controllers
         [Route("[action]")]
         [HttpDelete]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<bool>> DeleteReport(string patientId, string doctorId, DateTime createdTime)
         {
             var report = await this.repository.GetReportByIdAndTime(patientId, doctorId, createdTime);
