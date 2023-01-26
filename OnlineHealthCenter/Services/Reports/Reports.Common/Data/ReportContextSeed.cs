@@ -21,8 +21,12 @@ namespace Reports.Common.Data
                 new Report()
                 {
                     Id = Guid.NewGuid(),
-                    PatientId = "2107885523340",
-                    DoctorId = "602d2149e773f2a3990b47f5",
+                    PatientId = "a15a4178-2964-4973-b1fe-425ef1fdc0a4",
+                    PatientFirstName = "James",
+                    PatientLastName = "Brown",
+                    DoctorId = "558cd9e5-4ca9-4aea-8b6c-7f7b2d4e01ba",
+                    DoctorFirstName = "Alan",
+                    DoctorLastName = "Stern",
                     Comment = "Two days complete bed rest with plenty of intake of liquid.",
                     Diagnosis = "Orthostatic hypotension",
                     Prescription = "Orvaten",
@@ -31,11 +35,15 @@ namespace Reports.Common.Data
                 new Report()
                 {
                     Id = Guid.NewGuid(),
-                    PatientId = "1906885523341",
-                    DoctorId = "602d2149e773f2a3990b47f5",
-                    Comment = "Checkup required in a week.",
-                    Diagnosis = "Peripleumonicis",
-                    Prescription = "Longaceph",
+                    PatientId = "a15a4178-2964-4973-b1fe-425ef1fdc0a4",
+                    PatientFirstName = "James",
+                    PatientLastName = "Brown",
+                    DoctorId = "558cd9e5-4ca9-4aea-8b6c-7f7b2d4e01ba",
+                    DoctorFirstName = "Alan",
+                    DoctorLastName = "Stern",
+                    Comment = "Patient complains about chect pain and shortness of breath. Checkup required in a week.",
+                    Diagnosis = "Tachycardia",
+                    Prescription = "Lopressor",
                     CreatedTime = DateTime.Now
                 }
             };
