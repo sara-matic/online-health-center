@@ -3,6 +3,6 @@
     public abstract class AppointmentBaseDTO
     {
         public string PatientId { get; set; }
-        public DateTime AppointmentTime { get; set; }
+        public string AppointmentTime { get; set; }
     }
 }

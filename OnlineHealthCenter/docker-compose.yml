@@ -7,6 +7,12 @@ services:
   mssql:
     image: mcr.microsoft.com/mssql/server:2017-latest
 
+  postgresdb:
+    image: postgres
+
+  pgadmin:
+    image: dpage/pgadmin4
+
   employeeinformation.api:
     image: ${DOCKER_REGISTRY-}employeeinformationapi
     build:
@@ -43,7 +49,15 @@ services:
       context: .
       dockerfile: Services/Impressions/Impressions.GRPC/Dockerfile
 
+  appointments.api:
+    image: ${DOCKER_REGISTRY-}appointmentsapi
+    build:
+      context: .
+      dockerfile: Services/Appointments/Appointments.API/Dockerfile
+
 volumes:
   mongo_data:
   mssql_data:
+  postgres_data:
+  pgadmin_data:
 
