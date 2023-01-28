@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeInformation.Common.DTOs.NurseDTOs
 {
-    public class CreateNurseDto : BaseNurseDto
+    public class CreateNurseDto : BaseIdentityNurseDto
     {
     }
 }

@@ -2,6 +2,7 @@
 using EmployeeInformation.Common.DTOs.NurseDTOs;
 using EmployeeInformation.Common.Entities;
 using EmployeeInformation.Common.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeInformation.API.Controllers
@@ -35,6 +36,7 @@ namespace EmployeeInformation.API.Controllers
             return Ok(this.mapper.Map<IEnumerable<NurseDto>>(nurses));
         }
 
+        [Authorize(Roles = "Nurse,Doctor")]
         [HttpGet("GetNurseById/{id}", Name = "GetNurse")]
         [ProducesResponseType(typeof(NurseDto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
@@ -50,6 +52,7 @@ namespace EmployeeInformation.API.Controllers
             return Ok(this.mapper.Map<NurseDto>(nurse));
         }
 
+        [Authorize(Roles = "Nurse")]
         [Route("[action]")]
         [HttpPost]
         [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
@@ -59,6 +62,7 @@ namespace EmployeeInformation.API.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Nurse")]
         [Route("[action]/{id}")]
         [HttpDelete]
         [ProducesResponseType(typeof(Nurse), StatusCodes.Status200OK)]

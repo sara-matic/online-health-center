@@ -11,6 +11,5 @@ namespace EmployeeInformation.Common.DTOs.DoctorDTOs
         public string MedicalSpecialty { get; set; }
         public string Title { get; set; }
         public string Biography { get; set; }
-        public decimal Mark { get; set; }
     }
 }
