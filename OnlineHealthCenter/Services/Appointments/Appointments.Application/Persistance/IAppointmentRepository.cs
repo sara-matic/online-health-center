@@ -6,7 +6,7 @@ namespace Appointments.Application.Persistance
     public interface IAppointmentRepository
     {
         Task<IEnumerable<Appointment>> GetAppointmentsByPatientId(string PatientId);
-        Task<Appointment> GetAppointmentByTime(string PatientId, DateTime appointmentTime);
+        Task<Appointment> GetAppointmentByTime(string PatientId, string appointmentTime);
         Task<IEnumerable<Appointment>> GetAppointmentsByDoctorId(string DoctorId);
         Task CreateAppointment(CreateAppointmentDTO createAppointmentDTO);
         Task<bool> ApproveAppointment(ApproveAppointmentDTO approveAppointmentDTO);
