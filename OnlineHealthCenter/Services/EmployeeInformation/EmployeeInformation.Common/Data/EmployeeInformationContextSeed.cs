@@ -27,7 +27,7 @@ namespace EmployeeInformation.Common.Data
             {
                 new Doctor
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("bf248cb4-863d-4858-b551-54a1e5fba068"),
                     FirstName = "Alan",
                     LastName = "Stern",
                     MedicalSpecialty = "Cardiology",
@@ -36,9 +36,11 @@ namespace EmployeeInformation.Common.Data
                     ImageFile = "alan-stern.png",
                     Mark = 0
                 },
+                
+
                 new Doctor
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("d483510e-a3c2-4d00-8d6a-de860ab61deb"),
                     FirstName = "David",
                     LastName = "Sowa",
                     MedicalSpecialty = "Gynecology",
@@ -47,9 +49,10 @@ namespace EmployeeInformation.Common.Data
                     ImageFile = "david-sowa.png",
                     Mark = 0
                 },
+                
                 new Doctor
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("c5f4078f-67ae-4588-a60b-63a7ad56196e"),
                     FirstName = "George",
                     LastName = "Green",
                     MedicalSpecialty = "Pulmonology",
@@ -58,20 +61,10 @@ namespace EmployeeInformation.Common.Data
                     ImageFile = "george-green.png",
                     Mark = 0
                 },
+                
                  new Doctor
                 {
-                    Id = Guid.NewGuid(),
-                    FirstName = "Edward",
-                    LastName = "Fry",
-                    MedicalSpecialty = "Cardiology",
-                    Title = "Specialist",
-                    Biography = "Edward Fry, MD, FACC, attended medical school at Washington University School of Medicine in St. Louis and completed his residency in internal medicine at Barnes-Jewish Hospital. He completed a two-year cardiovascular research fellowship focused on pharmacokinetics/pharmacodynamics of native and genetically modified plasminogen activators. He also completed a general cardiology fellowship at Washington University, where he then served as assistant professor and medical director of the cardiac transplant program before completing an interventional cardiology fellowship at Ascension St. Vincent Hospital – Indianapolis.",
-                    ImageFile = "edward-fry.png",
-                    Mark = 0
-                },
-                 new Doctor
-                {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("35fa1299-dd73-43dd-860f-1c876b283bef"),
                     FirstName = "Hadley",
                     LastName = "Wilson",
                     MedicalSpecialty = "Cardiology",
@@ -80,32 +73,29 @@ namespace EmployeeInformation.Common.Data
                     ImageFile = "hadley-wilson.png",
                     Mark = 0
                  }
+                
             };
+                
         }
         private static IEnumerable<Nurse> NursePreconfigured()
         {
             return new List<Nurse>
             {
+                
                 new Nurse
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("91bdb681-3c97-490d-9333-b670838abe52"),
                     FirstName = "Anna",
                     LastName = "Green",
                     ImageFile = "anna-green.png"
                 },
+
                 new Nurse
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("6fa5502f-db30-491f-a87a-573113096f09"),
                     FirstName = "Rachel",
                     LastName = "Gray",
                     ImageFile = "rachel-gray.png"
-                },
-                new Nurse
-                {
-                    Id = Guid.NewGuid(),
-                    FirstName = "Page",
-                    LastName = "Jones",
-                    ImageFile = "page-jones.png"
                 }
             };
         }
