@@ -1,5 +1,5 @@
 ﻿using Ordering.Domain.Common;
-using Scheduling.Domain.Enums;
+using Appointments.Domain.Enums;
 
 namespace Appointments.Domain.ValueObjects
 {

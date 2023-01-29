@@ -49,9 +49,14 @@ namespace Appointments.API.Controllers
         [HttpPost]
         [Route("[action]")]
         [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateAppointment([FromBody] CreateAppointmentDTO createAppointmentDTO)
         {
-            //TODO: Before creating, check whether the object already exists in the database
+            bool canCreateAppointent = await this.repository.CheckCreateAppointmentRequestValidity(createAppointmentDTO);
+
+            if (!canCreateAppointent)
+                return BadRequest();
+            
             await this.repository.CreateAppointment(createAppointmentDTO);
             return Ok();
         }
@@ -59,10 +64,8 @@ namespace Appointments.API.Controllers
         [Route("[action]")]
         [HttpPut]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        //TODO: Apply [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<bool>> ApproveAppointment([FromBody] ApproveAppointmentDTO approveAppointmentDTO)
         {
-            //TODO: add existence checks
             bool approveAction = await this.repository.ApproveAppointment(approveAppointmentDTO);
             return Ok(approveAction);
         }
@@ -70,10 +73,8 @@ namespace Appointments.API.Controllers
         [Route("[action]")]
         [HttpPut]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        //TODO: Apply [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<bool>> CancelAppointment([FromBody] CancelAppointmentDTO cancelAppointmentDTO)
         {
-            //TODO: add existence checks
             bool approveActionResult = await this.repository.CancelAppointment(cancelAppointmentDTO);
             return Ok(approveActionResult);
         }
@@ -81,10 +82,8 @@ namespace Appointments.API.Controllers
         [Route("[action]")]
         [HttpDelete]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        //TODO: Apply [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<bool>> DeleteAppointment(string appointmentId)
         {
-            //TODO: add existence checks 
             bool deleteResultAction = await this.repository.DeleteAppointment(appointmentId);
             return Ok(deleteResultAction);
         }

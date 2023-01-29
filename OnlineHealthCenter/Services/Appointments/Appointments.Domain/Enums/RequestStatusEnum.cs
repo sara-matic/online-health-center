@@ -1,4 +1,4 @@
-﻿namespace Scheduling.Domain.Enums
+﻿namespace Appointments.Domain.Enums
 {
     public enum RequestStatusEnum
     {

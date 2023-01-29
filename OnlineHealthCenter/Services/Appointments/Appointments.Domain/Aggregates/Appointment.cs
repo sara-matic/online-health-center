@@ -1,7 +1,7 @@
 ﻿using Appointments.Domain.Common;
 using Appointments.Domain.ValueObjects;
-using Scheduling.Domain.Enums;
-using Scheduling.Domain.Exceptions;
+using Appointments.Domain.Enums;
+using Appointments.Domain.Exceptions;
 
 namespace Appointments.Domain.Aggregates
 {
@@ -49,10 +49,10 @@ namespace Appointments.Domain.Aggregates
         public void ApplyDiscount(int discountAmoundInPercentage)
         {
             if (this.InitialPrice == null)
-                throw new SchedulingDomainException("A discount cannot be applied because the initial price of the appointment has not been determined (null).");
+                throw new AppointmentsDomainException("A discount cannot be applied because the initial price of the appointment has not been determined (null).");
 
             if (discountAmoundInPercentage < 0 || discountAmoundInPercentage > 100)
-                throw new SchedulingDomainException("The Discount percentage amound is out of range [0, 100].");
+                throw new AppointmentsDomainException("The Discount percentage amound is out of range [0, 100].");
 
             this.InitialPrice = (int)((1.0f - discountAmoundInPercentage / 100.0f) * this.InitialPrice.Value);
         }
