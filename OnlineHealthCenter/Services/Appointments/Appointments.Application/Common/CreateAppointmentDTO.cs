@@ -1,4 +1,4 @@
-﻿using Scheduling.Domain.Enums;
+﻿using Appointments.Domain.Enums;
 
 namespace Appointments.Application.Common.DTOs
 {
