@@ -7,7 +7,6 @@ using MongoDB.Driver;
 
 namespace Discount.Common.Repositories
 {
-    //TODO: Use AutoMapper instade using CouponDTO ctor directly
     internal class DiscountsRepository : IDiscountsRepository
     {
         private readonly IDiscountsContext context;

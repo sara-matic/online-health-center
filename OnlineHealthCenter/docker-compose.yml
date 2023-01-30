@@ -55,6 +55,12 @@ services:
       context: .
       dockerfile: Services/Appointments/Appointments.API/Dockerfile
 
+  discounts.grpc:
+    image: ${DOCKER_REGISTRY-}discountsgrpc
+    build:
+      context: .
+      dockerfile: Services/Discounts/Discounts.GRPC/Dockerfile
+
 volumes:
   mongo_data:
   mssql_data:
