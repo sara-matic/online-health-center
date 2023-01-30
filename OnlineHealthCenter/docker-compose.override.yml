@@ -115,3 +115,13 @@ services:
     ports:
       - "8005:80"
 
+  discounts.grpc:
+    container_name: discounts.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://mongodbcontainer:27017"
+    depends_on:
+      - mongodbcontainer
+    ports:
+      - "8006:80"
+

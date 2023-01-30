@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+option csharp_namespace = "Discounts.GRPC.Protos";
+
+service DiscountsProtoService 
+{
+	rpc GetDiscounts (GetDiscountsRequest) returns (GetDiscountsResponse);
+	rpc GetDiscuntAmount (GetDiscoutAmountRequest) returns (GetDiscoutAmountResponse);
+	rpc DeleteDiscountAfterUsing (DeleteDiscountRequest) returns (DeleteDiscountResponse);
+}
+
+message GetDiscountsRequest 
+{
+	string patientId = 1;
+}
+
+message GetDiscountsResponse
+{
+	message Coupon
+	{
+		string speciality = 1;
+		int32 amountInPercentage = 2;
+	}
+
+	repeated Coupon coupons = 1;
+}
+
+message GetDiscoutAmountRequest
+{
+	string patientId = 1;
+	string speciality = 2;
+}
+
+message GetDiscoutAmountResponse
+{
+	int32 amountInPercentage = 1;
+}
+
+message DeleteDiscountRequest
+{
+	string patientId = 1;
+	string speciality = 2;
+}
+
+message DeleteDiscountResponse
+{
+	bool successfullyDeleted = 1;
+}
