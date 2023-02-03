@@ -1,6 +1,9 @@
-﻿using Appointments.Application.Common.DTOs;
+﻿using Appointments.API.GrpcServices;
+using Appointments.Application.Common.DTOs;
 using Appointments.Application.Persistance;
 using Appointments.Domain.Aggregates;
+using Appointments.Domain.Exceptions;
+using Grpc.Core;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Appointments.API.Controllers
@@ -10,10 +13,14 @@ namespace Appointments.API.Controllers
     public class AppointmentsController : ControllerBase
     {
         private readonly IAppointmentRepository repository;
+        private readonly ILogger logger;
+        private readonly DiscountsGRPCService discountsGRPCService;
 
-        public AppointmentsController(IAppointmentRepository repository)
+        public AppointmentsController(IAppointmentRepository repository, DiscountsGRPCService discountsGRPCService, ILogger<AppointmentsController> logger)
         {
             this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
+            this.discountsGRPCService = discountsGRPCService ?? throw new ArgumentNullException(nameof(discountsGRPCService));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpGet]
@@ -87,5 +94,47 @@ namespace Appointments.API.Controllers
             bool deleteResultAction = await this.repository.DeleteAppointment(appointmentId);
             return Ok(deleteResultAction);
         }
+
+        #region Requests Implemented using GRPC
+
+        [Route("[action]/{patientId}/{specialty}")]
+        [HttpPut]
+        [ProducesResponseType(typeof(bool?), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<bool>> ApplyDiscountAmount(string patientId, string specialty)
+        {
+            Discounts.GRPC.Protos.GetDiscoutAmountResponse? getAmountResponse;
+
+            try
+            {
+                getAmountResponse = await this.discountsGRPCService.GetDiscuntAmount(patientId, specialty);
+
+                if (getAmountResponse == null)
+                    return NotFound();
+
+                var newAppointmentPrice = await this.repository.ApplyDiscount(new ApplyAppointmentDiscountDTO { PatientId = patientId, Specialty = specialty, AmountInPercentage = getAmountResponse.AmountInPercentage });
+                
+                var deleteDiscountResponse = await this.discountsGRPCService.DeleteDiscountAfterUsing(patientId, specialty);
+
+                return Ok(deleteDiscountResponse?.SuccessfullyDeleted);
+            }
+            catch (RpcException)
+            {
+                this.logger.LogInformation("GRPC Exception: while fetching the discount amount or deleting Coupon from Discounts Service.");
+                return BadRequest();
+            }
+            catch (AppointmentsDomainException e)
+            {
+                this.logger.LogInformation(e.Message);
+                return BadRequest();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        #endregion
     }
 }

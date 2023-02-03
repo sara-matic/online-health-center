@@ -13,5 +13,6 @@ namespace Appointments.Application.Persistance
         Task<bool> CancelAppointment(CancelAppointmentDTO cancelAppointmentDTO);
         Task<bool> DeleteAppointment(string AppointmentId);
         Task<bool> CheckCreateAppointmentRequestValidity(CreateAppointmentDTO createAppointmentDTO);
+        Task<int?> ApplyDiscount(ApplyAppointmentDiscountDTO applyAppointmentDiscountDTO);
     }
 }

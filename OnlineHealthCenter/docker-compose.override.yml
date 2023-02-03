@@ -110,8 +110,10 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "DatabaseSettings:ConnectionString=Server=postgresdb;Port=5432;Database=AppointmentsDb;User Id=admin;Password=healthCENTER1997;"
+      - "GrpcSettings:DiscountsUrl=http://discounts.grpc"
     depends_on:
       - postgresdb 
+      - discounts.grpc
     ports:
       - "8005:80"
 
