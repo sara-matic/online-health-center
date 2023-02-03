@@ -1,6 +1,6 @@
 ﻿namespace Appointments.Application.Common.DTOs
 {
-    public class CancelAppointmentDTO : AppointmentBaseDTO
+    public class CancelAppointmentDTO : AppointmentIdentityBaseDTO
     {
     }
 }

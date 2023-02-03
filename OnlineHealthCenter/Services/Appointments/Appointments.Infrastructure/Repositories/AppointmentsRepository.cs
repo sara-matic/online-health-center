@@ -62,13 +62,14 @@ namespace Appointments.Infrastructure.Repositories
             {
                 var result = await connecton
                     .ExecuteAsync("INSERT INTO Appointments" +
-                    "(AppointmentId, DoctorId, PatientId, AppointmentTime, AppointmentRequestStatus, InitialPrice, RequestCreatedBy, RequestCreatedTime)" +
-                    "VALUES(@AppointmentId, @DoctorId, @PatientId, @AppointmentTime, @AppointmentRequestStatus, @InitialPrice, @RequestCreatedBy, @RequestCreatedTime)",
+                    "(AppointmentId, DoctorId, PatientId, Specialty, AppointmentTime, AppointmentRequestStatus, InitialPrice, RequestCreatedBy, RequestCreatedTime)" +
+                    "VALUES(@AppointmentId, @DoctorId, @PatientId, @Specialty, @AppointmentTime, @AppointmentRequestStatus, @InitialPrice, @RequestCreatedBy, @RequestCreatedTime)",
                     new
                     {
                         AppointmentId = createAppointmentDTO.AppointmentId,
                         DoctorId = createAppointmentDTO.DoctorId,
                         PatientId = createAppointmentDTO.PatientId,
+                        Specialty = createAppointmentDTO.Specialty,
                         AppointmentTime = AppointmentsTimeUtility.GetCommonDateTimeFormat(createAppointmentDTO.AppointmentTime),
                         InitialPrice = createAppointmentDTO.InitialPrice,
                         RequestCreatedBy = createAppointmentDTO.RequestCreatedBy,
@@ -129,8 +130,23 @@ namespace Appointments.Infrastructure.Repositories
 
                 return rowsCount == 0;
             }
-
         }
 
+        public async Task<int?> ApplyDiscount(ApplyAppointmentDiscountDTO applyAppointmentDiscountDTO)
+        {
+            using (var connection = this.context.GetConnection())
+            {
+                var appointment = await connection
+                 .QueryFirstAsync<Appointment>("SELECT * FROM Appointments WHERE PatientId = @PatientId AND Specialty = @Specialty",
+                 new { PatientId = applyAppointmentDiscountDTO.PatientId, Specialty = applyAppointmentDiscountDTO.Specialty });
+
+                appointment.ApplyDiscount(applyAppointmentDiscountDTO.AmountInPercentage);
+
+                int rowsAffected = await connection.ExecuteAsync("UPDATE Appointments SET InitialPrice = @InitialPrice WHERE PatientId = @PatientId AND Specialty = @Specialty",
+                   new { PatientId = applyAppointmentDiscountDTO.PatientId, Specialty = appointment.Specialty, InitialPrice = appointment.InitialPrice });
+
+                return appointment.InitialPrice;
+            }
+        }
     }
 }

@@ -1,8 +1,14 @@
+using Appointments.API.GrpcServices;
 using Appointments.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAppointmentsInfrastructureServices();
+
+//grpc
+builder.Services.AddGrpcClient<Discounts.GRPC.Protos.DiscountsProtoService.DiscountsProtoServiceClient>(
+    options => options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountsUrl"]));
+builder.Services.AddScoped<DiscountsGRPCService>();
 
 builder.Services.AddControllers();
 
