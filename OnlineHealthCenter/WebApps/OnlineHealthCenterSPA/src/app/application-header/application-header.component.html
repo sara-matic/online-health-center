@@ -1,0 +1,15 @@
+<div class = "app-header">    
+    <img class="icon" src="./icon.png"> 
+    <div class = "company-name">Online Health Center</div>
+    <button class="login-button" (click) = "onLoginButtonClick()" id = "login-button">Login/Register</button>
+    <div class = "bounding-rectangle"></div>
+    <div class = "options-bar">
+        <button class="rout-button"  id = "start-page" [routerLink]="['']">Start Page</button>
+        <button class="rout-button"  id = "request-appointment-button" [routerLink]="['appointments']">Request Appointment</button>
+        <button class="rout-button"  id = "schedule-appointments" [routerLink]="['appointments']">Schedule</button>
+        <button class="rout-button"  id = "show-reports" [routerLink]="['']">Show Reports</button>
+        <button class="rout-button"  id = "create-report" [routerLink]="['']">Create Report</button>
+        <button class="rout-button"  id = "leave-impression" [routerLink]="['']">Leave Impression</button>
+    </div>
+    <router-outlet></router-outlet>
+</div> 

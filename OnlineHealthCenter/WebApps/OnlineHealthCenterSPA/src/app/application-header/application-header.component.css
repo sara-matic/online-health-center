@@ -1,0 +1,98 @@
+.app-header
+{
+    position: absolute; 
+    left: 0px;
+    width: 100%;
+    height: 60px;
+
+    background-color: darkcyan;
+}
+
+.icon
+{
+    width: 56px;
+    height: 56px;
+    margin-top: 2px;
+    margin-left: 2px;
+
+    background-color: darkcyan;
+    background-image: image(url('icon.png'));
+}
+
+.company-name
+{
+    position: absolute;
+    top: 7px;
+    left: 65px;
+    width: fit-content;
+    height: fit-content;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 30px;
+
+    background-color: darkcyan;
+    color: rgb(15, 66, 65);
+}
+
+.login-button
+{
+    position: absolute;
+    right: 5px;
+    width: 120px;
+    height: 50px;
+    margin-top: 5px;
+    margin-left: 2px;
+
+    border: none;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 13px;
+    font-style: bold;
+
+    background-color: rgb(100, 167, 167);
+    color: white;
+}
+
+.rout-button
+{
+    position: relative;
+    left: 2px;
+    width: 160px;
+    height: 50px;
+    margin-top: 2px;
+    margin-left: 5px;
+
+    border: none;
+    
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 13px;
+
+    background-color: rgb(100, 167, 167);
+    color: white;
+}
+
+.bounding-rectangle
+{
+    position: absolute;
+    top: 2px;
+    right: 125px;
+    width: 3px;
+    height: 56px;
+
+    background-color: rgb(29, 100, 99);
+}
+
+.options-bar
+{
+    position: absolute;
+    top:0px;
+    left: 390px;
+    width: 1020px;
+    height: 60px;
+    
+    border: solid, 1px;
+    border-style: solid;
+
+    background-color: darkcyan;
+    border-color:  rgb(29, 100, 99);;
+} 
