@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { IApointmentTime } from 'src/app/appointments/domain/appointmentTimeEntity';
-import { IDoctorEntity } from 'src/app/appointments/domain/doctor-entity';
+import { IDoctorEntity } from 'src/app/appointments/domain/doctorEntity';
 
 interface IRequestFormData
 {
