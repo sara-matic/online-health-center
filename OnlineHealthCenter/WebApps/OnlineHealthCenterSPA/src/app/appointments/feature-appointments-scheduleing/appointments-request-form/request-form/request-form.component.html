@@ -1,0 +1,39 @@
+<h3 class="naslov">Please fill in the formular: </h3>
+
+<br>
+
+<form [formGroup]="requestForm" (ngSubmit)="onRequestSubmit()">
+    <div class = "form-group">
+        <label class = "form-label">Choose doctor:</label>
+        <select formControlName="doctor" class="form-control" class = "dropdown" (change)="onSelectionChanged()">
+            <option value="" disabled selected>*Please select your option</option>
+            <option *ngFor= "let doctor of doctors" value="{{doctor.id}}">({{doctor.specialty}}) {{doctor.title}} {{doctor.firstName}} {{doctor.lastName}}</option>
+        </select>
+    </div>
+
+    <br>
+
+    <div class = form-group>
+        <label class = "form-label">Choose appointment time:</label>
+        <select type="text" formControlName="appointmentTime" class="form-control" class = "dropdown">
+            <option value="" disabled selected>*Please select your option</option>
+            <option *ngFor= "let time of doctorTimes" value="{{time.time}}">{{time.time}}</option>
+        </select>
+    </div>
+
+    <br>
+
+    <div class = form-group>
+        <label class = "form-label">Insert patient ID:</label>
+        <input type="text" formControlName="patientID" class="form-control">
+    </div>
+
+    <div class = form-group>
+        <label class = "form-label">Initial price:</label>
+        <input type="text" formControlName="initialPrice" class="form-control" readonly>
+    </div>
+
+    <br>
+
+    <button type="submit" class="submit-button">Submit Request</button>
+</form>
