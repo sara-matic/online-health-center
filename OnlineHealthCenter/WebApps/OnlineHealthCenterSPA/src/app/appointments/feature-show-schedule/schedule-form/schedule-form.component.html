@@ -1,1 +1,72 @@
-<p>schedule-form works!</p>
+<br>
+
+<h3 class="title">List of appointments: </h3>
+
+<br>
+
+<div>
+    <form [formGroup]="scheduleForm">
+
+        <div class="form-group">
+            <label class="form-label">Your Appointments:</label>
+            <select formControlName="appointmentID" class="form-control" class="dropdown"(change)="onSelectionChanged()">
+                <option value="" disabled selected>*Please select your option</option>
+                <option *ngFor="let apt of appointments" value="{{apt.appointmentID}}">({{apt.doctor}}) {{apt.patientName}}, {{apt.appointmentTime}}</option>
+            </select>
+        </div>
+
+        <br>
+
+        <div class="details">
+
+            <div class=form-group>
+                <label class="form-label">Patient Name:</label>
+                <input type="text" formControlName="patientName" class="form-control" readonly value="{{appointment?.patientName}}">
+            </div>
+
+            <br>
+
+            <div class=form-group>
+                <label class="form-label">Doctors Name:</label>
+                <input type="text" formControlName="doctor" class="form-control" readonly value="{{appointment?.doctor}}">
+            </div>
+
+            <br>
+
+            <div class=form-group>
+                <label class="form-label">Appointment time:</label>
+                <input type="text" formControlName="appointmentTime" class="form-control" readonly value="{{appointment?.appointmentTime}}">
+            </div>
+
+            <br>
+
+            <div class=form-group>
+                <label class="form-label">Appointment status:</label>
+                <input type="text" formControlName="requestStatus" class="form-control" readonly value="{{appointment?.appointmentStatus}}">
+            </div>
+
+            <br>
+
+            <div class=form-group>
+                <label class="form-label">Initial price:</label>
+                <input type="text" formControlName="initialPrice" class="form-control" readonly value="{{appointment?.initialPrice}}">
+            </div>
+
+            <br>
+
+            <div class=form-group>
+                <label class="form-label">Available discunt: </label>
+                <input type="text" formControlName="discount" class="form-control" readonly value="{{appointment?.discount}}">
+            </div>
+
+            <br>
+
+            <div>
+                <button class="button-cancel" id="cancel" (click)="onAppointmentCancelationRequested()">Cancel appointment</button>
+                <button class="button-apply-discount">Apply discount</button>
+                <button class="button-approve">Approve appointment</button>
+            </div>
+        </div>
+        
+    </form>
+</div>
