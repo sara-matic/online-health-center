@@ -1,0 +1,63 @@
+.title
+{
+    color: rgb(29, 100, 99);
+}
+
+.dropdown
+{
+    position: absolute;
+    left: 155px;
+    width: 580px;
+    height: 40px;
+
+    color: white;
+    background-color: rgb(100, 167, 167);
+}
+
+.details
+{
+    position: absolute;
+    left: 5px;
+    width: 730px;
+
+    border: solid, 1px;
+    border-style: solid;
+
+    border-color:  rgb(29, 100, 99);
+}
+
+.button-cancel
+{
+    position: relative;
+    left: 3px;
+    bottom: 3px;
+    
+    border: none;
+
+    color: white;
+    background-color: darkcyan;
+}
+
+.button-apply-discount
+{
+    position: relative;
+    left: 10px;
+    bottom: 3px;
+    
+    border: none;
+
+    color: white;
+    background-color: darkcyan;   
+}
+
+.button-approve
+{
+    position: absolute;
+    left: 550px;
+    bottom: 3px;
+    
+    border: none;
+
+    color: white;
+    background-color: darkcyan;   
+}
