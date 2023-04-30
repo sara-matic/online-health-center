@@ -8,6 +8,7 @@ interface IRequestFormData
   doctor: string;
   patientID: string;
   initialPrice: number;
+  appointmentDate: Date;
   appointmentTime: string;
 }
 
@@ -36,6 +37,7 @@ export class RequestFormComponent {
         doctor: new FormControl(''),
         patientID: new FormControl(''),
         initialPrice: new FormControl(''),
+        appointmentDate: new FormControl(''),
         appointmentTime: new FormControl('')
       }
     );
@@ -49,7 +51,7 @@ export class RequestFormComponent {
       return;
 
     window.confirm(
-      "\nPatient ID: " + data.patientID + "\nDoctor: " + data.doctor + "\nAppointment time: " + data.appointmentTime + "\nInitial price: " + data.initialPrice
+      "\nPatient ID: " + data.patientID + "\nDoctor: " + data.doctor + "\nAppointment date: " + new Date(data.appointmentDate).toLocaleDateString() + "\nAppointment time: " + data.appointmentTime + "\nInitial price: " + data.initialPrice
       + "\n\nClick OK to confirm request or Cancel it."
       );
   }
@@ -57,7 +59,7 @@ export class RequestFormComponent {
   public onSelectionChanged(): void
   {
     //Hard coded data:
-    this.doctorTimes = [{time: "time11"}, {time: "time21"}, {time: "time31"}];  
+    this.doctorTimes = [{time: new Date('Monday, June 15, 2023 1:45 PM').toLocaleTimeString()}, {time: new Date('Monday, June 15, 2023 2:30 PM').toLocaleTimeString()}, {time: new Date('Monday, June 15, 2023 5:45 PM').toLocaleTimeString()}];  
   }
 
   private pageDataIsValid(data: IRequestFormData): boolean
@@ -65,6 +67,12 @@ export class RequestFormComponent {
     if (data.doctor == null || data.doctor.length == 0)
     {
       window.alert("Please choose doctor in order to continue.");
+      return false;
+    }
+
+    if (data.appointmentDate == null)
+    {
+      window.alert("Please select appointment date in order to continue.");
       return false;
     }
 
