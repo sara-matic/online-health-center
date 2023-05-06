@@ -19,3 +19,16 @@
     color: white;
     background-color: rgb(100, 167, 167);
 }
+
+.control-group
+{
+    position: absolute;
+    left: 5px;
+
+    width: 750px;
+
+    border: solid, 1px;
+    border-style: solid;
+
+    border-color:  rgb(29, 100, 99);
+}
