@@ -1,0 +1,27 @@
+.title
+{
+    color: rgb(29, 100, 99);
+}
+
+.dropdown
+{
+    position: absolute;
+    left: 210px;
+    width: 500px;
+    height: 40px;
+
+    color: white;
+    background-color: rgb(100, 167, 167);
+}
+
+.information
+{
+    position: absolute;
+    left: 5px;
+    width: 730px;
+
+    border: solid, 1px;
+    border-style: solid;
+
+    border-color:  rgb(29, 100, 99);
+}
