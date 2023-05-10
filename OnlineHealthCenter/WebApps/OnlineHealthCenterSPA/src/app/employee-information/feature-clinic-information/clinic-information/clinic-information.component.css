@@ -1,0 +1,9 @@
+.information
+{
+    text-align: center;
+    margin: 10px;
+    border: solid, 1px;
+    border-style: solid;
+
+    border-color:  rgb(29, 100, 99);
+}
