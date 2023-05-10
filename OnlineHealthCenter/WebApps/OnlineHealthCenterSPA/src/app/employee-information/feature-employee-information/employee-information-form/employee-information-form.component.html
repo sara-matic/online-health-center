@@ -57,6 +57,21 @@
                 <label class = "form-label">Mark:</label>
                 <input type="text" formControlName="mark" class="form-control" readonly value="{{doctor?.mark}}">
             </div>
+
+            <br>
+
+            <div class = "impressions">
+                <label>Impressions:</label> 
+                <div *ngFor="let i of impressions">
+                    <br>
+                    <div class = "impression">
+                    Headline: {{i.headline}} <br>
+                    Content: {{i.content}} <br>
+                    Mark: {{i.mark}} 
+                    </div>
+                </div>
+            </div>
+            
         </div>
     </form>
 </div>
