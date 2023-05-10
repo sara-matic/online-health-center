@@ -11,6 +11,13 @@ interface IEmployeeInformationFormData {
   mark: number;
 }
 
+interface IImpressionData {
+  id: string;
+  headline: string
+  content: string
+  mark: number
+}
+
 @Component({
   selector: 'app-employee-information-form',
   templateUrl: './employee-information-form.component.html',
@@ -25,7 +32,12 @@ export class EmployeeInformationFormComponent {
   {id: "3", firstName: "Doctor", "lastName": "3", specialty: "Cardilology", title: "Primarius", biography: "Molly Nathanson MSN, CNM is originally from Massachusetts where she attended Brandeis University for her undergraduate degrees in Health.", mark: 10},
   {id: "4", firstName: "Doctor", "lastName": "4", specialty: "Cardilology", title: "Full Professor && Specialist", biography: "Pamela S. Haskins, CNM is originally from Springfield, MA. She received her nursing degree from Burbank Hospital School of Nursing in Fitchburg, MA", mark: 9}];
 
+  public allImpressions: Array<IImpressionData> = [{id: "1", headline: "Nice experience", content: "Doctor was very nice and kind", mark: 9},
+  {id: "1", headline: "Very good", content: "Doctor was really patient and calm, I had the best experience", mark: 10},
+  {id: "2", headline: "Amazing!", content: "Exam was really great", mark: 9}];
+
   public doctor? : IEmployeeInformationFormData;
+  public impressions? : IImpressionData[];
 
   constructor() {
 
@@ -46,7 +58,9 @@ export class EmployeeInformationFormComponent {
   {
       const data: IEmployeeInformationFormData = this.EmployeeInformationForm.value as IEmployeeInformationFormData;
       this.doctor = this.doctors.filter(d => d.id == data.id)[0]
-      
+      this.impressions = this.allImpressions.filter(imp => imp.id == data.id)
   }
+
+
 
 }
