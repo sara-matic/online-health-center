@@ -8,8 +8,10 @@ interface IScheduleFormData {
   appointmentID: string;
   doctor: string;
   patientName: string;
+  patientId: string;
   initialPrice: number;
   appointmentTime: string;
+  appointmentTimeOriginalFormat: string;
   discount?: number;
   appointmentStatus?: string;
 }
@@ -60,8 +62,10 @@ export class ScheduleFormComponent {
       const appointmentUIData: IScheduleFormData = { appointmentID: entity.appointmentId,
       doctor: "dr NN" + "-" + entity.specialty,
       patientName: "NN",
+      patientId: entity.patientId,
       initialPrice: entity.initialPrice,
       appointmentTime: new Date(entity.appointmentTime).toLocaleString(),
+      appointmentTimeOriginalFormat: entity.appointmentTime.toString(),
       discount: 0,
       appointmentStatus: new AppointmentRequestStatus(entity.appointmentRequestStatus.requestStatus).getRequestStatusDescription()}
 
@@ -84,7 +88,13 @@ export class ScheduleFormComponent {
     }
 
     if (window.confirm("Do you really want to cancel this appointment?\n\n Click OK to confirm or cancel to go back.")) {
-      //TODO
+      this.service.cancelAppointment(this.selectedAppointment.patientId, this.selectedAppointment.appointmentTimeOriginalFormat).subscribe(
+        (successfully: boolean) => {
+          if (successfully)
+            window.alert("Appointment has been canceled!");
+          else
+            window.alert("Something went wrong.\nPlease try again.");
+        });
     }
   }
 
@@ -95,6 +105,18 @@ export class ScheduleFormComponent {
 
   public onApproveRequested(): void
   {
-    window.alert("TODO");
+    if (this.selectedAppointment == null || this.selectedAppointment.appointmentTime.length == 0 || this.selectedAppointment.appointmentID.length ==0)
+    {
+      window.alert("You must select valid appointment!");
+      return;
+    }
+
+    this.service.approveAppointment(this.selectedAppointment.patientId, this.selectedAppointment.appointmentTimeOriginalFormat).subscribe(
+      (successfully: boolean) => {
+        if (successfully)
+          window.alert("Appointment has been approved!");
+        else
+          window.alert("Something went wrong.\nPlease try again.");
+      });
   }
 }

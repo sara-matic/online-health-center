@@ -15,4 +15,14 @@ export class AppointmentsFascadeService {
   {
     return this.appointmentsService.getAppointmentsByPatientId(patientId);
   }
+
+  public approveAppointment(patientId: string, appointmentTime: string): Observable<boolean>
+  {
+    return this.appointmentsService.approveAppointment(patientId, appointmentTime);
+  }
+
+  public cancelAppointment(patientId: string, appointmentTime: string): Observable<boolean>
+  {
+    return this.appointmentsService.cancelAppointment(patientId, appointmentTime);
+  }
 }
