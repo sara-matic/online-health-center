@@ -17,48 +17,31 @@
         <br>
     
         <div class="information">
-    
-            <div class = form-group>
-                <label class = "form-label">First Name:</label>
-                <input type="text" formControlName="firstName" class="form-control" readonly value="{{doctor?.firstName}}">
-            </div>
-            
-            <br>
 
-            <div class = form-group>
-                <label class = "form-label">Last Name:</label>
-                <input type="text" formControlName="lastName" class="form-control" readonly value="{{doctor?.lastName}}">
-            </div>
+            <label>Name:</label>
+            {{doctor?.firstName}} {{doctor?.lastName}}
 
             <br>
-    
-            <div class = form-group>
-                <label class = "form-label">Tilte:</label>
-                <input type="text" formControlName="title" class="form-control" readonly value="{{doctor?.title}}">
-            </div>
-    
-            <br>
-    
-            <div class = form-group>
-                <label class = "form-label">Specialty:</label>
-                <input type="text" formControlName="specialty" class="form-control" readonly value="{{doctor?.specialty}}">
-            </div>
-    
-            <br>
-    
-            <div class = form-group>
-                <label class = "form-label">Biography:</label>
-                <input type="text" formControlName="biography" class="form-control" readonly value="{{doctor?.biography}}">
-            </div>
-    
-            <br>
-    
-            <div class = form-group>
-                <label class = "form-label">Mark:</label>
-                <input type="text" formControlName="mark" class="form-control" readonly value="{{doctor?.mark}}">
-            </div>
+
+            <label>Title:</label>
+            {{doctor?.title}}
 
             <br>
+
+            <label>Specialty:</label>
+            {{doctor?.specialty}}
+
+            <br>
+
+            <label>Biography:</label>
+            {{doctor?.biography}}
+
+            <br>
+
+            <label>Mark:</label>
+            {{doctor?.mark}}
+
+            <hr>
 
             <div class = "impressions">
                 <label>Impressions:</label> 
