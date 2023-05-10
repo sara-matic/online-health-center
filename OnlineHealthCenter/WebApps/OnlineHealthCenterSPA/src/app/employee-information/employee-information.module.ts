@@ -3,15 +3,19 @@ import { CommonModule } from '@angular/common';
 
 import { EmployeeInformationRoutingModule } from './employee-information-routing.module';
 import { EmployeeInformationComponent } from './employee-information.component';
+import { EmployeeInformationFormComponent } from './feature-employee-information/employee-information-form/employee-information-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
-    EmployeeInformationComponent
+    EmployeeInformationComponent,
+    EmployeeInformationFormComponent
   ],
   imports: [
     CommonModule,
-    EmployeeInformationRoutingModule
+    EmployeeInformationRoutingModule,
+    ReactiveFormsModule
   ]
 })
 export class EmployeeInformationModule { }
