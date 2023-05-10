@@ -11,7 +11,7 @@
             <label class="form-label">Your Appointments:</label>
             <select formControlName="appointmentID" class="form-control" class="dropdown"(change)="onSelectionChanged()">
                 <option value="" disabled selected>*Please select your option</option>
-                <option *ngFor="let apt of appointments" value="{{apt.appointmentID}}">({{apt.doctor}}) {{apt.patientName}}, {{apt.appointmentTime}}</option>
+                <option *ngFor="let apt of appointmentsCollection" value="{{apt.appointmentID}}">({{apt.doctor}}) {{apt.patientName}}, {{apt.appointmentTime}}</option>
             </select>
         </div>
 
@@ -21,50 +21,50 @@
 
             <div class=form-group>
                 <label class="form-label">Patient Name:</label>
-                <input type="text" formControlName="patientName" class="form-control" readonly value="{{appointment?.patientName}}">
+                <input type="text" formControlName="patientName" class="form-control" readonly value="{{selectedAppointment?.patientName}}">
             </div>
 
             <br>
 
             <div class=form-group>
                 <label class="form-label">Doctors Name:</label>
-                <input type="text" formControlName="doctor" class="form-control" readonly value="{{appointment?.doctor}}">
+                <input type="text" formControlName="doctor" class="form-control" readonly value="{{selectedAppointment?.doctor}}">
             </div>
 
             <br>
 
             <div class=form-group>
                 <label class="form-label">Appointment time:</label>
-                <input type="text" formControlName="appointmentTime" class="form-control" readonly value="{{appointment?.appointmentTime}}">
+                <input type="text" formControlName="appointmentTime" class="form-control" readonly value="{{selectedAppointment?.appointmentTime}}">
             </div>
 
             <br>
 
             <div class=form-group>
                 <label class="form-label">Appointment status:</label>
-                <input type="text" formControlName="requestStatus" class="form-control" readonly value="{{appointment?.appointmentStatus}}">
+                <input type="text" formControlName="requestStatus" class="form-control" readonly value="{{selectedAppointment?.appointmentStatus}}">
             </div>
 
             <br>
 
             <div class=form-group>
                 <label class="form-label">Initial price:</label>
-                <input type="text" formControlName="initialPrice" class="form-control" readonly value="{{appointment?.initialPrice}}">
+                <input type="text" formControlName="initialPrice" class="form-control" readonly value="{{selectedAppointment?.initialPrice}}">
             </div>
 
             <br>
 
             <div class=form-group>
                 <label class="form-label">Available discunt: </label>
-                <input type="text" formControlName="discount" class="form-control" readonly value="{{appointment?.discount}}">
+                <input type="text" formControlName="discount" class="form-control" readonly value="{{selectedAppointment?.discount}}%">
             </div>
 
             <br>
 
             <div>
                 <button class="button-cancel" id="cancel" (click)="onAppointmentCancelationRequested()">Cancel appointment</button>
-                <button class="button-apply-discount">Apply discount</button>
-                <button class="button-approve">Approve appointment</button>
+                <button class="button-apply-discount" (click)="onApplyDiscountRequested()">Apply discount</button>
+                <button class="button-approve" (click)="onApproveRequested()">Approve appointment</button>
             </div>
         </div>
         
