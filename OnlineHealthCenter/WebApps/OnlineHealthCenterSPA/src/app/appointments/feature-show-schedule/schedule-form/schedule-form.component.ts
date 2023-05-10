@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AppointmentStatus } from '../../domain/appointment-status';
+import { FormControl, FormGroup } from '@angular/forms';
+import { AppointmentRequestStatus } from '../../domain/model/appointment-status';
+import { AppointmentsFascadeService } from '../../domain/application-services/appointments-fascade.service';
+import { IAppointmentEntity } from '../../domain/model/appointmentEntity';
 
-interface IScheduleFormData
-{
+interface IScheduleFormData {
   appointmentID: string;
   doctor: string;
   patientName: string;
   initialPrice: number;
   appointmentTime: string;
   discount?: number;
-  appointmentStatus: AppointmentStatus;
+  appointmentStatus?: string;
 }
 
 @Component({
@@ -22,17 +23,11 @@ export class ScheduleFormComponent {
   public scheduleForm: FormGroup;
 
   //Hard coded data:
-  public appointments: Array<IScheduleFormData> = [
-    {appointmentID: "1", doctor: "doctor 1", patientName: "patient 1", initialPrice:5500, appointmentTime: new Date('Monday, June 15, 2023 1:45 PM').toLocaleString(), discount: 30, appointmentStatus: AppointmentStatus.Approved},
-    {appointmentID: "2", doctor: "doctor 2", patientName: "patient 2", initialPrice:4700, appointmentTime: new Date('Tuesday, June 15, 2023 1:45 PM').toLocaleString(),  appointmentStatus: AppointmentStatus.WaitingForAnswer},
-    {appointmentID: "3", doctor: "doctor 3", patientName: "patient 3", initialPrice:3200, appointmentTime: new Date('Monday, June 8, 2023 1:45 PM').toLocaleString(), discount: 50,  appointmentStatus: AppointmentStatus.WaitingForAnswer},
-    {appointmentID: "4", doctor: "doctor 4", patientName: "patient 4", initialPrice:7000, appointmentTime: new Date('Friday, June 15, 2023 1:45 PM').toLocaleString(), discount: 20,  appointmentStatus: AppointmentStatus.Approved},
-  ];
+  public appointmentsCollection: Array<IScheduleFormData> = this.getAppointmentsByPatientId("8de0295d-75de-4bba-ade8-43abc66b3103"); //TODO: replace hard coded data with real patientId
 
-  public appointment?: IScheduleFormData;
+  public selectedAppointment?: IScheduleFormData;
 
-  constructor()
-  {
+  constructor(private service: AppointmentsFascadeService) {
     this.scheduleForm = new FormGroup(
       {
         appointmentID: new FormControl(''),
@@ -47,23 +42,59 @@ export class ScheduleFormComponent {
     );
   }
 
-  public onSelectionChanged(): void
+  private getAppointmentsByPatientId(patientID: string): Array<IScheduleFormData>
   {
-      const data: IScheduleFormData = this.scheduleForm.value as IScheduleFormData;
-      this.appointment = this.appointments.filter(apt => apt.appointmentID === data.appointmentID)[0];
+    this.service.getAppointmentsByPatientId(patientID).subscribe((appointments: Array<IAppointmentEntity>) => {
+      this.appointmentsCollection = this.getFormDataFromAppointmentEntities(appointments);
+    });
+
+    return this.appointmentsCollection;
+  } 
+
+  private getFormDataFromAppointmentEntities(entities: Array<IAppointmentEntity>): Array<IScheduleFormData>
+  {
+    var uiDataCollection = Array<IScheduleFormData>();
+
+    entities.forEach(entity => {
+
+      const appointmentUIData: IScheduleFormData = { appointmentID: entity.appointmentId,
+      doctor: "dr NN" + "-" + entity.specialty,
+      patientName: "NN",
+      initialPrice: entity.initialPrice,
+      appointmentTime: new Date(entity.appointmentTime).toLocaleString(),
+      discount: 0,
+      appointmentStatus: new AppointmentRequestStatus(entity.appointmentRequestStatus.requestStatus).getRequestStatusDescription()}
+
+      uiDataCollection.push(appointmentUIData);
+    });
+
+    return uiDataCollection;
   }
 
-  public onAppointmentCancelationRequested(): void 
-  {
-     if (this.appointment == null || this.appointment.appointmentID.length == 0)
-     {
+  public onSelectionChanged(): void {
+    const data: IScheduleFormData = this.scheduleForm.value as IScheduleFormData;
+    this.selectedAppointment = this.appointmentsCollection.filter(apt => apt.appointmentID === data.appointmentID)[0];
+  }
+
+  public onAppointmentCancelationRequested(): void {
+
+    if (this.selectedAppointment == null || this.selectedAppointment.appointmentID.length == 0) {
       window.alert("You must select valid appointment!");
       return;
-     }
+    }
 
-     if(window.confirm("Do you really want to cancel this appointment?\n\n Click OK to confirm or cancel to go back."))
-     {
+    if (window.confirm("Do you really want to cancel this appointment?\n\n Click OK to confirm or cancel to go back.")) {
       //TODO
-     }
+    }
+  }
+
+  public onApplyDiscountRequested(): void
+  {
+    window.alert("TODO");
+  }
+
+  public onApproveRequested(): void
+  {
+    window.alert("TODO");
   }
 }

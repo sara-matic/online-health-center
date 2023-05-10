@@ -85,14 +85,12 @@
 .options-bar
 {
     position: absolute;
-    top:0px;
-    left: 390px;
-    width: 1020px;
-    height: 60px;
-    
-    border: solid, 1px;
-    border-style: solid;
+    top:3px;
 
+    left: 390px;
+    width: 1010px;
+    height: 57px;
+    
     background-color: darkcyan;
     border-color:  rgb(29, 100, 99);
 } 
