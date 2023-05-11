@@ -5,9 +5,9 @@
 
 .dropdown
 {
-    position: absolute;
-    left: 210px;
-    width: 500px;
+    position: relative;
+    left: 10px;
+    width: 606px;
     height: 40px;
 
     color: white;
@@ -17,11 +17,22 @@
 .information
 {
     position: absolute;
-    left: 5px;
+    left: 50px;
     width: 730px;
 
     border: solid, 1px;
     border-style: solid;
 
     border-color:  rgb(29, 100, 99);
+}
+
+.chooser
+{
+    position: relative;
+    left: 50px;
+}
+
+.text
+{
+    color:rgb(29, 100, 99);
 }
