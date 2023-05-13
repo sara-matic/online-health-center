@@ -5,6 +5,7 @@ import { IAppointmentEntity } from '../model/appointmentEntity';
 import { IAppointmentApproveRequest } from '../model/appointment-approve-request';
 import { IAppointmentCancelRequest } from '../model/appoinement-cancel-request';
 import { IAppointmentDeleteRequest } from '../model/appointment-delete-request';
+import { IApplyDiscuntRequest } from '../model/apply-discount-request';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ import { IAppointmentDeleteRequest } from '../model/appointment-delete-request';
 
 export class AppointmentsService {
 
-  private readonly commonPath: string = "http://localhost:5005/api/v1/Appointments/";
+  private readonly commonPath: string = "http://localhost:8005/api/v1/Appointments/";
 
   constructor(private httpClient: HttpClient){ }
 
@@ -37,5 +38,13 @@ export class AppointmentsService {
     const cancelRequest: IAppointmentCancelRequest = {patientId: patientId, appointmentTime: appointmentTime};
     
     return this.httpClient.put<boolean>(connectionString, cancelRequest);
+  }
+
+  public applyDiscount(patientId: string, specialty: string): Observable<boolean>
+  {
+    const connectionString = this.commonPath + 'ApplyDiscountAmount/' + patientId + "/" + specialty + "?patientId=" + patientId + "?specialty=" + specialty;
+    const applyDiscountRequest: IApplyDiscuntRequest = {patientId: patientId, specialty: specialty};
+    
+    return this.httpClient.put<boolean>(connectionString, applyDiscountRequest);
   }
 }

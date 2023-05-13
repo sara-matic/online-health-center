@@ -1,12 +1,15 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { AppointmentRequestStatus } from '../../domain/model/appointment-status';
+import { AppointmentRequestStatus, RequestStatusEnum } from '../../domain/model/appointment-status';
 import { AppointmentsFascadeService } from '../../domain/application-services/appointments-fascade.service';
 import { IAppointmentEntity } from '../../domain/model/appointmentEntity';
+import { DiscountsService } from '../../domain/infrastructure/discounts.service';
+import { IDiscountEntity } from '../../domain/model/discountEntity';
 
 interface IScheduleFormData {
   appointmentID: string;
   doctor: string;
+  specialty: string;
   patientName: string;
   patientId: string;
   initialPrice: number;
@@ -24,12 +27,12 @@ interface IScheduleFormData {
 export class ScheduleFormComponent {
   public scheduleForm: FormGroup;
 
-  //Hard coded data:
-  public appointmentsCollection: Array<IScheduleFormData> = this.getAppointmentsByPatientId("8de0295d-75de-4bba-ade8-43abc66b3103"); //TODO: replace hard coded data with real patientId
+  //TODO: replace hard coded data with real patientId
+  public appointmentsCollection: Array<IScheduleFormData> = this.getAppointmentsByPatientId("8de0295d-75de-4bba-ade8-43abc66b3103");
 
   public selectedAppointment?: IScheduleFormData;
 
-  constructor(private service: AppointmentsFascadeService) {
+  constructor(private service: AppointmentsFascadeService, private discountsSetvice: DiscountsService) {
     this.scheduleForm = new FormGroup(
       {
         appointmentID: new FormControl(''),
@@ -44,30 +47,45 @@ export class ScheduleFormComponent {
     );
   }
 
-  private getAppointmentsByPatientId(patientID: string): Array<IScheduleFormData>
-  {
+  private getAppointmentsByPatientId(patientID: string): Array<IScheduleFormData> {
     this.service.getAppointmentsByPatientId(patientID).subscribe((appointments: Array<IAppointmentEntity>) => {
       this.appointmentsCollection = this.getFormDataFromAppointmentEntities(appointments);
     });
 
-    return this.appointmentsCollection;
-  } 
+    this.populateDiscounts(patientID);
 
-  private getFormDataFromAppointmentEntities(entities: Array<IAppointmentEntity>): Array<IScheduleFormData>
-  {
+    return this.appointmentsCollection;
+  }
+
+  private populateDiscounts(patientID: string): void {
+    this.discountsSetvice.getDiscountsByPatientId(patientID).subscribe(
+      (discounts: Array<IDiscountEntity>) => {
+        
+        discounts.forEach(discount => {
+          this.appointmentsCollection.forEach(apt => {
+            if (apt.specialty == discount.specialty)
+              apt.discount = discount.amountInPercentage;
+            })
+        });
+      });
+  }
+
+  private getFormDataFromAppointmentEntities(entities: Array<IAppointmentEntity>): Array<IScheduleFormData> {
     var uiDataCollection = Array<IScheduleFormData>();
 
     entities.forEach(entity => {
-
-      const appointmentUIData: IScheduleFormData = { appointmentID: entity.appointmentId,
-      doctor: "dr NN" + "-" + entity.specialty,
-      patientName: "NN",
-      patientId: entity.patientId,
-      initialPrice: entity.initialPrice,
-      appointmentTime: new Date(entity.appointmentTime).toLocaleString(),
-      appointmentTimeOriginalFormat: entity.appointmentTime.toString(),
-      discount: 0,
-      appointmentStatus: new AppointmentRequestStatus(entity.appointmentRequestStatus.requestStatus).getRequestStatusDescription()}
+      const appointmentUIData: IScheduleFormData = {
+        appointmentID: entity.appointmentId,
+        doctor: "dr NN" + "-" + entity.specialty,
+        patientName: "NN",
+        patientId: entity.patientId,
+        initialPrice: entity.initialPrice,
+        appointmentTime: new Date(entity.appointmentTime).toLocaleString(),
+        appointmentTimeOriginalFormat: entity.appointmentTime.toString(),
+        specialty: entity.specialty,
+        discount: 0,
+        appointmentStatus: new AppointmentRequestStatus(entity.appointmentRequestStatus.requestStatus).getRequestStatusDescription()
+      }
 
       uiDataCollection.push(appointmentUIData);
     });
@@ -78,6 +96,9 @@ export class ScheduleFormComponent {
   public onSelectionChanged(): void {
     const data: IScheduleFormData = this.scheduleForm.value as IScheduleFormData;
     this.selectedAppointment = this.appointmentsCollection.filter(apt => apt.appointmentID === data.appointmentID)[0];
+
+    const element = document.getElementById('applyDiscountButton');
+    element!.hidden = this.selectedAppointment.discount === null || this.selectedAppointment.discount === 0;
   }
 
   public onAppointmentCancelationRequested(): void {
@@ -90,33 +111,51 @@ export class ScheduleFormComponent {
     if (window.confirm("Do you really want to cancel this appointment?\n\n Click OK to confirm or cancel to go back.")) {
       this.service.cancelAppointment(this.selectedAppointment.patientId, this.selectedAppointment.appointmentTimeOriginalFormat).subscribe(
         (successfully: boolean) => {
+          
           if (successfully)
             window.alert("Appointment has been canceled!");
           else
             window.alert("Something went wrong.\nPlease try again.");
+
+            window.location.reload();
         });
     }
   }
 
-  public onApplyDiscountRequested(): void
-  {
-    window.alert("TODO");
+  public onApplyDiscountRequested(): void {
+
+    if (this.selectedAppointment == null || this.selectedAppointment.appointmentID.length == 0) {
+      window.alert("You must select valid appointment!");
+      return;
+    }
+
+    this.service.applyDiscount(this.selectedAppointment?.patientId, this.selectedAppointment?.specialty).subscribe(
+      (successfully: boolean) => {
+        
+        if (successfully)
+          window.alert("Discount has been applied successfully!");
+        else
+          window.alert("An error occurred. Please try later.");
+
+        window.location.reload();
+      });
   }
 
-  public onApproveRequested(): void
-  {
-    if (this.selectedAppointment == null || this.selectedAppointment.appointmentTime.length == 0 || this.selectedAppointment.appointmentID.length ==0)
-    {
+  public onApproveRequested(): void {
+    if (this.selectedAppointment == null || this.selectedAppointment.appointmentTime.length == 0 || this.selectedAppointment.appointmentID.length == 0) {
       window.alert("You must select valid appointment!");
       return;
     }
 
     this.service.approveAppointment(this.selectedAppointment.patientId, this.selectedAppointment.appointmentTimeOriginalFormat).subscribe(
       (successfully: boolean) => {
+
         if (successfully)
           window.alert("Appointment has been approved!");
         else
           window.alert("Something went wrong.\nPlease try again.");
+
+          window.location.reload();
       });
   }
 }

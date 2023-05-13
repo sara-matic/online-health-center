@@ -25,4 +25,9 @@ export class AppointmentsFascadeService {
   {
     return this.appointmentsService.cancelAppointment(patientId, appointmentTime);
   }
+
+  public applyDiscount(patientId: string, specialty: string): Observable<boolean>
+  {
+    return this.appointmentsService.applyDiscount(patientId, specialty);
+  }
 }
