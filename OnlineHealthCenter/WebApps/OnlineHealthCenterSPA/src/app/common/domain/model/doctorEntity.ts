@@ -4,5 +4,5 @@ export interface IDoctorEntity
     firstName: string;
     lastName: string;
     title: string;
-    specialty: string;
+    medicalSpecialty: string;
 }

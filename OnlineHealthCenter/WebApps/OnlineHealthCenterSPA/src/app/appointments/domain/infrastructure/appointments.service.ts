@@ -6,6 +6,8 @@ import { IAppointmentApproveRequest } from '../model/appointment-approve-request
 import { IAppointmentCancelRequest } from '../model/appoinement-cancel-request';
 import { IAppointmentDeleteRequest } from '../model/appointment-delete-request';
 import { IApplyDiscuntRequest } from '../model/apply-discount-request';
+import { ICreateDiscountRequest } from '../model/ICreateDiscountRequest';
+import { ICreateAppointmentRequest } from '../model/ICreateAppointmentRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -46,5 +48,24 @@ export class AppointmentsService {
     const applyDiscountRequest: IApplyDiscuntRequest = {patientId: patientId, specialty: specialty};
     
     return this.httpClient.put<boolean>(connectionString, applyDiscountRequest);
+  }
+
+  public createAppointment(patientId : string, appointmentTime: string, specialty: string, doctorId: string,
+    requestCreatedBy: string, initialPrice: number, requestCreatedTime: string, requestStatus: string) : Observable<void>
+  {
+    const connectionString = this.commonPath + 'CreateAppointment';
+    const createRequest: ICreateAppointmentRequest = {
+      patientId: patientId,
+      appointmentTime: appointmentTime,
+      appointmentId: crypto.randomUUID(),
+      specialty: specialty,
+      doctorId: doctorId,
+      requestCreatedBy: requestCreatedBy,
+      initialPrice: initialPrice,
+      requestCreatedTime: requestCreatedTime,
+      requestStatus: requestStatus
+    };
+
+    return this.httpClient.post<void>(connectionString, createRequest);
   }
 }
