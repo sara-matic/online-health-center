@@ -60,11 +60,12 @@ export class ScheduleFormComponent {
   private populateDiscounts(patientID: string): void {
     this.discountsSetvice.getDiscountsByPatientId(patientID).subscribe(
       (discounts: Array<IDiscountEntity>) => {
-        
         discounts.forEach(discount => {
-          this.appointmentsCollection.forEach(apt => {
-            if (apt.specialty == discount.specialty)
-              apt.discount = discount.amountInPercentage;
+
+          if (this.appointmentsCollection !== undefined)
+            this.appointmentsCollection.forEach(apt => {  //appointmentsCollection je ovde undefined!!!
+              if (apt.specialty == discount.specialty)
+                apt.discount = discount.amountInPercentage;
             })
         });
       });
