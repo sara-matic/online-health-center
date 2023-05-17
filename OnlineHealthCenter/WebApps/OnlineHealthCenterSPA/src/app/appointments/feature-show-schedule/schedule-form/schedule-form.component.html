@@ -14,6 +14,10 @@
                 <option *ngFor="let apt of appointmentsCollection" value="{{apt.appointmentID}}">({{apt.doctor}}) {{apt.patientName}}, {{apt.appointmentTime}}</option>
             </select>
         </div>
+        
+        <br>
+
+        *Patient ID: {{selectedAppointment?.patientId}}
 
         <br>
 
@@ -70,3 +74,5 @@
         
     </form>
 </div>
+
+<router-outlet></router-outlet>
