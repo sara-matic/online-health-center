@@ -5,4 +5,6 @@ export interface IDoctorEntity
     lastName: string;
     title: string;
     medicalSpecialty: string;
+    biography: string;
+    mark: number;
 }
