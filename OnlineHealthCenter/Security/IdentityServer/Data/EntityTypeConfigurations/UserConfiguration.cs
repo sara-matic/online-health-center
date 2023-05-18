@@ -18,7 +18,8 @@ namespace IdentityServer.Data.EntityTypeConfigurations
                 FirstName = "James",
                 LastName = "Brown",
                 UserName = "jamesbrown",
-                NormalizedUserName = "JAMESBROWN"
+                NormalizedUserName = "JAMESBROWN",
+                Email = "jamesbrown@gmail.com"
             };
 
             var doctor = new User
@@ -27,7 +28,8 @@ namespace IdentityServer.Data.EntityTypeConfigurations
                 FirstName = "Alan",
                 LastName = "Stern",
                 UserName = "alanstern",
-                NormalizedUserName = "ALANSTERN"
+                NormalizedUserName = "ALANSTERN",
+                Email = "alanstern@gmail.com"
             };
 
             var nurse = new User
@@ -36,7 +38,8 @@ namespace IdentityServer.Data.EntityTypeConfigurations
                 FirstName = "Rachel",
                 LastName = "Gray",
                 UserName = "rachelgray",
-                NormalizedUserName = "RACHELGRAY"
+                NormalizedUserName = "RACHELGRAY",
+                Email = "rachelgray@gmail.com"
             };
 
             var passwordHasher = new PasswordHasher<User>();

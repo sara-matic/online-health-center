@@ -19,10 +19,9 @@ namespace IdentityServer.Repositories
             this.context = context ?? throw new ArgumentNullException(nameof(context));
         }
 
-        public async Task<bool> CreateUser(User user, string password)
+        public async Task<IdentityResult> CreateUser(User user, string password)
         {
-            var result = await this.userManager.CreateAsync(user, password);
-            return result.Succeeded;
+            return await this.userManager.CreateAsync(user, password);
         }
 
         public async Task<bool> AddRoleToUser(User user, string role)

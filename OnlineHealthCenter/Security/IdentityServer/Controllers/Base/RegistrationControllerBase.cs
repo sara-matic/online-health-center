@@ -22,10 +22,16 @@ namespace IdentityServer.Controllers.Base
         protected async Task<IActionResult> RegisterNewUserWithRoles(NewUserDTO newUserDTO, IEnumerable<string> roles)
         {
             var user = mapper.Map<User>(newUserDTO);
+            var result = await repository.CreateUser(user, newUserDTO.Password);
 
-            if (!await repository.CreateUser(user, newUserDTO.Password))
+            if (!result.Succeeded)
             {
-                return BadRequest();
+                foreach (var error in result.Errors)
+                {
+                    ModelState.TryAddModelError(error.Code, error.Description);
+                }
+
+                return BadRequest(ModelState);
             }
 
             logger.LogInformation($"Successfully registered user: {user.UserName}.");
