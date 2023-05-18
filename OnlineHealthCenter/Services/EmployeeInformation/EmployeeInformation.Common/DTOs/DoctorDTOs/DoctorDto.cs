@@ -8,5 +8,6 @@ namespace EmployeeInformation.Common.DTOs.DoctorDTOs
 {
     public class DoctorDto : BaseIdentityDoctorDto
     {
+        public decimal Mark { get; set; }
     }
 }

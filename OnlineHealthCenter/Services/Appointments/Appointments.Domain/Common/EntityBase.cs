@@ -2,8 +2,8 @@
 {
     public class EntityBase
     {
-        public string ReportId { get; protected set; }
+        public string AppointmentId { get; protected set; }
         public string RequestCreatedBy { get; set; }
-        public DateTime RequestCreatedTime { get; set; }
+        public DateTime? RequestCreatedTime { get; set; }
     }
 }

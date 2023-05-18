@@ -1,0 +1,65 @@
+<br>
+<h2 class="text">Information about our employees:</h2>
+
+<br>
+
+<div class="text">
+    <form [formGroup]="EmployeeInformationForm">
+
+        <div class="form-group" class = "chooser">
+            <label class="form-label"><b>Choose doctor:</b></label>
+            <select formControlName="id" class="form-control" class="dropdown" (change)="onSelectionChanged()">
+                <option value="" disabled selected>*Select your doctor</option>
+                <option *ngFor="let d of doctors" value="{{d.id}}">({{d.specialty}}) {{d.title}} {{d.firstName}} {{d.lastName}}</option>
+            </select>
+        </div>
+    
+        <br>
+    
+        <div class="information">
+            <label class="text"><b><u>Informations about doctor:</u></b></label> 
+
+            <br><br>
+
+            <label><b>Name:</b></label>
+            {{doctor?.firstName}} {{doctor?.lastName}}
+
+            <br>
+
+            <label><b>Title:</b></label>
+            {{doctor?.title}}
+
+            <br>
+
+            <label><b>Specialty:</b></label>
+            {{doctor?.specialty}}
+
+            <br>
+
+            <label><b>Mark:</b></label>
+            {{doctor?.mark}}
+
+            <br><br>
+
+            <label><b>Biography:</b></label>
+            {{doctor?.biography}}
+
+            <hr><hr>
+
+            <div class = "impressions">
+                <label class="text"><b><u>Impressions:</u></b></label> 
+                <div *ngFor="let i of impressions">
+                    <br>
+                    <div class = "impression">
+                        <i>Headline:</i><b> {{i.headline}}</b> <br>
+                        <i>Mark:</i> {{i.mark}} <br>
+                        <i>Content:</i> {{i.content}}
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            
+        </div>
+    </form>
+    <br>
+</div>

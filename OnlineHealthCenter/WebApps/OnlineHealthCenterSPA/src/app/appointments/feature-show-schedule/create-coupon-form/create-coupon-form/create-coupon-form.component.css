@@ -1,0 +1,47 @@
+.disount-form
+{
+    position: absolute;
+    left: 800px;
+    top: 205px;
+
+    width: 500px;
+
+    border: solid, 1px;
+    border-style: solid;
+    border-color: rgb(29, 100, 99);
+
+    background-color:  #acd1d0;
+}
+
+.submit-button
+{
+    position: relative;
+    left: 2px;
+    bottom: 2px;
+
+    color:white;
+    background-color: darkcyan;
+
+    border:none;
+}
+
+.dropdown
+{
+    position: relative;
+    left: 10px;
+
+    height: 40px;
+    width: 360px;
+
+    color: white;
+    background-color: rgb(100, 167, 167);
+
+}
+
+.discount-label
+{
+    margin-bottom: 10px;
+
+    color: rgb(29, 100, 99);
+    font-size: 20px;
+}

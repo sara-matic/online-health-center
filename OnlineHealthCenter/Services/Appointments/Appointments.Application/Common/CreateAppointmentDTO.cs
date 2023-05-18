@@ -1,14 +1,15 @@
-﻿using Scheduling.Domain.Enums;
+﻿using Appointments.Domain.Enums;
 
 namespace Appointments.Application.Common.DTOs
 {
-    public class CreateAppointmentDTO : AppointmentBaseDTO
+    public class CreateAppointmentDTO : AppointmentIdentityBaseDTO
     {
         public string AppointmentId { get; set; }
         public string DoctorId { get; set; }
+        public string Specialty { get; set; }
         public string RequestCreatedBy { get; set; }
-        public int InitialPrice { get; set; }
-        public DateTime RequestCreatedTime { get; set; }
-        public RequestStatusEnum RequestStatus { get; set; }
+        public int? InitialPrice { get; set; }
+        public string RequestCreatedTime { get; set; }
+        public string RequestStatus { get; set; }
     }
 }

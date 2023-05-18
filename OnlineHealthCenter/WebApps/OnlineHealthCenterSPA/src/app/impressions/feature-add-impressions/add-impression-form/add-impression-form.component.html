@@ -1,0 +1,50 @@
+<h3>Please leave your impression</h3>
+
+<br>
+
+<form [formGroup]="addImpressionForm" (ngSubmit)="onAddImpressionSubmit()">
+    <div class="form-group">
+        <label class="form-label">Choose doctor:</label>
+        <select formControlName="doctor" class="form-control" class="dropdown">
+            <option value="" disabled selected>*Select your doctor</option>
+            <option *ngFor="let doctor of doctors" value="{{doctor.id}}">({{doctor.specialty}}) {{doctor.title}} {{doctor.firstName}} {{doctor.lastName}}</option>
+        </select>
+    </div>
+
+    <br>
+
+    <div class="control-group">
+
+        <div class = form-group>
+            <label class = "form-label">Insert patient ID:</label>
+            <input type="text" formControlName="patientID" class="form-control">
+        </div>
+    
+        <br>
+    
+        <div class = form-group>
+            <label class = "form-label">Insert headline:</label>
+            <input type="text" formControlName="headline" class="form-control">
+        </div>
+    
+        <br>
+    
+        <div class = form-group>
+            <label class = "form-label">Leave impression:</label>
+            <input type="text" formControlName="content" class="form-control">
+        </div>
+    
+        <br>
+    
+        <div class = form-group>
+            <label class = "form-label">Insert mark:</label>
+            <input type="text" formControlName="mark" class="form-control">
+        </div>
+    
+        <br>
+    
+        <button type="submit" class="submit-button">Submit Request</button>
+        
+    </div>
+
+</form>

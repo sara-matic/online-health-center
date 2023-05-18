@@ -1,0 +1,30 @@
+<form class = "disount-form" [formGroup]="discountForm" (ngSubmit)="onSubmit()">
+
+    <label class="discount-label"><b>Create Discount:</b></label>
+    
+    <div class="form-group">
+        <label class="form-label">Choose specialty:</label>
+        <select formControlName="specialty" class="form-control" class="dropdown">
+            <option value="" disabled selected>*Please select your option</option>
+            <option *ngFor="let spec of specialities" value="{{spec}}">{{spec}}</option>
+        </select>
+    </div>
+
+    <br>
+
+        <div class=form-group>
+            <label class="form-label">Insert patient ID:</label>
+            <input type="text" formControlName="patientId" class="form-control">  
+        </div>
+
+        <br>
+
+        <div class=form-group>
+            <label class="form-label">Amount in percentage:</label>
+            <input type="text" formControlName="amountInPercentage" class="form-control">  
+        </div>
+
+        <br>
+
+        <button type="submit" class="submit-button">Submit</button>
+</form>

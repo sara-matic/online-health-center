@@ -20,6 +20,29 @@ services:
     volumes:
       - mssql_data:/var/opt/mssql/data
 
+  postgresdb:
+    container_name: postgresdb
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=healthCENTER1997
+      - POSTGRES_DB=AppointmentsDb
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  
+  pgadmin:
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=health.center@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=healthCENTER1997
+    restart: always
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/root/.pgadmin
+
   employeeinformation.api:
     container_name: employeeinformation.api
     environment:
@@ -81,3 +104,26 @@ services:
       - mongodbcontainer
     ports:
       - "8004:80"
+
+  appointments.api:
+    container_name: appointments.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=Server=postgresdb;Port=5432;Database=AppointmentsDb;User Id=admin;Password=healthCENTER1997;"
+      - "GrpcSettings:DiscountsUrl=http://discounts.grpc"
+    depends_on:
+      - postgresdb 
+      - discounts.grpc
+    ports:
+      - "8005:80"
+
+  discounts.grpc:
+    container_name: discounts.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings:ConnectionString=mongodb://mongodbcontainer:27017"
+    depends_on:
+      - mongodbcontainer
+    ports:
+      - "8006:80"
+

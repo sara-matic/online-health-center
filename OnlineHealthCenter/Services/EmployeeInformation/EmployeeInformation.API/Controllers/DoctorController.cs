@@ -4,6 +4,7 @@ using EmployeeInformation.Common.DTOs.DoctorDTOs;
 using EmployeeInformation.Common.Entities;
 using EmployeeInformation.Common.Repositories.Interfaces;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Numerics;
 
@@ -138,6 +139,7 @@ namespace EmployeeInformation.Controllers
             return Ok(this.mapper.Map<IEnumerable<DoctorDto>>(doctors));
         }
 
+        [Authorize(Roles = "Nurse")]
         [Route("[action]")]
         [HttpPost]
         [ProducesResponseType(typeof(void), StatusCodes.Status201Created)]
@@ -147,6 +149,7 @@ namespace EmployeeInformation.Controllers
             return Ok();
         }
 
+        [Authorize(Roles = "Nurse")]
         [Route("[action]")]
         [HttpPut]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
@@ -164,23 +167,7 @@ namespace EmployeeInformation.Controllers
             return Ok(result);
         }
 
-        [Route("[action]")]
-        [HttpPut]
-        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateMark(Guid id, decimal mark)
-        {
-            var doctorExists = await this.doctorRepository.GetDoctorById(id);
-
-            if (doctorExists == null)
-            {
-                return BadRequest();
-            }
-
-            var result = await this.doctorRepository.UpdateMark(id, mark);
-            return Ok(result);
-        }
-
+        [Authorize(Roles = "Nurse")]
         [Route("[action]/{id}")]
         [HttpDelete]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]

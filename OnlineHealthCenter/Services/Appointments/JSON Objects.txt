@@ -1,0 +1,41 @@
+
+--------------------------------------------------
+Appointment objects - JSON format:
+---------------------------
+
+{
+  "patientId": "8de0295d-75de-4bba-abc8-43abc66b3103",
+  "appointmentTime": "2023-01-23T21:45:23.459Z",
+  "appointmentId": "8de0297d-75de-4bba-abc8-43abc66b3103",
+  "specialty": "Cardiology",
+  "doctorId": "8de0291d-75de-4bba-abc8-43abc66b3103",
+  "requestCreatedBy": "8de0295d-75de-4bba-abc8-43abc66b3103",
+  "initialPrice": 4500,
+  "requestCreatedTime": "2023-01-23T21:45:23.460Z",
+  "requestStatus": "Approved"
+}
+
+--------------------------------------------------
+{
+  "patientId": "8de0295d-75de-4bba-ade8-43abc66b3103",
+  "appointmentTime": "2023-02-23T21:45:23.459Z",
+  "appointmentId": "8de0295d-75de-4bba-abe8-42abc66b3103",
+  "doctorId": "8de0295d-75de-4bba-abe8-43abc66b3103",
+  "specialty": "Ginekology",
+  "requestCreatedBy": "8de0295d-75de-4bba-ade8-43abc66b3103",
+  "initialPrice": 5000,
+  "requestCreatedTime": "2023-01-11T21:45:23.459Z",
+  "requestStatus": "WaitingForAnswer"
+}
+--------------------------------------------------
+
+{
+  "patientId": "8de0295d-75de-4bba-ade8-43abc66b3103",
+  "appointmentTime": "5/28/2023 10:30:15 AM",
+  "appointmentId": "8de0291d-75de-4bba-abe8-42abc66b3103",
+  "specialty": "Pulmology",
+  "doctorId": "8df0295d-75de-4bba-abe8-43abc66b3103",
+  "requestCreatedBy": "8de0295d-75de-4bba-ade8-43abc66b3103",
+  "initialPrice": 5000,
+  "requestCreatedTime": "5/25/2023 10:30:15 AM",
+  "requestStatus": "WaitingForAnswer"
