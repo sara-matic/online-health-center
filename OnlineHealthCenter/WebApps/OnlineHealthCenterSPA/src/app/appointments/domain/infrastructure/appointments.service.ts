@@ -50,7 +50,7 @@ export class AppointmentsService {
     return this.httpClient.put<boolean>(connectionString, applyDiscountRequest);
   }
 
-  public createAppointment(patientId : string, appointmentTime: string, specialty: string, doctorId: string,
+  public createAppointment(patientId : string, appointmentTime: string, specialty: string, doctorId: string, doctorName: string, patientName: string,
     requestCreatedBy: string, initialPrice: number, requestCreatedTime: string, requestStatus: string) : Observable<void>
   {
     const connectionString = this.commonPath + 'CreateAppointment';
@@ -58,6 +58,8 @@ export class AppointmentsService {
       patientId: patientId,
       appointmentTime: appointmentTime,
       appointmentId: crypto.randomUUID(),
+      patientName: patientName,
+      doctorName: doctorName,
       specialty: specialty,
       doctorId: doctorId,
       requestCreatedBy: requestCreatedBy,
@@ -67,5 +69,11 @@ export class AppointmentsService {
     };
 
     return this.httpClient.post<void>(connectionString, createRequest);
+  }
+
+  public deleteDiscount(appointmentId: string): Observable<boolean>
+  {
+    const connectionString = this.commonPath + 'DeleteAppointment/' + appointmentId;
+    return this.httpClient.delete<boolean>(connectionString);
   }
 }

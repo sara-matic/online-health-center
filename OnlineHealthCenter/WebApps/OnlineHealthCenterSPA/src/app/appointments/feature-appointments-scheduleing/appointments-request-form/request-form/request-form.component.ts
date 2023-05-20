@@ -9,6 +9,7 @@ import { withNoXsrfProtection } from '@angular/common/http';
 interface IRequestFormData {
   doctor: string;
   patientID: string;
+  patientName: string;
   initialPrice: number;
   appointmentDate: Date;
   appointmentTime: string;
@@ -30,7 +31,7 @@ export class RequestFormComponent {
   public readonly doctorTimes: Array<IApointmentTime> = [{ time: "8:00:00" }, { time: "9:00:00" }, { time: "10:00:00" }, { time: "11:00:00" }, { time: "12:00:00" }, { time: "13:00:00" },
   { time: "14:00:00" }, { time: "15:00:00" }, { time: "16:00:00" }];
 
-  public readonly patientId = "8de0295d-75de-4bba-ade8-43abc66b3103"; //TODO: replace hard coded data with real patientID
+  public readonly patientId = "8de0295d-75de-4bba-abc8-43abc66b3103"; //TODO: replace hard coded data with real patientID
   public initialPrice?: number;
 
   constructor(private employeesService: EmployeesFascadeService, private appointmentsService: AppointmentsFascadeService) {
@@ -38,6 +39,7 @@ export class RequestFormComponent {
       {
         doctor: new FormControl(''),
         patientID: new FormControl(''),
+        patientName: new FormControl(''),
         initialPrice: new FormControl(''),
         appointmentDate: new FormControl(''),
         appointmentTime: new FormControl('')
@@ -63,12 +65,13 @@ export class RequestFormComponent {
     const selectedDoctor: IDoctorEntity = this.doctors.filter(doc => doc.id == data.doctor)[0];
 
     if (window.confirm(
-      "\nPatient ID: " + data.patientID + "\nDoctor: " + data.doctor + "\nAppointment date: " + new Date(data.appointmentDate).toLocaleDateString() + "\nAppointment time: " + data.appointmentTime + "\nInitial price: " + this.initialPrice
+      "\nPatient ID: " + data.patientID + "\nPatient Name: " + data.patientName + "\nDoctor: " + data.doctor + "\nAppointment date: " + new Date(data.appointmentDate).toLocaleDateString() + "\nAppointment time: " + data.appointmentTime + "\nInitial price: " + this.initialPrice
       + "\n\nClick OK to confirm request or Cancel it.")) 
     {
       const appointmentTime = data.appointmentDate + " " + data.appointmentTime;
+      const selectedDoctorName = selectedDoctor.firstName + " " + selectedDoctor.lastName;
 
-      this.appointmentsService.createAppointment(data.patientID, appointmentTime, selectedDoctor.medicalSpecialty, selectedDoctor.id, "", this.initialPrice ?? 5000, appointmentTime, "WaitingForAnswer")
+      this.appointmentsService.createAppointment(data.patientID, appointmentTime, selectedDoctor.medicalSpecialty, selectedDoctor.id, selectedDoctorName, data.patientName, "", this.initialPrice ?? 5000, appointmentTime, "WaitingForAnswer")
         .subscribe();
       
       window.location.reload();
