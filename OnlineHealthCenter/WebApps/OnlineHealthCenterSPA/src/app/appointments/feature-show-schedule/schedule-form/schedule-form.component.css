@@ -29,7 +29,7 @@
 .button-cancel
 {
     position: relative;
-    left: 3px;
+    left: 10px;
     bottom: 3px;
     
     border: none;
@@ -41,7 +41,19 @@
 .button-apply-discount
 {
     position: relative;
-    left: 10px;
+    left: 5px;
+    bottom: 3px;
+    
+    border: none;
+
+    color: white;
+    background-color: darkcyan;   
+}
+
+.button-delete
+{
+    position: absolute;
+    left: 567px;
     bottom: 3px;
     
     border: none;
@@ -52,12 +64,12 @@
 
 .button-approve
 {
-    position: absolute;
-    left: 550px;
+    position: relative;
+    left: 15px;
     bottom: 3px;
     
     border: none;
 
     color: white;
-    background-color: darkcyan;   
+    background-color: darkcyan; 
 }

@@ -28,7 +28,7 @@ export class ScheduleFormComponent {
   public scheduleForm: FormGroup;
 
   //TODO: replace hard coded data with real patientId
-  public appointmentsCollection: Array<IScheduleFormData> = this.getAppointmentsByPatientId("8de0295d-75de-4bba-ade8-43abc66b3103");
+  public appointmentsCollection: Array<IScheduleFormData> = this.getAppointmentsByPatientId("8de0295d-75de-4bba-abc8-43abc66b3103");
 
   public selectedAppointment?: IScheduleFormData;
 
@@ -77,8 +77,8 @@ export class ScheduleFormComponent {
     entities.forEach(entity => {
       const appointmentUIData: IScheduleFormData = {
         appointmentID: entity.appointmentId,
-        doctor: "dr NN" + "-" + entity.specialty,
-        patientName: "NN",
+        doctor: "dr "+ entity.doctorName + "-" + entity.specialty,
+        patientName: entity.patientName,
         patientId: entity.patientId,
         initialPrice: entity.initialPrice,
         appointmentTime: new Date(entity.appointmentTime).toLocaleString(),
@@ -121,6 +121,26 @@ export class ScheduleFormComponent {
             window.location.reload();
         });
     }
+  }
+
+  public onDeleteAppointment(): void
+  {
+    if (this.selectedAppointment?.appointmentID == null || this.selectedAppointment.appointmentID.length == 0) {
+      window.alert("You must select valid appointment!");
+      return;
+    }
+
+    this.service.deleteDiscount(this.selectedAppointment.appointmentID)
+      .subscribe((successfully: boolean) => {
+
+        if (successfully)
+        {
+          window.alert("Appointment has been deleted.");
+          window.location.reload();
+        }
+        else
+          window.alert("An error occured. Please try later.");
+      });
   }
 
   public onApplyDiscountRequested(): void {
