@@ -5,6 +5,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAppointmentsInfrastructureServices();
 
+builder.Services.AddCors(options => 
+{
+    options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
+
 //grpc
 builder.Services.AddGrpcClient<Discounts.GRPC.Protos.DiscountsProtoService.DiscountsProtoServiceClient>(
     options => options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountsUrl"]));
@@ -26,5 +31,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("CorsPolicy");
 app.MapControllers();
 app.Run();

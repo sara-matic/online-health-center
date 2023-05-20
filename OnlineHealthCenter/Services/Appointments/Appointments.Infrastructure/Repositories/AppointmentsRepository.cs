@@ -56,19 +56,23 @@ namespace Appointments.Infrastructure.Repositories
             }
         }
 
-        public async Task CreateAppointment(CreateAppointmentDTO createAppointmentDTO)
+        public async Task<bool> CreateAppointment(CreateAppointmentDTO createAppointmentDTO)
         {
+            int rowsAffected = 0;
+
             using (var connecton = this.context.GetConnection())
             {
-                var result = await connecton
+                 rowsAffected = await connecton
                     .ExecuteAsync("INSERT INTO Appointments" +
-                    "(AppointmentId, DoctorId, PatientId, Specialty, AppointmentTime, AppointmentRequestStatus, InitialPrice, RequestCreatedBy, RequestCreatedTime)" +
-                    "VALUES(@AppointmentId, @DoctorId, @PatientId, @Specialty, @AppointmentTime, @AppointmentRequestStatus, @InitialPrice, @RequestCreatedBy, @RequestCreatedTime)",
+                    "(AppointmentId, DoctorId, PatientId, DoctorName, PatientName, Specialty, AppointmentTime, AppointmentRequestStatus, InitialPrice, RequestCreatedBy, RequestCreatedTime)" +
+                    "VALUES(@AppointmentId, @DoctorId, @PatientId,@DoctorName, @PatientName, @Specialty, @AppointmentTime, @AppointmentRequestStatus, @InitialPrice, @RequestCreatedBy, @RequestCreatedTime)",
                     new
                     {
                         AppointmentId = createAppointmentDTO.AppointmentId,
                         DoctorId = createAppointmentDTO.DoctorId,
                         PatientId = createAppointmentDTO.PatientId,
+                        DoctorName = createAppointmentDTO.DoctorName,
+                        PatientName = createAppointmentDTO.PatientName,
                         Specialty = createAppointmentDTO.Specialty,
                         AppointmentTime = AppointmentsTimeUtility.GetCommonDateTimeFormat(createAppointmentDTO.AppointmentTime),
                         InitialPrice = createAppointmentDTO.InitialPrice,
@@ -77,6 +81,8 @@ namespace Appointments.Infrastructure.Repositories
                         AppointmentRequestStatus = createAppointmentDTO.RequestStatus.ToString()
                     });
             }
+
+            return rowsAffected > 0;
         }
 
         public async Task<bool> DeleteAppointment(string appointmentId)

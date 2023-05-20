@@ -63,7 +63,7 @@ namespace Appointments.API.Controllers
 
             if (!canCreateAppointent)
                 return BadRequest();
-            
+
             await this.repository.CreateAppointment(createAppointmentDTO);
             return Ok();
         }
@@ -86,7 +86,7 @@ namespace Appointments.API.Controllers
             return Ok(approveActionResult);
         }
 
-        [Route("[action]")]
+        [Route("[action]/{appointmentId}")]
         [HttpDelete]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<ActionResult<bool>> DeleteAppointment(string appointmentId)
