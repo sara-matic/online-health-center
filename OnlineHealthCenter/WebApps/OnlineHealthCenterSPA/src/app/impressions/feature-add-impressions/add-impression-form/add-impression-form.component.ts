@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IDoctorEntity } from '../../domain/doctorEntity';
+import { IDoctorEntity } from 'src/app/common/domain/model/doctorEntity';
+import { EmployeesFascadeService } from 'src/app/common/domain/application-services/employees-fascade.service';
+import { ImpressionsFascadeService } from '../../domain/application-services/impressions-fascade.service';
 
 interface IAddImpressionFormData
 {
   doctor: string;
   patientID: string;
-  headline: string
-  content: string
-  mark: number
+  headline: string;
+  content: string;
+  mark: number;
 }
 
 @Component({
@@ -21,12 +23,9 @@ export class AddImpressionFormComponent {
 
   public addImpressionForm: FormGroup;
 
-  public doctors: Array<IDoctorEntity> = [{id: "1", firstName: "Doctor", "lastName": "1", specialty: "Cardilology", title: "Specialist"},
-  {id: "2", firstName: "Doctor", "lastName": "2", specialty: "Pulmology", title: "Specialist"},
-  {id: "3", firstName: "Doctor", "lastName": "3", specialty: "Cardilology", title: "Primarius"},
-  {id: "1", firstName: "Doctor", "lastName": "1", specialty: "Cardilology", title: "Full Professor && Specialist"}];
+  public doctors: Array<IDoctorEntity> = this.getDoctors();
 
-  constructor() {
+  constructor(private employeesService : EmployeesFascadeService, private impressionsService : ImpressionsFascadeService) {
     this.addImpressionForm = new FormGroup(
       {
         doctor: new FormControl(''),
@@ -36,6 +35,15 @@ export class AddImpressionFormComponent {
         mark: new FormControl('')
       }
     );
+  }
+
+  private getDoctors(): Array<IDoctorEntity> {
+    this.employeesService.getDoctors().subscribe(
+      (doctors: Array<IDoctorEntity>) => {
+        this.doctors = doctors;
+      });
+      
+    return this.doctors;
   }
 
   public onAddImpressionSubmit(): void
@@ -51,7 +59,7 @@ export class AddImpressionFormComponent {
       + "\n\nClick OK to confirm."
       );
   }
-
+  
   private pageDataIsValid(data: IAddImpressionFormData): boolean
   {
     if (data.doctor == null || data.doctor.length == 0)
