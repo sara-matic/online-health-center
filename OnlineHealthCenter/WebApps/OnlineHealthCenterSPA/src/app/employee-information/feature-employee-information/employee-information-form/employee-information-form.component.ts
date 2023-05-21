@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { EmployeesFascadeService } from 'src/app/common/domain/application-services/employees-fascade.service';
 import { IDoctorEntity } from 'src/app/common/domain/model/doctorEntity';
+import { ImpressionsFascadeService } from 'src/app/impressions/domain/application-services/impressions-fascade.service';
+import { IImpressionEntity } from 'src/app/impressions/domain/model/impressionEntity';
 
 interface IEmployeeInformationFormData {
   id: string;
@@ -31,14 +33,12 @@ export class EmployeeInformationFormComponent {
 
   public doctors: Array<IDoctorEntity> = this.getDoctors();
 
-  public allImpressions: Array<IImpressionData> = [{id: "558cd9e5-4ca9-4aea-8b6c-7f7b2d4e01ba", headline: "Nice experience", content: "Doctor was very nice and kind", mark: 9},
-  {id: "558cd9e5-4ca9-4aea-8b6c-7f7b2d4e01ba", headline: "Very good", content: "Doctor was really patient and calm, I had the best experience", mark: 10},
-  {id: "2", headline: "Amazing!", content: "Exam was really great", mark: 9}];
+  public allImpressions: Array<IImpressionEntity> = this.getImpressions();
 
   public doctor? : IEmployeeInformationFormData;
-  public impressions? : IImpressionData[];
+  public impressions? : IImpressionEntity[];
 
-  constructor(private employeesService: EmployeesFascadeService) {
+  constructor(private employeesService: EmployeesFascadeService, private impressionsService: ImpressionsFascadeService) {
 
     this.EmployeeInformationForm = new FormGroup(
       {
@@ -62,11 +62,20 @@ export class EmployeeInformationFormComponent {
     return this.doctors;
   }
 
+  private getImpressions(): Array<IImpressionEntity> {
+    this.impressionsService.getImpressions().subscribe(
+      (impressions: Array<IImpressionEntity>) => {
+        this.allImpressions = impressions;
+      }
+    );
+    return this.allImpressions;
+  }
+
   public onSelectionChanged(): void
   {
       const data: IEmployeeInformationFormData = this.EmployeeInformationForm.value as IEmployeeInformationFormData;
       this.doctor = this.doctors.filter(d => d.id == data.id)[0] as IDoctorEntity;
-      this.impressions = this.allImpressions.filter(imp => imp.id == data.id)
+      this.impressions = this.allImpressions.filter(imp => imp.doctorID == data.id)
   }
 
 
