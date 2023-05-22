@@ -18,4 +18,9 @@ export class ImpressionsService {
     return this.httpClient.get<Array<IImpressionEntity>>(connectionString);
   }
 
+  public getImpressionsByPatientId(patientID: string): Observable<Array<IImpressionEntity>> 
+  {
+    const connectionString = this.commonPath + 'GetImpressionsByPatientId/' + patientID + "?patientID="+patientID;
+    return this.httpClient.get<Array<IImpressionEntity>>(connectionString);
+  }
 }

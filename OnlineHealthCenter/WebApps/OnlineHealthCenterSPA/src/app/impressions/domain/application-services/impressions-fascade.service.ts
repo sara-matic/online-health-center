@@ -15,4 +15,9 @@ export class ImpressionsFascadeService {
     return this.impressionsService.getImpressions();
   }
 
+  public getImpressionsByPatientId(patientID: string): Observable<Array<IImpressionEntity>>
+  {
+    return this.impressionsService.getImpressionsByPatientId(patientID);
+  }
+
 }
