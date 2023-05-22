@@ -1,0 +1,24 @@
+.impressions
+{
+    position: absolute;
+    left: 800px;
+    top: 100px;
+}
+
+.text
+{
+    color:rgb(29, 100, 99);
+}
+
+
+.show-impression-form
+{
+    position: relative;
+    width: 500px;
+
+    border: solid, 1px;
+    border-style: solid;
+    border-color: rgb(29, 100, 99);
+
+    background-color:  #acd1d0;
+}

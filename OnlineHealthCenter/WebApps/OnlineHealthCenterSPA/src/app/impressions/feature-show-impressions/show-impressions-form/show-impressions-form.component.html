@@ -1,0 +1,17 @@
+<div class="impressions">
+    <br>
+<h2 class="text">All of your impressions:</h2>
+
+<form class = "show-impression-form" [formGroup]="showImpressionForm">
+        <div *ngFor="let i of allImpressions">
+            <br>
+            <div class = "impression">
+                <i>Doctor:</i> {{i.doctorID}}<br>
+                <i>Headline:</i><b> {{i.headline}}</b> <br>
+                <i>Mark:</i> {{i.mark}} <br>
+                <i>Content:</i> {{i.content}}
+            </div>
+            <hr>
+        </div>
+</form>
+</div>
