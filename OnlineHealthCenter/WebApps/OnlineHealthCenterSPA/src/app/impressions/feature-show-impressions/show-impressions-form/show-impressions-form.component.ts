@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { ImpressionsFascadeService } from '../../domain/application-services/impressions-fascade.service';
 import { IImpressionEntity } from '../../domain/model/impressionEntity';
 import { IDoctorEntity } from 'src/app/common/domain/model/doctorEntity';
 import { EmployeesFascadeService } from 'src/app/common/domain/application-services/employees-fascade.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 interface IImpressionFormData {
-  doctorID: string;
+  doctor: string;
   patientID: string;
   headline: string;
   content: string;
@@ -24,7 +24,13 @@ export class ShowImpressionsFormComponent {
 
   public allImpressions: Array<IImpressionFormData> = this.getImpressionsByPatientId("a15a4178-2964-4973-b1fe-425ef1fdc0a4");
 
-  constructor(private impressionsService:  ImpressionsFascadeService, private employeeService: EmployeesFascadeService) {
+  public doctors: Array<IDoctorEntity> = this.getDoctors();
+
+  public doctor?: IDoctorEntity;
+
+  public impressions?: Array<IImpressionFormData>;
+
+  constructor(private impressionsService:  ImpressionsFascadeService, private employeesService: EmployeesFascadeService) {
     this.showImpressionForm = new FormGroup({
       doctor: new FormControl(''),
       patientID: new FormControl(''),
@@ -47,7 +53,7 @@ export class ShowImpressionsFormComponent {
 
     entities.forEach(entity => {
       const impressionUIData: IImpressionFormData = {
-        doctorID: entity.doctorID,
+        doctor: entity.doctorID,
         patientID: entity.patientID,
         headline: entity.headline,
         content: entity.content,
@@ -59,4 +65,27 @@ export class ShowImpressionsFormComponent {
 
     return uiDataCollection;
   }
+
+  private getDoctors(): Array<IDoctorEntity> {
+    this.employeesService.getDoctors().subscribe(
+      (doctors: Array<IDoctorEntity>) => {
+        this.doctors = doctors;
+      });
+      
+    return this.doctors;
+  }
+
+  private getSelectedDoctor(): IDoctorEntity
+  {
+    const data: IImpressionFormData = this.showImpressionForm.value as IImpressionFormData;
+    return this.doctors.filter(doc => doc.id == data.doctor)[0] as IDoctorEntity;
+  }
+
+  public onSelectionChanged(): void
+  {
+    const selectedDoctor = this.getSelectedDoctor();
+    this.doctor = selectedDoctor;
+    this.impressions = this.allImpressions.filter(i => i.doctor == selectedDoctor.id);
+  }
+
 }
