@@ -3,15 +3,45 @@
 <h2 class="text">All of your impressions:</h2>
 
 <form class = "show-impression-form" [formGroup]="showImpressionForm">
-        <div *ngFor="let i of allImpressions">
+
+    <br>
+    <div class="form-group" class = "chooser">
+        <label class="form-label">Choose doctor:</label>
+        <select formControlName="doctor" class="form-control" class="dropdown" (change)="onSelectionChanged()">
+            <option value="" disabled selected>*Select your doctor </option>
+            <option *ngFor="let d of doctors" value="{{d.id}}">({{d.medicalSpecialty}}) {{d.title}} {{d.firstName}} {{d.lastName}}</option>
+        </select>
+    </div>
+    
+     <br>
+
+    <div class="all-impressions" >
+        <label class="text"><b><u>Impressions:</u></b></label> 
+        <br>
+        <div *ngFor="let i of impressions">
             <br>
-            <div class = "impression">
-                <i>Doctor:</i> {{i.doctorID}}<br>
-                <i>Headline:</i><b> {{i.headline}}</b> <br>
-                <i>Mark:</i> {{i.mark}} <br>
-                <i>Content:</i> {{i.content}}
-            </div>
-            <hr>
+
+            <label><i>Doctor:</i></label>
+            ({{doctor?.medicalSpecialty}}) {{doctor?.firstName}} {{doctor?.lastName}}
+
+            <br>
+
+            <label><i>Headline:</i></label>
+            <b> {{i.headline}}</b>
+
+            <br>
+
+            <label><i>Mark:</i></label>
+            {{i.mark}}
+
+            <br>
+
+            <label><i>Content:</i></label>
+            {{i.content}}
+
+            <hr><hr>
         </div>
+    </div>
+
 </form>
 </div>

@@ -10,11 +10,21 @@
     color:rgb(29, 100, 99);
 }
 
+.dropdown
+{
+    position: absolute;
+    left: 210px;
+    width: 500px;
+    height: 40px;
+
+    color: white;
+    background-color: rgb(100, 167, 167);
+}
 
 .show-impression-form
 {
     position: relative;
-    width: 500px;
+    width: 750px;
 
     border: solid, 1px;
     border-style: solid;
