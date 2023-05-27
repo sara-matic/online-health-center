@@ -20,4 +20,8 @@ export class ImpressionsFascadeService {
     return this.impressionsService.getImpressionsByPatientId(patientID);
   }
 
+  public deleteImpression(id: string): Observable<boolean>
+  {
+    return this.impressionsService.deleteImpression(id);
+  }
 }
