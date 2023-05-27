@@ -32,3 +32,13 @@
 
     background-color:  #acd1d0;
 }
+
+.button-delete
+{
+    position: absolute;
+    
+    border: none;
+
+    color: white;
+    background-color: darkcyan;   
+}

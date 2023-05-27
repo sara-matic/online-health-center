@@ -4,8 +4,10 @@ import { IImpressionEntity } from '../../domain/model/impressionEntity';
 import { IDoctorEntity } from 'src/app/common/domain/model/doctorEntity';
 import { EmployeesFascadeService } from 'src/app/common/domain/application-services/employees-fascade.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { of } from 'rxjs';
 
 interface IImpressionFormData {
+  id: string;
   doctor: string;
   patientID: string;
   headline: string;
@@ -32,6 +34,7 @@ export class ShowImpressionsFormComponent {
 
   constructor(private impressionsService:  ImpressionsFascadeService, private employeesService: EmployeesFascadeService) {
     this.showImpressionForm = new FormGroup({
+      id: new FormControl(''),
       doctor: new FormControl(''),
       patientID: new FormControl(''),
       headline: new FormControl(''),
@@ -53,6 +56,7 @@ export class ShowImpressionsFormComponent {
 
     entities.forEach(entity => {
       const impressionUIData: IImpressionFormData = {
+        id: entity.id,
         doctor: entity.doctorID,
         patientID: entity.patientID,
         headline: entity.headline,
@@ -86,6 +90,21 @@ export class ShowImpressionsFormComponent {
     const selectedDoctor = this.getSelectedDoctor();
     this.doctor = selectedDoctor;
     this.impressions = this.allImpressions.filter(i => i.doctor == selectedDoctor.id);
+  }
+
+  public onDeleteImpression(id: string): void
+  {
+    this.impressionsService.deleteImpression(id)
+    .subscribe((successfully: boolean) => {
+
+      if (successfully)
+      {
+        window.alert("Impression has been deleted.");
+        window.location.reload();
+      }
+      else
+        window.alert("An error occured. Please try later.");
+    });
   }
 
 }

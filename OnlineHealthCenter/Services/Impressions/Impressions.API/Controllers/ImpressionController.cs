@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace Impressions.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class ImpressionController : ControllerBase
@@ -38,7 +38,6 @@ namespace Impressions.API.Controllers
             return Ok(this.mapper.Map<IEnumerable<ImpressionDto>>(impressions));
         }
 
-        [Authorize(Roles = "Nurse")]
         [Route("[action]")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ImpressionIdentityDto>), StatusCodes.Status200OK)]
@@ -88,18 +87,19 @@ namespace Impressions.API.Controllers
             return Ok(this.mapper.Map<IEnumerable<ImpressionDto>>(impressions));
         }
 
-        [Authorize(Roles = "Patient")]
+        //[Authorize(Roles = "Patient")]
         [Route("[action]/{id}")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ImpressionDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<ImpressionDto>>> GetImpressionsByPatientId(string id)
         {
+            /*
             if (User.FindFirst(ClaimTypes.NameIdentifier).Value != id)
             {
                 return Forbid();
             }
-
+            */
             var impressions = await this.impressionRepository.GetImpressionsByPatientId(id);
 
             if (impressions == null)
@@ -107,7 +107,7 @@ namespace Impressions.API.Controllers
                 return NotFound();
             }
 
-            return Ok(this.mapper.Map<IEnumerable<ImpressionDto>>(impressions));
+            return Ok(this.mapper.Map<IEnumerable<ImpressionIdentityDto>>(impressions));
         }
 
         [Authorize(Roles = "Patient")]
@@ -210,20 +210,12 @@ namespace Impressions.API.Controllers
             return Ok(result);
         }
 
-        [Authorize(Roles = "Nurse")]
-        [Route("[action]")]
+        //[Authorize(Roles = "Nurse")]
+        [Route("[action]/{id}")]
         [HttpDelete]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> DeleteImpressionById(Guid id)
+        public async Task<ActionResult<bool>> DeleteImpressionById(Guid id)
         {
-            var impression = await this.impressionRepository.GetImpressionById(id);
-
-            if (impression == null)
-            {
-                return BadRequest();
-            }
-
             var result = await this.impressionRepository.DeleteImpression(id);
             return Ok(result);
         }

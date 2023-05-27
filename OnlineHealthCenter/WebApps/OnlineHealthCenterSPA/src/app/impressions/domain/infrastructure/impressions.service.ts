@@ -14,7 +14,7 @@ export class ImpressionsService {
 
   public getImpressions(): Observable<Array<IImpressionEntity>> 
   {
-    const connectionString = this.commonPath + 'GetImpressions';
+    const connectionString = this.commonPath + 'GetImpressionsWithId';
     return this.httpClient.get<Array<IImpressionEntity>>(connectionString);
   }
 
@@ -22,5 +22,11 @@ export class ImpressionsService {
   {
     const connectionString = this.commonPath + 'GetImpressionsByPatientId/' + patientID + "?patientID="+patientID;
     return this.httpClient.get<Array<IImpressionEntity>>(connectionString);
+  }
+
+  public deleteImpression(id: string): Observable<boolean>
+  {
+    const connectionString = this.commonPath + 'DeleteImpressionById/' + id + "?id" + id;
+    return this.httpClient.delete<boolean>(connectionString);
   }
 }

@@ -1,5 +1,6 @@
 export interface IImpressionEntity
 {
+  id: string;
   doctorID: string;
   patientID: string;
   headline: string

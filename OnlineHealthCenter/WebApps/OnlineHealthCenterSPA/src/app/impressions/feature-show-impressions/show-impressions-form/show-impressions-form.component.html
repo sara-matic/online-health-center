@@ -20,7 +20,6 @@
         <br>
         <div *ngFor="let i of impressions">
             <br>
-
             <label><i>Doctor:</i></label>
             ({{doctor?.medicalSpecialty}}) {{doctor?.firstName}} {{doctor?.lastName}}
 
@@ -38,10 +37,16 @@
 
             <label><i>Content:</i></label>
             {{i.content}}
-
+            <br><br>
+            <div>
+                <button class="button-delete" (click)="onDeleteImpression(i.id)">Delete impression</button>
+            </div>
+            <br>
             <hr><hr>
         </div>
     </div>
 
 </form>
 </div>
+
+<router-outlet></router-outlet>
