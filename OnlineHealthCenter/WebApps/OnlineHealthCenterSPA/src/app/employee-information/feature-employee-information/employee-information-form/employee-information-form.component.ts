@@ -15,13 +15,6 @@ interface IEmployeeInformationFormData {
   mark: number;
 }
 
-interface IImpressionData {
-  id: string;
-  headline: string
-  content: string
-  mark: number
-}
-
 @Component({
   selector: 'app-employee-information-form',
   templateUrl: './employee-information-form.component.html',
@@ -76,8 +69,7 @@ export class EmployeeInformationFormComponent {
       const data: IEmployeeInformationFormData = this.EmployeeInformationForm.value as IEmployeeInformationFormData;
       this.doctor = this.doctors.filter(d => d.id == data.id)[0] as IDoctorEntity;
       this.impressions = this.allImpressions.filter(imp => imp.doctorID == data.id)
+      this.impressions.map(i => i.impressionDateTime = new Date(i.impressionDateTime).toLocaleString());
   }
-
-
 
 }

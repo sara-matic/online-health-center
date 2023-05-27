@@ -13,6 +13,7 @@ interface IImpressionFormData {
   headline: string;
   content: string;
   mark: number;
+  impressionDateTime: string;
 }
 
 @Component({
@@ -39,7 +40,8 @@ export class ShowImpressionsFormComponent {
       patientID: new FormControl(''),
       headline: new FormControl(''),
       content: new FormControl(''),
-      mark: new FormControl('')
+      mark: new FormControl(''),
+      impressionDateTime: new FormControl('')
     })
   }
 
@@ -61,7 +63,8 @@ export class ShowImpressionsFormComponent {
         patientID: entity.patientID,
         headline: entity.headline,
         content: entity.content,
-        mark: entity.mark
+        mark: entity.mark,
+        impressionDateTime: new Date(entity.impressionDateTime).toLocaleString()
       }
 
       uiDataCollection.push(impressionUIData);
