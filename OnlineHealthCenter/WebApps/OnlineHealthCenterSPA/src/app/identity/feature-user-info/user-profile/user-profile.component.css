@@ -1,0 +1,17 @@
+div {
+    overflow-x: auto;
+    padding: 30px;
+}
+
+h3 {
+    margin-top: 40px;
+    margin-left: 30px;
+}
+
+table {
+    width: 100%;
+}
+
+table td {
+    padding: 15px;
+}

@@ -6,11 +6,15 @@ import { IdentityComponent } from './identity.component';
 import { LoginFormComponent } from './feature-authentication/login-form/login-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
+import { UserProfileComponent } from './feature-user-info/user-profile/user-profile.component';
+import { LogoutComponent } from './feature-authentication/logout/logout.component';
 
 @NgModule({
   declarations: [
     IdentityComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    UserProfileComponent,
+    LogoutComponent
   ],
   imports: [
     CommonModule,

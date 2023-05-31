@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthenticationFacadeService } from '../../domain/application-services/authentication-facade.service';
+import { Router } from '@angular/router';
 
 interface ILoginFormData {
   username: string;
@@ -15,7 +16,7 @@ interface ILoginFormData {
 export class LoginFormComponent {
   public loginForm: FormGroup;
 
-  constructor(private authenticationService: AuthenticationFacadeService) {
+  constructor(private authenticationService: AuthenticationFacadeService, private routerService: Router) {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.minLength(3)]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
@@ -33,7 +34,9 @@ export class LoginFormComponent {
       window.alert(`Login ${success ? 'is' : 'is not'} successfull.`);
       this.loginForm.reset();
       if (success) {
-        //this.routerService();
+        this.routerService.navigate(['/identity', 'profile']);
+        // var element = document.getElementById('login-button');
+        // element!.textContent = "Logout";
       }
     });
   }

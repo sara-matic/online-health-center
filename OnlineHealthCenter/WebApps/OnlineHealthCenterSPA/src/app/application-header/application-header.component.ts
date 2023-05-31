@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginActionEnum } from './LoginActionEnum';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-application-header',
@@ -11,7 +12,7 @@ export class ApplicationHeaderComponent {
 
   private loginType: LoginActionEnum;
   
-  constructor()
+  constructor(private routerService: Router)
   {
     this.loginType = LoginActionEnum.LoginRegister;
   }
@@ -24,6 +25,7 @@ export class ApplicationHeaderComponent {
     {
       element!.textContent = "Logout";
       this.loginType = LoginActionEnum.Logout;
+      this.routerService.navigate(['/identity']);
     }
     else if (window.confirm("Logout is requested.\n\n Confirm or cancel."))
     {
