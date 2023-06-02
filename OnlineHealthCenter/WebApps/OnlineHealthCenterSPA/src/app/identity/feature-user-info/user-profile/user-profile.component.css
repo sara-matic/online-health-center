@@ -1,17 +1,54 @@
-div {
+div 
+{
     overflow-x: auto;
     padding: 30px;
 }
 
-h3 {
+h3 
+{
     margin-top: 40px;
     margin-left: 30px;
+    font-weight: 450;
 }
 
-table {
-    width: 100%;
+.pop-animation 
+{
+    position: relative;
+    animation: pop 0.7s;
 }
 
-table td {
+@keyframes pop 
+{
+    0% {
+      transform: translateY(200%);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+}
+
+table 
+{
+    width: 60%;
+    border-collapse:collapse;
+    border-color: rgb(166, 194, 194);
+    background-color: rgb(213, 229, 231);
+    font-weight: 400;
+}
+
+table td 
+{
     padding: 15px;
+}
+
+tr:hover 
+{
+    background-color: #ecf2f7;
+}
+
+.table-active 
+{
+    background-color: rgb(110, 167, 177);
 }

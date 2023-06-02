@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { ILoginRequest } from '../model/login-request';
 import { ILoginResponse } from '../model/login-response';
 import { ILogoutRequest } from '../model/logout-request';
+import { IRefreshTokenRequest } from '../model/refresh-token-request';
+import { IRefreshTokenResponse } from '../model/refresh-token-response';
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +21,9 @@ export class AuthenticationService {
 
   public logout(request: ILogoutRequest): Observable<Object> {
     return this.httpClient.post(`${this.url}/Logout`, request);
+  }
+
+  public refreshToken(request: IRefreshTokenRequest): Observable<IRefreshTokenResponse> {
+    return this.httpClient.post<IRefreshTokenResponse>(`${this.url}/Refresh`, request);
   }
 }

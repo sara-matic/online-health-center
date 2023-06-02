@@ -4,17 +4,20 @@
     <div class="col-6">
         <div class="nav flex-column">
             <div class="col-12">
-                <button class="nav-link" (click)="showForm()">Login</button>
+                <button class="nav-link" (click)="showLoginForm()">Login</button>
             </div>
             <div class="col-12">
-                <app-login-form *ngIf="formVisibility"></app-login-form>
+                <app-login-form *ngIf="loginFormVisibility"></app-login-form>
             </div>
         </div>
     </div>
     <div class="col-6">
         <div class="nav flex-column">
             <div class="col-12">
-                <a class="nav-link">Register</a>
+                <button class="nav-link" (click)="showRegisterForm()">Register</button>
+            </div>
+            <div class="col-12">
+                <app-registration-form *ngIf="registerFormVisibility"></app-registration-form>
             </div>
         </div>
     </div>

@@ -8,13 +8,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatDividerModule } from '@angular/material/divider';
 import { UserProfileComponent } from './feature-user-info/user-profile/user-profile.component';
 import { LogoutComponent } from './feature-authentication/logout/logout.component';
+import { RegistrationFormComponent } from './feature-authentication/registration-form/registration-form.component';
 
 @NgModule({
   declarations: [
     IdentityComponent,
     LoginFormComponent,
     UserProfileComponent,
-    LogoutComponent
+    LogoutComponent,
+    RegistrationFormComponent
   ],
   imports: [
     CommonModule,

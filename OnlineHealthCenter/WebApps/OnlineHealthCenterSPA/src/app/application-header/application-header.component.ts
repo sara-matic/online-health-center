@@ -21,18 +21,13 @@ export class ApplicationHeaderComponent {
   {
     var element = document.getElementById('login-button');
 
-    if (this.loginType === LoginActionEnum.LoginRegister)
+    if (element?.textContent === 'Login/Register')
     {
-      element!.textContent = "Logout";
-      this.loginType = LoginActionEnum.Logout;
       this.routerService.navigate(['/identity']);
     }
     else if (window.confirm("Logout is requested.\n\n Confirm or cancel."))
     {
-      element!.textContent = "Login/Register";
-      this.loginType = LoginActionEnum.LoginRegister;
+      this.routerService.navigate(['/identity', 'logout']);
     }
-
-    console.log("Login type: ", this.loginType);
   }
 }

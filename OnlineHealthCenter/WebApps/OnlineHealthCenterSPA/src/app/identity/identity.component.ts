@@ -6,9 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./identity.component.css']
 })
 export class IdentityComponent {
-  formVisibility: boolean = false;
+  loginFormVisibility: boolean = false;
+  registerFormVisibility: boolean = false;
 
-  showForm(): void {
-    this.formVisibility = true;
+  showLoginForm(): void {
+    this.loginFormVisibility = !this.loginFormVisibility;
+    this.registerFormVisibility = false;
+  }
+
+  showRegisterForm(): void {
+    this.registerFormVisibility = !this.registerFormVisibility;
+    this.loginFormVisibility = false;
   }
 }

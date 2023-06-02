@@ -1,6 +1,6 @@
 <h3>User information</h3>
 
-<div *ngIf="appState$ | async as appState">
+<div class="pop-animation" *ngIf="appState$ | async as appState">
     <table class="table table-stripped table-bordered" *ngIf="!appState.isEmpty(); else notLoggedIn">
         <tbody>
             <tr>

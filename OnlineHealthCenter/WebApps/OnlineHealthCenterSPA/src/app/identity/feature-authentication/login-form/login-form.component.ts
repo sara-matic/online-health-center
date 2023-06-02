@@ -25,7 +25,14 @@ export class LoginFormComponent {
 
   public onLoginFormSubmit(): void {
     if (this.loginForm.invalid) {
-      window.alert('Form has errors');
+
+      if (this.loginForm.controls['username'].invalid) {
+        window.alert('Username must be at least 3 characters long.');
+      }
+      else if (this.loginForm.controls['password'].invalid) {
+        window.alert('Password must be at least 8 characters long.');
+      }
+
       return;
     }
 
@@ -35,8 +42,8 @@ export class LoginFormComponent {
       this.loginForm.reset();
       if (success) {
         this.routerService.navigate(['/identity', 'profile']);
-        // var element = document.getElementById('login-button');
-        // element!.textContent = "Logout";
+        var element = document.getElementById('login-button');
+        element!.textContent = "Logout";
       }
     });
   }

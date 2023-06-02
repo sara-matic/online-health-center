@@ -1,16 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { AuthenticationFacadeService } from '../../domain/application-services/authentication-facade.service';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-logout',
   templateUrl: './logout.component.html',
   styleUrls: ['./logout.component.css']
 })
-export class LogoutComponent {
-  public logoutSuccess$: Observable<boolean>;
+export class LogoutComponent implements OnDestroy {
+  public logoutSuccess: boolean = false;
+  private sub: Subscription;
 
   constructor(private authenticationService: AuthenticationFacadeService) {
-    this.logoutSuccess$ = this.authenticationService.logout();
+    this.sub = this.authenticationService.logout().subscribe((success: boolean) => {
+      if (success) {
+        this.logoutSuccess = true;
+        var element = document.getElementById('login-button');
+        element!.textContent = "Login/Register";
+      }
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 }

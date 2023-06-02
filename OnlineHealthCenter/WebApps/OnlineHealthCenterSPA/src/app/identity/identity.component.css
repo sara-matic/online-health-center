@@ -7,9 +7,10 @@ h1
 
 .col-12 
 {
+    display: flex;
     text-align: center;
     align-items: center;
-    display: flex;
+    flex-direction: column;
     justify-content: center;
     margin-top: 2%;
 }
