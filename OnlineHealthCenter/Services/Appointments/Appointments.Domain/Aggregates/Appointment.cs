@@ -9,15 +9,19 @@ namespace Appointments.Domain.Aggregates
     {
         public string DoctorId { get; private set; }
         public string PatientId { get; private set; }
+        public string DoctorName { get; private set; }
+        public string PatientName { get; private set; }
         public string Specialty { get; private set; }
         public int? InitialPrice { get; private set; }
         public DateTime AppointmentTime { get; private set; }
         public AppointmentRequestStatus? AppointmentRequestStatus { get; private set; }
 
-        public Appointment(string doctorId, string patientId, string specialty, int? initialPrice, DateTime appointmentTime, AppointmentRequestStatus appointmentRequestStatus, string appointmentId = null)
+        public Appointment(string doctorId, string patientId, string doctorName, string patientName, string specialty, int? initialPrice, DateTime appointmentTime, AppointmentRequestStatus appointmentRequestStatus, string appointmentId = null)
         {
             this.DoctorId = doctorId ?? throw new ArgumentNullException(nameof(doctorId));
             this.PatientId = patientId ?? throw new ArgumentNullException(nameof(patientId));
+            this.DoctorName = doctorName ?? throw new ArgumentNullException(nameof(doctorName));
+            this.PatientName = patientName ?? throw new ArgumentNullException(nameof(patientName));
             this.AppointmentId = appointmentId != null || appointmentId != string.Empty ? appointmentId : Guid.NewGuid().ToString();
             this.Specialty = specialty;
             this.InitialPrice = initialPrice;
@@ -25,10 +29,12 @@ namespace Appointments.Domain.Aggregates
             this.AppointmentRequestStatus = appointmentRequestStatus ?? throw new ArgumentNullException(nameof(appointmentRequestStatus));
         }
 
-        public Appointment(string appointmentid, string doctorid, string patientid, string specialty, string appointmenttime, string appointmentrequeststatus, int? initialprice, string requestcreatedby, string requestcreatedtime)
+        public Appointment(string appointmentid, string doctorid, string patientid, string doctorName, string patientName, string specialty, string appointmenttime, string appointmentrequeststatus, int? initialprice, string requestcreatedby, string requestcreatedtime)
         {
             this.AppointmentId = appointmentid ?? throw new ArgumentNullException(nameof(appointmentid));
             this.DoctorId = doctorid ?? throw new ArgumentNullException(nameof(doctorid));
+            this.DoctorName = doctorName ?? throw new ArgumentNullException(nameof(doctorName));
+            this.PatientName = patientName ?? throw new ArgumentNullException(nameof(patientName));
             this.PatientId = patientid ?? throw new ArgumentNullException(nameof(patientid));
             this.Specialty = specialty;
             this.InitialPrice = initialprice;

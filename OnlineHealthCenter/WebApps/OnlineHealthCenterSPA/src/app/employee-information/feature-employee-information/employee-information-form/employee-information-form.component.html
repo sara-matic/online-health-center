@@ -10,14 +10,14 @@
             <label class="form-label"><b>Choose doctor:</b></label>
             <select formControlName="id" class="form-control" class="dropdown" (change)="onSelectionChanged()">
                 <option value="" disabled selected>*Select your doctor</option>
-                <option *ngFor="let d of doctors" value="{{d.id}}">({{d.specialty}}) {{d.title}} {{d.firstName}} {{d.lastName}}</option>
+                <option *ngFor="let d of doctors" value="{{d.id}}">({{d.medicalSpecialty}}) {{d.title}} {{d.firstName}} {{d.lastName}}</option>
             </select>
         </div>
     
         <br>
     
         <div class="information">
-            <label class="text"><b><u>Informations about doctor:</u></b></label> 
+            <label class="text"><b><u>Information about doctor:</u></b></label> 
 
             <br><br>
 
@@ -32,7 +32,7 @@
             <br>
 
             <label><b>Specialty:</b></label>
-            {{doctor?.specialty}}
+            {{doctor?.medicalSpecialty}}
 
             <br>
 
@@ -51,6 +51,7 @@
                 <div *ngFor="let i of impressions">
                     <br>
                     <div class = "impression">
+                        <i>Date and Time:</i>{{i.impressionDateTime}} <br>
                         <i>Headline:</i><b> {{i.headline}}</b> <br>
                         <i>Mark:</i> {{i.mark}} <br>
                         <i>Content:</i> {{i.content}}

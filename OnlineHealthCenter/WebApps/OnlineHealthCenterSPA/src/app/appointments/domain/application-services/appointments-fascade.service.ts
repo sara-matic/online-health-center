@@ -31,9 +31,14 @@ export class AppointmentsFascadeService {
     return this.appointmentsService.applyDiscount(patientId, specialty);
   }
 
-  public createAppointment(patientId : string, appointmentTime: string, specialty: string, doctorId: string,
+  public createAppointment(patientId : string, appointmentTime: string, specialty: string, doctorId: string, doctorName: string, patientName: string,
     requestCreatedBy: string, initialPrice: number, requestCreatedTime: string, requestStatus: string) : Observable<void>
   {
-    return this.appointmentsService.createAppointment(patientId, appointmentTime, specialty, doctorId, requestCreatedBy, initialPrice, requestCreatedTime, requestStatus);
+    return this.appointmentsService.createAppointment(patientId, appointmentTime, specialty, doctorId, doctorName, patientName, requestCreatedBy, initialPrice, requestCreatedTime, requestStatus);
+  }
+
+  public deleteDiscount(appointmentId: string): Observable<boolean>
+  {
+    return this.appointmentsService.deleteDiscount(appointmentId);
   }
 }
