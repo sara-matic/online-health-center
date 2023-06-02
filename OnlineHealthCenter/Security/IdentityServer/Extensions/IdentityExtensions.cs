@@ -77,6 +77,12 @@ namespace IdentityServer.Extensions
             services.AddScoped<IIdentityRepository, IdentityRepository>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
+
+            services.AddCors(options => {
+                options.AddPolicy("CorsPolicy", builder => 
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            });
+
             return services;
         }
     }

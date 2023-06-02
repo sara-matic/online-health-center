@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LoginActionEnum } from './LoginActionEnum';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-application-header',
@@ -11,7 +12,7 @@ export class ApplicationHeaderComponent {
 
   private loginType: LoginActionEnum;
   
-  constructor()
+  constructor(private routerService: Router)
   {
     this.loginType = LoginActionEnum.LoginRegister;
   }
@@ -20,17 +21,13 @@ export class ApplicationHeaderComponent {
   {
     var element = document.getElementById('login-button');
 
-    if (this.loginType === LoginActionEnum.LoginRegister)
+    if (element?.textContent === 'Login/Register')
     {
-      element!.textContent = "Logout";
-      this.loginType = LoginActionEnum.Logout;
+      this.routerService.navigate(['/identity']);
     }
     else if (window.confirm("Logout is requested.\n\n Confirm or cancel."))
     {
-      element!.textContent = "Login/Register";
-      this.loginType = LoginActionEnum.LoginRegister;
+      this.routerService.navigate(['/identity', 'logout']);
     }
-
-    console.log("Login type: ", this.loginType);
   }
 }

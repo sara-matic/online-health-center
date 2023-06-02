@@ -30,12 +30,11 @@ namespace IdentityServer.Controllers
             return Ok(this.mapper.Map<IEnumerable<UserDetailsDTO>>(users));
         }
 
-        [HttpGet("[action]")]
+        [HttpGet("{username}")]
         [ProducesResponseType(typeof(UserDetailsDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<UserDetailsDTO>> GetLoggedInUser()
+        public async Task<ActionResult<UserDetailsDTO>> GetUser(string username)
         {
-            var username = User.FindFirst(ClaimTypes.Name).Value;
             var user = await this.repository.GetUserByUsername(username);
             if (user == null)
             {

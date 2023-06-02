@@ -1,0 +1,21 @@
+h1
+{
+    text-align: center;
+    color: rgb(29, 100, 99);
+    margin-top: 2.5%;
+}
+
+.col-12 
+{
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 2%;
+}
+
+.nav-link
+{
+    margin-top: 3%;
+}
