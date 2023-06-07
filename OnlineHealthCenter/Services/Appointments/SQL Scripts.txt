@@ -7,6 +7,8 @@ CREATE TABLE Appointments
 	appointmentid varchar(50) primary key,
 	doctorid varchar(50) not null,
 	patientid varchar(50) not null,
+	doctorname varchar(50) not null,
+	patientname varchar(50) not null,
 	specialty varchar(24) not null,
 	appointmenttime varchar(50) not null,
 	appointmentrequeststatus varchar(24) not null,
