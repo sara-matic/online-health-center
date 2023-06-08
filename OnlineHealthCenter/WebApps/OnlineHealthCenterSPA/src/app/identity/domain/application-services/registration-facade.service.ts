@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { RegistrationService } from '../infrastructure/registration.service';
 import { Observable, map, take, of, catchError } from 'rxjs';
 import { IRegistrationRequest } from '../model/registration-request';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -21,15 +22,19 @@ export class RegistrationFacadeService {
       }),
       catchError((err) => {
         let errorMessage: string;
-        if (err.error && err.error.length !== 0) {
-            errorMessage = Object.values(err.error).join('\n');
-        }
-        else if (err.status === 403) {
+
+        if (err.status === 401 || err.status === 403) {
           errorMessage = 'To register staff you need to be logged in as a nurse.';
         }
         else {
-          errorMessage = 'Registration is not successfull.';
+          if (err.error && err.error.length !== 0) {
+            errorMessage = Object.values(err.error).join('\n');
+          }
+          else {
+            errorMessage = 'Registration is not successfull.';
+          }
         }
+
         console.error(err);
         return of(errorMessage);
       })

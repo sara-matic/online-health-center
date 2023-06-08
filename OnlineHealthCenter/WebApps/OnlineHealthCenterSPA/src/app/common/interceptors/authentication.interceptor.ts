@@ -70,7 +70,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
           if (accessToken === null) {
             return throwError(() => {
               const error: any = new Error('Unauthorized');
-              return new HttpErrorResponse({ error, status: 401});
+              return new HttpErrorResponse({ error, status: 401 });
             });
           }
 
