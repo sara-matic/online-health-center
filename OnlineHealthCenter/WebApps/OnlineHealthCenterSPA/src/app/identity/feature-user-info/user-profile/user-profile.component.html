@@ -1,19 +1,26 @@
-<h3>User information</h3>
+<h3>User information:</h3>
 
 <div class="pop-animation" *ngIf="appState$ | async as appState">
     <table class="table table-stripped table-bordered" *ngIf="!appState.isEmpty(); else notLoggedIn">
         <tbody>
             <tr>
+                <td class="table-active">Id</td>
+                <td>{{ appState.userId }}</td>
+            </tr>
+            
+            <tr>
                 <td class="table-active">Username</td>
                 <td>{{ appState.username }}</td>
             </tr>
-            <tr>
-                <td class="table-active">Email</td>
-                <td>{{ appState.email }}</td>
-            </tr>
+
             <tr>
                 <td class="table-active">Name</td>
                 <td>{{ appState.firstName }} {{ appState.lastName }}</td>
+            </tr>
+
+            <tr>
+                <td class="table-active">Email</td>
+                <td>{{ appState.email }}</td>
             </tr>
         </tbody>
     </table>
