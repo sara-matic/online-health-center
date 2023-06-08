@@ -17,5 +17,6 @@ namespace IdentityServer.Repositories.Interfaces
         Task RemoveRefreshTokenFromDb(string refreshToken);
         Task DeleteUser(User user);
         Task<bool> ChangePassword(User user, string oldPassword, string newPassword);
+        Task<IEnumerable<User>> SearchUsersByName(string firstName, string lastName);
     }
 }

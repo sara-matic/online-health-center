@@ -21,7 +21,7 @@ namespace IdentityServer.Controllers
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        [Authorize(Roles = "Nurse")]
+        [Authorize(Roles = "Nurse,Doctor")]
         [HttpGet("[action]")]
         [ProducesResponseType(typeof(IEnumerable<UserDetailsDTO>), StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<UserDetailsDTO>>> GetAllUsers()
@@ -96,6 +96,30 @@ namespace IdentityServer.Controllers
             }
 
             return Ok();
+        }
+
+        [Authorize(Roles = "Nurse,Doctor")]
+        [HttpGet("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<UserDetailsDTO>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<IEnumerable<UserDetailsDTO>>> SearchUsersByName(string name)
+        {
+            name = name.ToLower();
+
+            string firstName = "";
+            string lastName = "";
+
+            string[] words = name.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            if (words.Length > 0) {
+                firstName = words[0];
+            }
+
+            if (words.Length > 1) {
+                lastName = words[1];
+            }
+ 
+            var users = await this.repository.SearchUsersByName(firstName, lastName);
+            return Ok(this.mapper.Map<IEnumerable<UserDetailsDTO>>(users));
         }
     }
 }
