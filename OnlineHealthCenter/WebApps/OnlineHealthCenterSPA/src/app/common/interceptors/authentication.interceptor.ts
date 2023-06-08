@@ -67,8 +67,11 @@ export class AuthenticationInterceptor implements HttpInterceptor {
 
       return this.authenticationService.refreshToken().pipe(
         switchMap((accessToken: string | null) => {
-          if (accessToken == null) {
-            return throwError(() => new Error('Refresh token flow failed'));
+          if (accessToken === null) {
+            return throwError(() => {
+              const error: any = new Error('Unauthorized');
+              return new HttpErrorResponse({ error, status: 401});
+            });
           }
 
           this.isRefreshing = false;
