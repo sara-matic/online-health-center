@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { AuthenticationFacadeService } from '../../domain/application-services/authentication-facade.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logout',
@@ -11,12 +12,10 @@ export class LogoutComponent implements OnDestroy {
   public logoutSuccess: boolean = false;
   private sub: Subscription;
 
-  constructor(private authenticationService: AuthenticationFacadeService) {
+  constructor(private authenticationService: AuthenticationFacadeService, private routerService: Router) {
     this.sub = this.authenticationService.logout().subscribe((success: boolean) => {
       if (success) {
         this.logoutSuccess = true;
-        var element = document.getElementById('login-button');
-        element!.textContent = "Login/Register";
       }
     });
   }

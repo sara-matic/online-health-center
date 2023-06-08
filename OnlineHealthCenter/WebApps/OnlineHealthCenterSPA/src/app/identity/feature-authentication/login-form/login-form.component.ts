@@ -38,13 +38,15 @@ export class LoginFormComponent {
 
     const data: ILoginFormData = this.loginForm.value as ILoginFormData;
     this.authenticationService.login(data.username, data.password).subscribe((success: boolean) => {
-      window.alert(`Login ${success ? 'is' : 'is not'} successfull.`);
-      this.loginForm.reset();
       if (success) {
+        window.alert('Login is successfull.');
         this.routerService.navigate(['/identity', 'profile']);
-        var element = document.getElementById('login-button');
-        element!.textContent = "Logout";
       }
+      else {
+        window.alert('Login is not successfull.\nMake sure you entered valid username and password.');
+      }
+
+      this.loginForm.reset();
     });
   }
 }
