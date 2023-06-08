@@ -5,6 +5,9 @@ import { AppointmentsFascadeService } from '../../domain/application-services/ap
 import { IAppointmentEntity } from '../../domain/model/appointmentEntity';
 import { DiscountsService } from '../../domain/infrastructure/discounts.service';
 import { IDiscountEntity } from '../../domain/model/discountEntity';
+import { AppStateService } from 'src/app/common/app-state/app-state.service';
+import { IAppState } from 'src/app/common/app-state/app-state';
+import { catchError, map, of, take } from 'rxjs';
 
 interface IScheduleFormData {
   appointmentID: string;
@@ -26,13 +29,11 @@ interface IScheduleFormData {
 })
 export class ScheduleFormComponent {
   public scheduleForm: FormGroup;
-
-  //TODO: replace hard coded data with real patientId
-  public appointmentsCollection: Array<IScheduleFormData> = this.getAppointmentsByPatientId("8de0295d-75de-4bba-abc8-43abc66b3103");
-
+  public appointmentsCollection!: Array<IScheduleFormData>;
   public selectedAppointment?: IScheduleFormData;
 
-  constructor(private service: AppointmentsFascadeService, private discountsSetvice: DiscountsService) {
+  constructor(private service: AppointmentsFascadeService, private discountsSetvice: DiscountsService, 
+    private appStateService: AppStateService) {
     this.scheduleForm = new FormGroup(
       {
         appointmentID: new FormControl(''),
@@ -45,6 +46,20 @@ export class ScheduleFormComponent {
         requestStatus: new FormControl('')
       }
     );
+
+    this.appStateService.getAppState().pipe(
+      take(1),
+      map((appState: IAppState) => {
+        return this.getAppointmentsByPatientId(appState.userId as string);
+      }),
+      catchError((err) => {
+        window.alert('Failed to retrieve previous appointments.')
+        console.error(err);
+        return of([]);
+      })
+    ).subscribe((appointments: IScheduleFormData[]) => {
+      this.appointmentsCollection = appointments;
+    });
   }
 
   private getAppointmentsByPatientId(patientID: string): Array<IScheduleFormData> {

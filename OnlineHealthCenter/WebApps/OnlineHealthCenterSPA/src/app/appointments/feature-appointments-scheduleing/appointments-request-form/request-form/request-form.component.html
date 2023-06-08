@@ -2,9 +2,9 @@
 
 <br>
 
-<form [formGroup]="requestForm" (ngSubmit)="onRequestSubmit()">
+<form [formGroup]="requestForm" (ngSubmit)="onRequestSubmit()" *ngIf="appState$ | async as appState">
     <div class="form-group">
-        <label class="form-label"><i>*Your ID: {{patientId}}</i></label>
+        <label class="form-label"><i>*Your ID: {{appState.userId}}</i></label>
     </div>
 
     <div class="form-group">

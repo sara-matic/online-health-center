@@ -5,6 +5,9 @@ import { EmployeesFascadeService } from 'src/app/common/domain/application-servi
 import { IApointmentTime } from 'src/app/appointments/domain/model/appointmentTimeEntity';
 import { IDoctorEntity } from 'src/app/common/domain/model/doctorEntity';
 import { withNoXsrfProtection } from '@angular/common/http';
+import { AppStateService } from 'src/app/common/app-state/app-state.service';
+import { Observable, catchError, map, of, take } from 'rxjs';
+import { IAppState } from 'src/app/common/app-state/app-state';
 
 interface IRequestFormData {
   doctor: string;
@@ -31,10 +34,11 @@ export class RequestFormComponent {
   public readonly doctorTimes: Array<IApointmentTime> = [{ time: "8:00:00" }, { time: "9:00:00" }, { time: "10:00:00" }, { time: "11:00:00" }, { time: "12:00:00" }, { time: "13:00:00" },
   { time: "14:00:00" }, { time: "15:00:00" }, { time: "16:00:00" }];
 
-  public readonly patientId = "8de0295d-75de-4bba-abc8-43abc66b3103"; //TODO: replace hard coded data with real patientID
+  public appState$!: Observable<IAppState>;// = "8de0295d-75de-4bba-abc8-43abc66b3103"; //TODO: replace hard coded data with real patientID
   public initialPrice?: number;
 
-  constructor(private employeesService: EmployeesFascadeService, private appointmentsService: AppointmentsFascadeService) {
+  constructor(private employeesService: EmployeesFascadeService, private appointmentsService: AppointmentsFascadeService,
+    private appStateService: AppStateService) {
     this.requestForm = new FormGroup(
       {
         doctor: new FormControl(''),
@@ -45,6 +49,8 @@ export class RequestFormComponent {
         appointmentTime: new FormControl('')
       }
     );
+
+    this.appState$ = this.appStateService.getAppState();
   }
 
   private getDoctors(): Array<IDoctorEntity> {
