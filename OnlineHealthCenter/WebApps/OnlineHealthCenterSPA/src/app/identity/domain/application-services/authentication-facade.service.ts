@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of, switchMap, take } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, switchMap, take } from 'rxjs';
 import { AuthenticationService } from '../infrastructure/authentication.service';
 import { ILoginRequest } from '../model/login-request';
 import { ILoginResponse } from '../model/login-response';
@@ -17,13 +17,17 @@ import { IRefreshTokenResponse } from '../model/refresh-token-response';
   providedIn: 'root'
 })
 export class AuthenticationFacadeService {
+  private readonly loggedInKey = 'loggedIn';
+  private loginStatusSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(
     private authenticationService: AuthenticationService, 
     private appStateService: AppStateService, 
     private jwtService: JwtService,
     private userService: UserFacadeService
-  ) { }
+  ) { 
+    this.updateLoginStatus();
+  }
 
   public login(username: string, password: string): Observable<boolean> {
     const request: ILoginRequest = { username, password };
@@ -45,6 +49,9 @@ export class AuthenticationFacadeService {
         this.appStateService.setFirstName(userDetails.firstName);
         this.appStateService.setLastName(userDetails.lastName);
 
+        localStorage.setItem(this.loggedInKey, 'true');
+        this.updateLoginStatus();
+
         return true;
       }),
       catchError((err) => {
@@ -65,10 +72,18 @@ export class AuthenticationFacadeService {
       switchMap((request: ILogoutRequest) => this.authenticationService.logout(request)),
       map(() => {
         this.appStateService.clearAppState();
+
+        localStorage.removeItem(this.loggedInKey);
+        this.updateLoginStatus();
+
         return true;
       }),
       catchError((err) => {
         console.error(err);
+
+        localStorage.removeItem(this.loggedInKey);
+        this.updateLoginStatus();
+
         return of(false);
       })
     );
@@ -86,13 +101,29 @@ export class AuthenticationFacadeService {
         this.appStateService.setAccessToken(response.accessToken);
         this.appStateService.setRefreshToken(response.refreshToken);
 
+        localStorage.setItem(this.loggedInKey, 'true');
+        this.updateLoginStatus();
+
         return response.accessToken;
       }),
       catchError((err) => {
         console.log(err);
         this.appStateService.clearAppState();
+
+        localStorage.removeItem(this.loggedInKey);
+        this.updateLoginStatus();
+
         return of(null);
       })
     );
+  }
+
+  public isLoggedIn(): Observable<boolean> {
+    return this.loginStatusSubject.asObservable();
+  }
+
+  private updateLoginStatus(): void {
+    const loggedIn = localStorage.getItem(this.loggedInKey) === 'true';
+    this.loginStatusSubject.next(loggedIn);
   }
 }
