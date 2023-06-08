@@ -24,8 +24,11 @@ export class RegistrationFacadeService {
         if (err.error && err.error.length !== 0) {
             errorMessage = Object.values(err.error).join('\n');
         }
+        else if (err.status === 403) {
+          errorMessage = 'To register staff you need to be logged in as a nurse.';
+        }
         else {
-          errorMessage = ('Registration is not successfull.');
+          errorMessage = 'Registration is not successfull.';
         }
         console.error(err);
         return of(errorMessage);

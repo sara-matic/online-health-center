@@ -1,0 +1,78 @@
+<p>Your reports:</p>
+
+<div *ngIf="(appState$ | async) as appState">
+    <div class="parent-container" *ngIf="isUserLoggedIn(appState); else notLoggedIn">
+        <div class="form-group" *ngIf="isPatientLoggedIn(appState)">
+            <label class="form-label">Search reports by Doctor name:</label>
+            <input type="text" class="form-control" [(ngModel)]="doctorFilter" (ngModelChange)="onDoctorFilterChange()">
+        </div>
+        
+        <div class="form-group" *ngIf="isDoctorLoggedIn(appState)">
+            <label class="form-label">Search reports by Patient name:</label>
+            <input type="text" class="form-control" [(ngModel)]="patientFilter" (ngModelChange)="onPatientFilterChange()">
+        </div>
+        
+        <div class="report-list-container">
+            <div class="report-list-scroll">
+                <ul>
+                    <li class="list-item" *ngFor="let report of filteredReports">
+                        <div class="report-info">
+                            <div>
+                                <span class="report-label">Patient:</span>
+                                <span class="report-value">{{ report.patientFirstName }} {{ report.patientLastName }} ({{ report.patientId }})</span>
+                            </div>
+                        </div>
+            
+                        <div class="report-info">
+                            <div>
+                                <span class="report-label">Doctor:</span>
+                                <span class="report-value">{{ report.doctorFirstName }} {{ report.doctorLastName }} ({{ report.doctorId }})</span>
+                            </div>
+                        </div>
+                        
+                        <div class="report-info">
+                            <div>
+                                <span class="report-label">Comment:</span>
+                                <span class="report-value">{{ report.comment }}</span>
+                            </div>
+                        </div>
+
+                        <div class="report-info">
+                            <div>
+                                <span class="report-label">Prescription:</span>
+                                <span class="report-value">{{ report.prescription }}</span>
+                            </div>
+                        </div>
+
+                        <div class="report-info">
+                            <div>
+                                <span class="report-label">Diagnosis:</span>
+                                <span class="report-value">{{ report.diagnosis }}</span>
+                            </div>
+                        </div>
+
+                        <div class="report-info">
+                            <div>
+                                <span class="report-label">Date:</span>
+                                <span class="report-value">{{ report.createdTime | date:'dd.MM.yyyy' }}</span>
+                            </div>
+                        </div>
+
+                        <div class="report-info">
+                            <div>
+                                <span class="report-label">Time:</span>
+                                <span class="report-value">{{ report.createdTime | date:'HH:mm' }}</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="message">
+        <ng-template #notLoggedIn>
+            <p style="font-size: 140%; font-weight: 400; margin-left: 10%;">Please login to see your reports.</p>
+        </ng-template>
+    </div>
+</div>

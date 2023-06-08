@@ -97,5 +97,13 @@ namespace IdentityServer.Repositories
             var result = await this.userManager.ChangePasswordAsync(user, oldPassword, newPassword);
             return result.Succeeded;
         }
+
+        public async Task<IEnumerable<User>> SearchUsersByName(string firstName, string lastName)
+        {
+            firstName = firstName.ToLower();
+            lastName = lastName.ToLower();
+
+            return await this.userManager.Users.Where(u => (u.FirstName.ToLower().StartsWith(firstName) && u.LastName.ToLower().StartsWith(lastName)) || (u.LastName.ToLower().StartsWith(firstName) && u.FirstName.ToLower().StartsWith(lastName))).ToListAsync();
+        }
     }
 }

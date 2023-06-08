@@ -23,6 +23,9 @@ import { RegistrationFormComponent } from './feature-authentication/registration
     IdentityRoutingModule,
     ReactiveFormsModule,
     MatDividerModule
+  ],
+  exports: [
+    LoginFormComponent
   ]
 })
 export class IdentityModule { }

@@ -1,9 +1,23 @@
 .login-form 
 {
     width: 100%;
+    height: 250px;
     margin: 0 auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 10px;
     background-color: #f7f7f7;
+}
+
+.form-group
+{
+    padding-bottom: 5px;
+}
+
+.btn
+{
+    margin-bottom: 3%;
+    position: relative;
+    width: 80px;
+    left: 90px;
 }

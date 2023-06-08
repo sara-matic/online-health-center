@@ -1,20 +1,27 @@
 div 
 {
     overflow-x: auto;
-    padding: 30px;
+    padding: 70px;
+    margin-left: 0;
 }
 
 h3 
 {
-    margin-top: 40px;
-    margin-left: 30px;
-    font-weight: 450;
+    margin-top: 60px;
+    margin-left: 10%;
+    margin-bottom: 0;
+    font-size: 180%;
+    color: rgb(25, 68, 67);
+    font-weight: 400;
 }
 
 .pop-animation 
 {
     position: relative;
     animation: pop 0.7s;
+    padding-top: 50px;
+    margin-left: 10%;
+    padding-left: 0;
 }
 
 @keyframes pop 
@@ -31,11 +38,14 @@ h3
 
 table 
 {
-    width: 60%;
-    border-collapse:collapse;
-    border-color: rgb(166, 194, 194);
-    background-color: rgb(213, 229, 231);
+    width: 70%;
+    height: 185px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: #f0efef;
     font-weight: 400;
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 table td 
@@ -50,5 +60,5 @@ tr:hover
 
 .table-active 
 {
-    background-color: rgb(110, 167, 177);
+    background-color: rgb(156, 214, 224);
 }

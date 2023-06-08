@@ -14,8 +14,19 @@
     appearance: none;
     padding: 8px;
     border-radius: 4px;
-    border: 1px solid #ccc;
-    background-color: #fff;
     width: 100%;
     box-sizing: border-box;
+}
+
+.form-group
+{
+    padding-bottom: 10px;
+}
+
+.btn
+{
+    margin-bottom: 3%;
+    position: relative;
+    width: 100px;
+    left: 137px;
 }
