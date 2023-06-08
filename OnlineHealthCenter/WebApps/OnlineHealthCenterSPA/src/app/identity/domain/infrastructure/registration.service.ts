@@ -28,7 +28,7 @@ export class RegistrationService {
       }
       default:
         console.error('Invalid role specified');
-        return throwError('Invalid role');
+        return throwError(() => new Error('Invalid role'));
     }
   }
 
