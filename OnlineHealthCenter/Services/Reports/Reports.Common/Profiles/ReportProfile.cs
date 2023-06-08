@@ -12,6 +12,10 @@ namespace Reports.Common.Profiles
                 .ForMember(
                     dest => dest.Id, 
                     opt => opt.MapFrom(src => Guid.NewGuid())
+                )
+                .ForMember(
+                    dest => dest.CreatedTime,
+                    opt => opt.MapFrom(src => DateTime.Now)
                 );
 
             CreateMap<Report, ReportDTO>();
