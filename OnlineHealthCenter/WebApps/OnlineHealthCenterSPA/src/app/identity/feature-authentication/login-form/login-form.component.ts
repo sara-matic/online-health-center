@@ -44,9 +44,8 @@ export class LoginFormComponent {
       }
       else {
         window.alert('Login is not successfull.\nMake sure you entered valid username and password.');
+        this.loginForm.reset();
       }
-
-      this.loginForm.reset();
     });
   }
 }

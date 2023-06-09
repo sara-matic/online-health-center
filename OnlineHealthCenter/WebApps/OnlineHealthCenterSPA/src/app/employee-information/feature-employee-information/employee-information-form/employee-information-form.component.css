@@ -1,38 +1,42 @@
-.title
-{
+.title {
     color: rgb(29, 100, 99);
+    font-size: 24px;
+    margin-left: 1px;
 }
 
-.dropdown
-{
+.dropdown {
     position: relative;
-    left: 10px;
+    left: 0;
     width: 606px;
     height: 40px;
-
     color: white;
     background-color: rgb(100, 167, 167);
 }
 
-.information
-{
+.information {
     position: absolute;
-    left: 50px;
+    margin-left: 0;
     width: 730px;
-
-    border: solid, 1px;
-    border-style: solid;
-
-    border-color:  rgb(29, 100, 99);
+    border: none;
+    color: rgb(29, 100, 99);
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 3px;
 }
 
-.chooser
-{
-    position: relative;
-    left: 50px;
+.chooser {
+    margin-left: 0;
 }
 
-.text
-{
-    color:rgb(29, 100, 99);
+.text {
+    color: rgb(29, 100, 99);
+    font-size: 18px;
+}
+
+.impressions {
+    margin-top: 20px;
+}
+
+.impression {
+    margin-bottom: 10px;
 }

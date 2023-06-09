@@ -1,23 +1,22 @@
-<br>
-<h2 class="text">Information about our employees:</h2>
+<div class="text" style="margin-left: 5%;">
+    <h2 class="title">Information about our employees:</h2>
 
-<br>
+    <br>
 
-<div class="text">
-    <form [formGroup]="EmployeeInformationForm">
+    <form [formGroup]="EmployeeInformationForm" style="margin-left: 0;">
 
-        <div class="form-group" class = "chooser">
+        <div class="form-group chooser">
             <label class="form-label"><b>Choose doctor:</b></label>
-            <select formControlName="id" class="form-control" class="dropdown" (change)="onSelectionChanged()">
+            <select formControlName="id" class="form-control dropdown" (change)="onSelectionChanged()">
                 <option value="" disabled selected>*Select your doctor</option>
                 <option *ngFor="let d of doctors" value="{{d.id}}">({{d.medicalSpecialty}}) {{d.title}} {{d.firstName}} {{d.lastName}}</option>
             </select>
         </div>
-    
+
         <br>
-    
+
         <div class="information">
-            <label class="text"><b><u>Information about doctor:</u></b></label> 
+            <label class="text"><b><u>Information about doctor:</u></b></label>
 
             <br><br>
 
@@ -44,22 +43,22 @@
             <label><b>Biography:</b></label>
             {{doctor?.biography}}
 
-            <hr><hr>
+            <hr>
 
-            <div class = "impressions">
-                <label class="text"><b><u>Impressions:</u></b></label> 
+            <div class="impressions">
+                <label class="text"><b><u>Impressions:</u></b></label>
                 <div *ngFor="let i of impressions">
                     <br>
-                    <div class = "impression">
-                        <i>Date and Time:</i>{{i.impressionDateTime}} <br>
-                        <i>Headline:</i><b> {{i.headline}}</b> <br>
+                    <div class="impression">
+                        <i>Date and Time:</i> {{i.impressionDateTime}} <br>
+                        <i>Headline:</i> <b>{{i.headline}}</b> <br>
                         <i>Mark:</i> {{i.mark}} <br>
                         <i>Content:</i> {{i.content}}
                     </div>
                     <hr>
                 </div>
             </div>
-            
+
         </div>
     </form>
     <br>
