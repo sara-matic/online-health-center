@@ -1,18 +1,24 @@
-.information
-{    
-
+.information {
     text-align: left;
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-top: 30px;
-    border: solid, 1px;
-    border-style: solid;
-
-    border-color:  rgb(29, 100, 99);
-    color:rgb(29, 100, 99);
+    margin: 30px auto;
+    padding: 2%;
+    border: none;
+    color: rgb(29, 100, 99);
+    width: 90%;
+    border-radius: 3px;
+    background-color: #f7f7f7;
 }
 
-.text
-{
-    color:rgb(29, 100, 99);
+.text {
+    color: rgb(29, 100, 99);
+    font-size: 25;
+    font-weight: 500;
+}
+
+.information p {
+    margin: 20px 0;
+}
+
+.information i {
+    font-style: italic;
 }
