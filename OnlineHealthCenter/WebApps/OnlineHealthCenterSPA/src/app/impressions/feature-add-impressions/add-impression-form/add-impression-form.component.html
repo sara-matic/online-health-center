@@ -2,7 +2,10 @@
 
 <br>
 
-<form [formGroup]="addImpressionForm" (ngSubmit)="onAddImpressionSubmit()">
+<form [formGroup]="addImpressionForm" (ngSubmit)="onAddImpressionSubmit()" *ngIf="appState$ | async as appState">
+    <div class="form-group">
+        <label class="form-label"><i>*Your ID: {{appState.userId}}</i></label>
+    </div>
     <div class="form-group">
         <label class="form-label">Choose doctor:</label>
         <select formControlName="doctor" class="form-control" class="dropdown">
