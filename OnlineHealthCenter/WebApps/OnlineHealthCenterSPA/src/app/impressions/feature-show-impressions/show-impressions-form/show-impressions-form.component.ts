@@ -4,7 +4,10 @@ import { IImpressionEntity } from '../../domain/model/impressionEntity';
 import { IDoctorEntity } from 'src/app/common/domain/model/doctorEntity';
 import { EmployeesFascadeService } from 'src/app/common/domain/application-services/employees-fascade.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { of } from 'rxjs';
+import { Observable, catchError, map, of, take } from 'rxjs';
+import { IAppState } from 'src/app/common/app-state/app-state';
+import { AppStateService } from 'src/app/common/app-state/app-state.service';
+import { Role } from 'src/app/common/app-state/role';
 
 interface IImpressionFormData {
   id: string;
@@ -25,7 +28,7 @@ export class ShowImpressionsFormComponent {
 
   public showImpressionForm: FormGroup;
 
-  public allImpressions: Array<IImpressionFormData> = this.getImpressionsByPatientId("a15a4178-2964-4973-b1fe-425ef1fdc0a4");
+  public allImpressions: Array<IImpressionFormData> = [];
 
   public doctors: Array<IDoctorEntity> = this.getDoctors();
 
@@ -33,7 +36,10 @@ export class ShowImpressionsFormComponent {
 
   public impressions?: Array<IImpressionFormData>;
 
-  constructor(private impressionsService:  ImpressionsFascadeService, private employeesService: EmployeesFascadeService) {
+  public appState$!: Observable<IAppState>
+
+  constructor(private impressionsService:  ImpressionsFascadeService, private employeesService: EmployeesFascadeService,
+    private appStateService: AppStateService) {
     this.showImpressionForm = new FormGroup({
       id: new FormControl(''),
       doctor: new FormControl(''),
@@ -42,9 +48,23 @@ export class ShowImpressionsFormComponent {
       content: new FormControl(''),
       mark: new FormControl(''),
       impressionDateTime: new FormControl('')
-    })
-  }
+    });
 
+    this.appStateService.getAppState().pipe(
+      take(1),
+      map((appState: IAppState) => {
+        return this.getImpressionsByPatientId(appState.userId as string);
+      }),
+      catchError((err) => {
+        window.alert('Failed to retrieve previous appointments.')
+        console.error(err);
+        return of([]);
+      })
+    ).subscribe((impressions: IImpressionFormData[]) => {
+      this.allImpressions = impressions;
+    });
+  }
+  
   private getImpressionsByPatientId(patientID: string): Array<IImpressionFormData> {
     this.impressionsService.getImpressionsByPatientId(patientID).subscribe((impressions: Array<IImpressionEntity>) => {
       this.allImpressions = this.getFormDataFromImpressionEntities(impressions);

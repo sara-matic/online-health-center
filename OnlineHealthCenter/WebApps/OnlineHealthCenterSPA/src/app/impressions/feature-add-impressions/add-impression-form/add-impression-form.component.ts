@@ -3,6 +3,9 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { IDoctorEntity } from 'src/app/common/domain/model/doctorEntity';
 import { EmployeesFascadeService } from 'src/app/common/domain/application-services/employees-fascade.service';
 import { ImpressionsFascadeService } from '../../domain/application-services/impressions-fascade.service';
+import { IAppState } from 'src/app/common/app-state/app-state';
+import { Observable } from 'rxjs';
+import { AppStateService } from 'src/app/common/app-state/app-state.service';
 
 interface IAddImpressionFormData
 {
@@ -25,7 +28,10 @@ export class AddImpressionFormComponent {
 
   public doctors: Array<IDoctorEntity> = this.getDoctors();
 
-  constructor(private employeesService : EmployeesFascadeService, private impressionsService : ImpressionsFascadeService) {
+  public appState$!: Observable<IAppState>;
+
+  constructor(private employeesService : EmployeesFascadeService, private impressionsService : ImpressionsFascadeService,
+    private appStateService: AppStateService) {
     this.addImpressionForm = new FormGroup(
       {
         doctor: new FormControl(''),
@@ -35,6 +41,7 @@ export class AddImpressionFormComponent {
         mark: new FormControl('')
       }
     );
+    this.appState$ = this.appStateService.getAppState();
   }
 
   private getDoctors(): Array<IDoctorEntity> {
