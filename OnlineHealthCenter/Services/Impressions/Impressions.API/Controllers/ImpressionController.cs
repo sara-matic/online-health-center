@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace Impressions.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class ImpressionController : ControllerBase
@@ -87,19 +87,19 @@ namespace Impressions.API.Controllers
             return Ok(this.mapper.Map<IEnumerable<ImpressionDto>>(impressions));
         }
 
-        //[Authorize(Roles = "Patient")]
+        [Authorize(Roles = "Patient")]
         [Route("[action]/{id}")]
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ImpressionDto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<ImpressionDto>>> GetImpressionsByPatientId(string id)
         {
-            /*
+            
             if (User.FindFirst(ClaimTypes.NameIdentifier).Value != id)
             {
                 return Forbid();
             }
-            */
+            
             var impressions = await this.impressionRepository.GetImpressionsByPatientId(id);
 
             if (impressions == null)
@@ -152,9 +152,10 @@ namespace Impressions.API.Controllers
         [Authorize(Roles = "Patient")]
         [Route("[action]")]
         [HttpPost]
-        [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> AddImpression([FromBody] CreateImpressionDto createImpressionDto)
         {
+            
             if (User.FindFirst(ClaimTypes.NameIdentifier).Value != createImpressionDto.PatientID)
             {
                 return Forbid();

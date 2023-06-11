@@ -4,13 +4,13 @@ import { IDoctorEntity } from 'src/app/common/domain/model/doctorEntity';
 import { EmployeesFascadeService } from 'src/app/common/domain/application-services/employees-fascade.service';
 import { ImpressionsFascadeService } from '../../domain/application-services/impressions-fascade.service';
 import { IAppState } from 'src/app/common/app-state/app-state';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, switchMap, take } from 'rxjs';
 import { AppStateService } from 'src/app/common/app-state/app-state.service';
+import { NONE_TYPE } from '@angular/compiler';
 
 interface IAddImpressionFormData
 {
   doctor: string;
-  patientID: string;
   headline: string;
   content: string;
   mark: number;
@@ -28,14 +28,16 @@ export class AddImpressionFormComponent {
 
   public doctors: Array<IDoctorEntity> = this.getDoctors();
 
+  public doctor? : IDoctorEntity;
+
   public appState$!: Observable<IAppState>;
+
 
   constructor(private employeesService : EmployeesFascadeService, private impressionsService : ImpressionsFascadeService,
     private appStateService: AppStateService) {
     this.addImpressionForm = new FormGroup(
       {
         doctor: new FormControl(''),
-        patientID: new FormControl(''),
         headline: new FormControl(''),
         content: new FormControl(''),
         mark: new FormControl('')
@@ -61,23 +63,30 @@ export class AddImpressionFormComponent {
       return;
     }
 
-    window.confirm(
-      "\nDoctor: " + data.doctor + "\nMark: " + data.mark
-      + "\n\nClick OK to confirm."
-      );
-  }
+    const selectedDoctor: IDoctorEntity = this.doctors.filter(doc => doc.id == data.doctor)[0];
+
+    const headline = data.headline;
+    const content = data.content;
+    const mark = data.mark;
+
+    this.impressionsService.addImpression(selectedDoctor.id, headline, content, mark)
+    .subscribe((errorMessage: string | null) => {
+      if (errorMessage !== null) {
+        window.alert(errorMessage);
+      }
+      else {
+        window.alert('Impression added successfully.');
+        this.addImpressionForm.reset();
+        window.location.reload();
+      }
+    });
+    }
   
   private pageDataIsValid(data: IAddImpressionFormData): boolean
   {
     if (data.doctor == null || data.doctor.length == 0)
     {
       window.alert("Please choose doctor in order to continue.");
-      return false;
-    }
-
-    if (data.patientID == null || data.patientID.length == 0)
-    {
-      window.alert("Please insert valid patient ID in order to continue.");
       return false;
     }
 
