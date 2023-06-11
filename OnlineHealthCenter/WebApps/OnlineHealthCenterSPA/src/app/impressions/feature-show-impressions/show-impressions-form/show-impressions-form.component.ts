@@ -56,7 +56,7 @@ export class ShowImpressionsFormComponent {
         return this.getImpressionsByPatientId(appState.userId as string);
       }),
       catchError((err) => {
-        window.alert('Failed to retrieve previous appointments.')
+        window.alert('Failed to retrieve your impressions.')
         console.error(err);
         return of([]);
       })
