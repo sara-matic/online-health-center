@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IImpressionEntity } from '../model/impressionEntity';
+import { IAddImpressionRequest } from '../model/IAddImpressionRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,11 @@ export class ImpressionsService {
   {
     const connectionString = this.commonPath + 'GetImpressionsByPatientId/' + patientID + "?patientID="+patientID;
     return this.httpClient.get<Array<IImpressionEntity>>(connectionString);
+  }
+
+  public addImpression(request: IAddImpressionRequest): Observable<Object> {
+    const connectionString = this.commonPath + 'AddImpression';
+    return this.httpClient.post(connectionString, request);
   }
 
   public deleteImpression(id: string): Observable<boolean>
