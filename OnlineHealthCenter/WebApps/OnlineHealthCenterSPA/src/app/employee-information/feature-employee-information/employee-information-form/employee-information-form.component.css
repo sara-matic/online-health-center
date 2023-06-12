@@ -40,3 +40,13 @@
 .impression {
     margin-bottom: 10px;
 }
+
+.button-delete
+{
+    position: absolute;
+    
+    border: none;
+
+    color: white;
+    background-color: darkcyan;   
+}

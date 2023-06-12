@@ -4,6 +4,11 @@ import { EmployeesFascadeService } from 'src/app/common/domain/application-servi
 import { IDoctorEntity } from 'src/app/common/domain/model/doctorEntity';
 import { ImpressionsFascadeService } from 'src/app/impressions/domain/application-services/impressions-fascade.service';
 import { IImpressionEntity } from 'src/app/impressions/domain/model/impressionEntity';
+import { EmployeeInformationService } from '../../domain/infrastructure/employee-information.service';
+import { IAppState } from 'src/app/common/app-state/app-state';
+import { Observable } from 'rxjs';
+import { Role } from 'src/app/common/app-state/role';
+import { AppStateService } from 'src/app/common/app-state/app-state.service';
 
 interface IEmployeeInformationFormData {
   id: string;
@@ -30,8 +35,10 @@ export class EmployeeInformationFormComponent {
 
   public doctor? : IEmployeeInformationFormData;
   public impressions? : IImpressionEntity[];
+  public appState$: Observable<IAppState>;
 
-  constructor(private employeesService: EmployeesFascadeService, private impressionsService: ImpressionsFascadeService) {
+
+  constructor(private employeesService: EmployeesFascadeService, private impressionsService: ImpressionsFascadeService, private employeeInformationService: EmployeeInformationService, private appStateService: AppStateService) {
 
     this.EmployeeInformationForm = new FormGroup(
       {
@@ -44,6 +51,7 @@ export class EmployeeInformationFormComponent {
         mark: new FormControl('')
       }
     );
+    this.appState$ = this.appStateService.getAppState();
   }
 
   private getDoctors(): Array<IDoctorEntity> {
@@ -72,4 +80,28 @@ export class EmployeeInformationFormComponent {
       this.impressions.map(i => i.impressionDateTime = new Date(i.impressionDateTime).toLocaleString());
   }
 
+  public onDeleteDoctor(): void
+  {
+
+    if (this.doctor?.id == null || this.doctor.id.length == 0) {
+      window.alert("You must select valid doctor!");
+      return;
+    }
+
+    this.employeeInformationService.deleteDoctor(this.doctor.id)
+    .subscribe((successfully: boolean) => {
+
+      if (successfully)
+      {
+        window.alert("Doctor has been deleted.");
+        window.location.reload();
+      }
+      else
+        window.alert("An error occured. Please try later.");
+    });
+  }
+
+  public isNurseLoggedIn(appState: IAppState): boolean {
+    return appState.hasRole(Role.Nurse);
+  }
 }
