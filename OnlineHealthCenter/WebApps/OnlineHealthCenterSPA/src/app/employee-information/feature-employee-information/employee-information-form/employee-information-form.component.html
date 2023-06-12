@@ -2,7 +2,7 @@
     <h2 class="title">Information about our employees:</h2>
 
     <br>
-
+<div *ngIf="(appState$ | async) as appState">
     <form [formGroup]="EmployeeInformationForm" style="margin-left: 0;">
 
         <div class="form-group chooser">
@@ -43,6 +43,14 @@
             <label><b>Biography:</b></label>
             {{doctor?.biography}}
 
+            <br>
+
+            <div *ngIf="isNurseLoggedIn(appState)">
+                <button class="button-delete" (click)="onDeleteDoctor()">Delete doctor</button>
+            </div>
+
+            <br>
+
             <hr>
 
             <div class="impressions">
@@ -62,4 +70,5 @@
         </div>
     </form>
     <br>
+<div>
 </div>
