@@ -57,7 +57,7 @@ export class AddDoctorFormComponent {
     const biography = data.biography;
 
     this.employeeInformationService.addDoctor(firstName, lastName, imageFile, medicalSpecialty, title, biography)
-    .subscribe((errorMessage: string | null) => {
+    .subscribe((errorMessage) => {
       if (errorMessage !== null) {
         window.alert(errorMessage);
       }
