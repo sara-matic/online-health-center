@@ -164,7 +164,7 @@ namespace EmployeeInformation.Controllers
             }
 
             var result = await this.doctorRepository.UpdateDoctor(this.mapper.Map<Doctor>(updateDoctorDto));
-            return Ok(result);
+            return Ok();
         }
 
         [Authorize(Roles = "Nurse")]
