@@ -142,7 +142,7 @@ namespace EmployeeInformation.Controllers
         [Authorize(Roles = "Nurse")]
         [Route("[action]")]
         [HttpPost]
-        [ProducesResponseType(typeof(void), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> AddDoctor([FromBody] CreateDoctorDto createDoctorDto)
         {
             await this.doctorRepository.AddDoctor(this.mapper.Map<Doctor>(createDoctorDto));
