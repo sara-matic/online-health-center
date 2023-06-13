@@ -15,8 +15,8 @@ import { AuthenticationFacadeService } from 'src/app/identity/domain/application
 export class AuthenticationInterceptor implements HttpInterceptor {
   private readonly whitelistUrls: string[] = [
     'api/v1/Authentication/Login', 
-    '/api/v1/Authentication/Refresh',
-    '/api/v1/PatientRegistration/RegisterPatient'
+    'api/v1/Authentication/Refresh',
+    'api/v1/PatientRegistration/RegisterPatient'
   ];
 
   private isRefreshing: boolean = false;
@@ -73,6 +73,8 @@ export class AuthenticationInterceptor implements HttpInterceptor {
               return new HttpErrorResponse({ error, status: 401 });
             });
           }
+
+          this.appStateService.setAccessToken(accessToken);
 
           this.isRefreshing = false;
           this.refreshedAccessTokenSubject.next(accessToken);
