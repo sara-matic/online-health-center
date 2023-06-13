@@ -7,6 +7,7 @@ import { EmployeeInformationFormComponent } from './feature-employee-information
 import { ReactiveFormsModule } from '@angular/forms';
 import { ClinicInformationComponent } from './feature-clinic-information/clinic-information/clinic-information.component';
 import { AddDoctorFormComponent } from './feature-add-doctor/add-doctor-form/add-doctor-form.component';
+import { UpdateDoctorFormComponent } from './feature-update-doctor/update-doctor-form/update-doctor-form.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { AddDoctorFormComponent } from './feature-add-doctor/add-doctor-form/add
     EmployeeInformationComponent,
     EmployeeInformationFormComponent,
     ClinicInformationComponent,
-    AddDoctorFormComponent
+    AddDoctorFormComponent,
+    UpdateDoctorFormComponent
   ],
   imports: [
     CommonModule,

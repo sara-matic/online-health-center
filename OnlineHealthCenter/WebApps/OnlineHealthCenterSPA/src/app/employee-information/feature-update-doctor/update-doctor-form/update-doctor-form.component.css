@@ -1,0 +1,43 @@
+.submit-button
+{
+    color: white;
+    background-color: darkcyan;
+}
+
+.title
+{
+    color: rgb(29, 100, 99);
+    font-size: 24px;
+}
+
+.text
+{
+    color:rgb(29, 100, 99);
+}
+
+.dropdown
+{
+    position: absolute;
+    left: 210px;
+    width: 500px;
+    height: 40px;
+
+    color: white;
+    background-color: rgb(100, 167, 167);
+}
+
+.update-doctor
+{
+    position: absolute;
+    left: 900px;
+    top: 1300px;
+}
+
+.control-group
+{
+    width: 700px;
+    border: solid, 1px;
+    border-style: solid;
+
+    border-color:  rgb(29, 100, 99);
+}
