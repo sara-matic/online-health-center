@@ -1,12 +1,20 @@
 <div *ngIf="(appState$ | async) as appState">
-<div class="add-doctor" *ngIf="isNurseLoggedIn(appState)">
-    <h3 class="title">Add Doctor:</h3>
+<div class="update-doctor" *ngIf="isNurseLoggedIn(appState)">
+<h3 class="text">Update Doctor</h3>
 
 <br>
 
-
-<form [formGroup]="addDoctorForm" (ngSubmit)="onAddDoctorSubmit()" *ngIf="appState$ | async as appState">
+<form [formGroup]="updateDoctorForm" (ngSubmit)="onUpdateDoctorSubmit()" *ngIf="appState$ | async as appState">
     
+    <div class="form-group">
+        <label class="form-label">Choose doctor:</label>
+        <select formControlName="id" class="form-control" class="dropdown">
+            <option value="" disabled selected>*Select your doctor</option>
+            <option *ngFor="let doctor of doctors" value="{{doctor.id}}">({{doctor.medicalSpecialty}}) {{doctor.title}} {{doctor.firstName}} {{doctor.lastName}}</option>
+        </select>
+    </div>
+
+    <br>
 
     <div class="control-group">
     
@@ -28,23 +36,23 @@
             <label class = "form-label">Medical Specialty:</label>
             <input type="text" formControlName="medicalSpecialty" class="form-control">
         </div>
-    
-        <br>
 
+        <br>
+    
         <div class = form-group>
             <label class = "form-label">Title:</label>
             <input type="text" formControlName="title" class="form-control">
         </div>
 
         <br>
-
+    
         <div class = form-group>
             <label class = "form-label">Biography:</label>
             <input type="text" formControlName="biography" class="form-control">
         </div>
     
         <br>
-        
+    
         <button type="submit" class="submit-button">Submit Request</button>
         
     </div>
@@ -52,5 +60,4 @@
 </form>
 </div>
 </div>
-<app-update-doctor-form></app-update-doctor-form>
 <router-outlet></router-outlet>

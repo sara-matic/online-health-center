@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { IAppState } from 'src/app/common/app-state/app-state';
-import { EmployeeInformationService } from '../../domain/infrastructure/employee-information.service';
-import { AppStateService } from 'src/app/common/app-state/app-state.service';
 import { EmployeeInformationFascadeService } from '../../domain/application-services/employee-information-fascade.service';
+import { AppStateService } from 'src/app/common/app-state/app-state.service';
+import { IDoctorEntity } from 'src/app/common/domain/model/doctorEntity';
+import { EmployeesFascadeService } from 'src/app/common/domain/application-services/employees-fascade.service';
 import { Role } from 'src/app/common/app-state/role';
 
-interface IAddDoctorFormData
+interface IUpdateDoctorFormData
 {
+  id: string;
   firstName: string;
   lastName: string;
   medicalSpecialty: string;
@@ -17,20 +19,25 @@ interface IAddDoctorFormData
 }
 
 @Component({
-  selector: 'app-add-doctor-form',
-  templateUrl: './add-doctor-form.component.html',
-  styleUrls: ['./add-doctor-form.component.css']
+  selector: 'app-update-doctor-form',
+  templateUrl: './update-doctor-form.component.html',
+  styleUrls: ['./update-doctor-form.component.css']
 })
-export class AddDoctorFormComponent {
+export class UpdateDoctorFormComponent {
 
-  public addDoctorForm: FormGroup;
+  public updateDoctorForm: FormGroup;
 
   public appState$!: Observable<IAppState>;
 
+  public doctors: Array<IDoctorEntity> = this.getDoctors();
+
+  public doctor? : IDoctorEntity;
+
   constructor(private employeeInformationService : EmployeeInformationFascadeService,
-    private appStateService: AppStateService) {
-    this.addDoctorForm = new FormGroup(
+    private appStateService: AppStateService, private employeesService: EmployeesFascadeService) {
+    this.updateDoctorForm = new FormGroup(
       {
+        id: new FormControl(''),
         firstName: new FormControl(''),
         lastName: new FormControl(''),
         medicalSpecialty: new FormControl(''),
@@ -41,13 +48,24 @@ export class AddDoctorFormComponent {
     this.appState$ = this.appStateService.getAppState();
   }
 
-  public onAddDoctorSubmit(): void
+  private getDoctors(): Array<IDoctorEntity> {
+    this.employeesService.getDoctors().subscribe(
+      (doctors: Array<IDoctorEntity>) => {
+        this.doctors = doctors;
+      });
+      
+    return this.doctors;
+  }
+
+  public onUpdateDoctorSubmit(): void
   {
-    const data: IAddDoctorFormData = this.addDoctorForm.value as IAddDoctorFormData;
+    const data: IUpdateDoctorFormData = this.updateDoctorForm.value as IUpdateDoctorFormData;
 
     if (!this.pageDataIsValid(data)) {
       return;
     }
+
+    const selectedDoctor: IDoctorEntity = this.doctors.filter(doc => doc.id == data.id)[0];
 
     const firstName = data.firstName;
     const lastName = data.lastName;
@@ -56,20 +74,20 @@ export class AddDoctorFormComponent {
     const title = data.title;
     const biography = data.biography;
 
-    this.employeeInformationService.addDoctor(firstName, lastName, imageFile, medicalSpecialty, title, biography)
+    this.employeeInformationService.updateDoctor(selectedDoctor.id, firstName, lastName, imageFile, medicalSpecialty, title, biography)
     .subscribe((errorMessage) => {
       if (errorMessage !== null) {
         window.alert(errorMessage);
       }
       else {
-        window.alert('Doctor added successfully.');
-        this.addDoctorForm.reset();
+        window.alert('Doctor updated successfully.');
+        this.updateDoctorForm.reset();
         window.location.reload();
       }
     });
     }
   
-  private pageDataIsValid(data: IAddDoctorFormData): boolean
+  private pageDataIsValid(data: IUpdateDoctorFormData): boolean
   {
     if (data.firstName == null || data.firstName.length == 0)
     {
@@ -107,5 +125,6 @@ export class AddDoctorFormComponent {
   public isNurseLoggedIn(appState: IAppState): boolean {
     return appState.hasRole(Role.Nurse);
   }
+
 
 }

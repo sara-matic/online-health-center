@@ -152,8 +152,8 @@ namespace EmployeeInformation.Controllers
         [Authorize(Roles = "Nurse")]
         [Route("[action]")]
         [HttpPut]
-        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateDoctor([FromBody] UpdateDoctorDto updateDoctorDto)
         {
             var doctorExists = await this.GetDoctorById(updateDoctorDto.Id);

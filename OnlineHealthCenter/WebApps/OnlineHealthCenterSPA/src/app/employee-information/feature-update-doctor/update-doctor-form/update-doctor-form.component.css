@@ -15,11 +15,22 @@
     color:rgb(29, 100, 99);
 }
 
-.add-doctor
+.dropdown
+{
+    position: absolute;
+    left: 210px;
+    width: 500px;
+    height: 40px;
+
+    color: white;
+    background-color: rgb(100, 167, 167);
+}
+
+.update-doctor
 {
     position: absolute;
     left: 900px;
-    top: 600px;
+    top: 1300px;
 }
 
 .control-group
