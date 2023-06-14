@@ -12,9 +12,10 @@ export class EmployeeInformationFascadeService {
 
   constructor(private employeeInformationService: EmployeeInformationService, private appStateService: AppStateService) { }
 
-  public addDoctor(firstName: string, lastName: string, imageFile: string, medicalSpecialty: string, title: string, biography: string): Observable<Object> {
+  public addDoctor(id: string, firstName: string, lastName: string, imageFile: string, medicalSpecialty: string, title: string, biography: string): Observable<Object> {
     
     const request: IAddDoctorRequest = { 
+      id,
       firstName,
       lastName,
       imageFile,
