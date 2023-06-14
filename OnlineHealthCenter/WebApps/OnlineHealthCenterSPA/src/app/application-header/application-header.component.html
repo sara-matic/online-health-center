@@ -12,6 +12,7 @@
         <button *ngIf="isPatientLoggedIn(appState)" class="rout-button"  id = "leave-impression" [routerLink]="['impressions/leave-impression']">Leave Impression</button>
         <button *ngIf="isUserLoggedIn(appState)" class="rout-button"  id = "user-profile" [routerLink]="['identity/profile']">User Profile</button>
         <button *ngIf="isNurseLoggedIn(appState)" class="rout-button"  id = "register-users" [routerLink]="['identity/register']">Register Users</button>
+        <button *ngIf="isNurseLoggedIn(appState)" class="rout-button"  id = "show-all-users" [routerLink]="['identity/users']">All Users</button>
     </div>
     <router-outlet></router-outlet>
 </div> 

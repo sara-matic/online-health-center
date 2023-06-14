@@ -17,4 +17,8 @@ export class UserFacadeService {
   public searchUsersByName(name: string): Observable<IUserDetails[]> {
     return this.userService.searchUsersByName(name);
   }
+
+  public getAllUsers(): Observable<IUserDetails[]> {
+    return this.userService.getAllUsers();
+  }
 }
