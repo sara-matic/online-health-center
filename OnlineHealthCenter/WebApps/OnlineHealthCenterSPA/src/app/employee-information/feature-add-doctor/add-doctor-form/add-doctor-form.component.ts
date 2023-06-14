@@ -9,6 +9,7 @@ import { Role } from 'src/app/common/app-state/role';
 
 interface IAddDoctorFormData
 {
+  id: string;
   firstName: string;
   lastName: string;
   medicalSpecialty: string;
@@ -31,6 +32,7 @@ export class AddDoctorFormComponent {
     private appStateService: AppStateService) {
     this.addDoctorForm = new FormGroup(
       {
+        id: new FormControl(''),
         firstName: new FormControl(''),
         lastName: new FormControl(''),
         medicalSpecialty: new FormControl(''),
@@ -49,6 +51,7 @@ export class AddDoctorFormComponent {
       return;
     }
 
+    const id = data.id;
     const firstName = data.firstName;
     const lastName = data.lastName;
     const imageFile = data.firstName + "-" + data.lastName + ".jpg";
@@ -56,7 +59,7 @@ export class AddDoctorFormComponent {
     const title = data.title;
     const biography = data.biography;
 
-    this.employeeInformationService.addDoctor(firstName, lastName, imageFile, medicalSpecialty, title, biography)
+    this.employeeInformationService.addDoctor(id, firstName, lastName, imageFile, medicalSpecialty, title, biography)
     .subscribe((errorMessage) => {
       if (errorMessage !== null) {
         window.alert(errorMessage);
