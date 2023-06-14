@@ -38,7 +38,6 @@ export class ShowReportsFormComponent {
             } else {
               window.alert('Failed to retrieve reports.');
               console.error('Failed to retrieve reports: ', error);
-              console.log('**** ', typeof(error));
             }
           }
         );
@@ -55,7 +54,6 @@ export class ShowReportsFormComponent {
           } else {
             window.alert('Failed to retrieve reports.');
             console.error('Failed to retrieve reports: ', error);
-            console.log('**** ', typeof(error));
           }
         }
       );
