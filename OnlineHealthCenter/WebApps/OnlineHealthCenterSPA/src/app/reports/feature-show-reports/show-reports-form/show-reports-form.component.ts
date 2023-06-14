@@ -61,11 +61,15 @@ export class ShowReportsFormComponent {
   private filterReports(reports: IShowReportResponse[]): void {
     if (this.doctorFilter !== '') {
       //this.filteredReports = reports.filter(report => report.doctorId === this.doctorFilter);
-      this.filteredReports = reports.filter(report => report.doctorFirstName.concat(report.doctorLastName).toLowerCase().includes(this.doctorFilter.toLowerCase()));
+      this.filteredReports = reports.filter(report => report.doctorFirstName.concat(report.doctorLastName).toLowerCase().includes(this.doctorFilter.toLowerCase())
+        || report.doctorLastName.concat(report.doctorFirstName).toLowerCase().includes(this.doctorFilter.toLowerCase())
+      );
     }
     else if (this.patientFilter !== '') {
       //this.filteredReports = reports.filter(report => report.patientId === this.patientFilter);
-      this.filteredReports = reports.filter(report => report.patientFirstName.concat(report.patientLastName).toLowerCase().includes(this.patientFilter.toLowerCase()));
+      this.filteredReports = reports.filter(report => report.patientFirstName.concat(report.patientLastName).toLowerCase().includes(this.patientFilter.toLowerCase())
+        || report.patientLastName.concat(report.patientFirstName).toLowerCase().includes(this.patientFilter.toLowerCase())
+      );
     } 
     else {
       this.filteredReports = reports;

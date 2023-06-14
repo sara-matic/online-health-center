@@ -1,0 +1,39 @@
+<p>
+    Users:
+</p>
+
+<div class="parent-container">
+    <div class="form-group">
+        <label class="form-label">Search users by name:</label>
+        <input type="text" class="form-control" [(ngModel)]="userFilter" (ngModelChange)="onUserFilterChange()">
+    </div>
+
+    <div class="list-container">
+        <div class="list-scroll">
+            <ul>
+                <li class="list-item" *ngFor="let user of users">
+                    <div class="user-info">
+                        <div>
+                            <span class="user-label">Name:</span>
+                            <span class="user-value">{{ user.firstName }} {{ user.lastName }}</span>
+                        </div>
+                    </div>
+
+                    <div class="user-info">
+                        <div>
+                            <span class="user-label">Id:</span>
+                            <span class="user-value">{{ user.id }}</span>
+                        </div>
+                    </div>
+
+                    <div class="user-info">
+                        <div>
+                            <span class="user-label">Email:</span>
+                            <span class="user-value">{{ user.email }}</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>    
+        </div>
+    </div>
+</div>

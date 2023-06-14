@@ -20,4 +20,8 @@ export class UserService {
       .set('name', name);
     return this.httpClient.get<IUserDetails[]>(`${this.url}/SearchUsersByName`, { params });
   }
+
+  public getAllUsers(): Observable<IUserDetails[]> {
+    return this.httpClient.get<IUserDetails[]>(`${this.url}/GetAllUsers`);
+  }
 }
