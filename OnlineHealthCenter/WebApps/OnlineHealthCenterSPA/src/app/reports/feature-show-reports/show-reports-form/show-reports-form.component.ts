@@ -6,6 +6,7 @@ import { Observable, catchError } from 'rxjs';
 import { IAppState } from 'src/app/common/app-state/app-state';
 import { AppStateService } from 'src/app/common/app-state/app-state.service';
 import { Role } from 'src/app/common/app-state/role';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-show-reports-form',
@@ -31,8 +32,14 @@ export class ShowReportsFormComponent {
             this.filterReports(reports);
           },
           (error: any) => {
-            window.alert('Failed to retrieve reports.');
-            console.error('Failed to retrieve reports: ', error);
+            if (error instanceof HttpErrorResponse && error.status === 404) {
+              window.alert('No reports found.');
+              console.error('No reports found: ', error);
+            } else {
+              window.alert('Failed to retrieve reports.');
+              console.error('Failed to retrieve reports: ', error);
+              console.log('**** ', typeof(error));
+            }
           }
         );
       } 
@@ -42,8 +49,14 @@ export class ShowReportsFormComponent {
           this.filterReports(reports);
         },
         (error: any) => {
-          console.error('Failed to retrieve reports: ', error);
-          window.alert('Failed to retrieve reports.');
+          if (error instanceof HttpErrorResponse && error.status === 404) {
+            window.alert('No reports found.');
+            console.error('No reports found: ', error);
+          } else {
+            window.alert('Failed to retrieve reports.');
+            console.error('Failed to retrieve reports: ', error);
+            console.log('**** ', typeof(error));
+          }
         }
       );
       }
