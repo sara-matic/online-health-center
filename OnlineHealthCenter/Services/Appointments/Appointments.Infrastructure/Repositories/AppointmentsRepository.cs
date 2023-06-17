@@ -36,6 +36,43 @@ namespace Appointments.Infrastructure.Repositories
             }
         }
 
+        public async Task<bool> ApproveAppointment(string appointmentId)
+        {
+            using (var connecton = this.context.GetConnection())
+            {
+                var appointment = await connecton.QueryFirstOrDefaultAsync<Appointment>("SELECT * FROM Appointments WHERE AppointmentId = @AppointmentId", new { AppointmentId = appointmentId});
+
+                if (appointment == null)
+                    return false;
+
+                appointment.ChangeAppointmentRequestStatus(RequestStatusEnum.Approved);
+
+                int rowsAffected = await connecton.ExecuteAsync("UPDATE Appointments SET AppointmentRequestStatus = @AppointmentRequestStatus WHERE AppointmentId = @AppointmentId",
+                    new { AppointmentRequestStatus = appointment.AppointmentRequestStatus.RequestStatus.ToString(), appointmentId = appointmentId});
+
+                return rowsAffected > 0;
+            }
+        }
+
+
+        public async Task<bool> CancelAppointment(string appointmentId)
+        {
+            using (var connecton = this.context.GetConnection())
+            {
+                var appointment = await connecton.QueryFirstOrDefaultAsync<Appointment>("SELECT * FROM Appointments WHERE AppointmentId = @AppointmentId", new { AppointmentId = appointmentId });
+
+                if (appointment == null)
+                    return false;
+
+                appointment.ChangeAppointmentRequestStatus(RequestStatusEnum.Canceled);
+
+                int rowsAffected = await connecton.ExecuteAsync("UPDATE Appointments SET AppointmentRequestStatus = @AppointmentRequestStatus WHERE AppointmentId = @AppointmentId",
+                    new { AppointmentRequestStatus = appointment.AppointmentRequestStatus.RequestStatus.ToString(), appointmentId = appointmentId });
+
+                return rowsAffected > 0;
+            }
+        }
+
         public async Task<bool> CancelAppointment(CancelAppointmentDTO cancelAppointmentDTO)
         {
             using (var connecton = this.context.GetConnection())
@@ -152,6 +189,14 @@ namespace Appointments.Infrastructure.Repositories
                    new { PatientId = applyAppointmentDiscountDTO.PatientId, Specialty = appointment.Specialty, InitialPrice = appointment.InitialPrice });
 
                 return appointment.InitialPrice;
+            }
+        }
+
+        public async Task<IEnumerable<Appointment>> GetAllAppointments()
+        {
+            using (var connection = this.context.GetConnection())
+            {
+                return await connection.QueryAsync<Appointment>("SELECT * FROM Appointments");
             }
         }
     }

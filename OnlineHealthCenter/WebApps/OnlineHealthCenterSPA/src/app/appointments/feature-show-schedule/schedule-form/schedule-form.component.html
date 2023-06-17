@@ -66,10 +66,10 @@
             <br>
 
             <div>
-                <button class="button-apply-discount" id="applyDiscountButton" (click)="onApplyDiscountRequested()">Apply discount</button>
+                <button class="button-apply-discount" *ngIf="isDiscountNonZeroAndAppointmentApproved()" (click)="onApplyDiscountRequested()">Apply discount</button>
                 <button class="button-cancel" id="cancel" (click)="onAppointmentCancelationRequested()">Cancel appointment</button>
-                <button class="button-approve" (click)="onApproveRequested()">Approve appointment</button>
-                <button class="button-delete" (click)="onDeleteAppointment()">Delete appointment</button>
+                <button class="button-approve" *ngIf="isStaffLoggedIn(appState)" (click)="onApproveRequested()">Approve appointment</button>
+                <button class="button-delete" *ngIf="isStaffLoggedIn(appState)" (click)="onDeleteAppointment()">Delete appointment</button>
             </div>
         </div>
         

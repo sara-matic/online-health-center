@@ -6,8 +6,9 @@ import { IAppointmentEntity } from '../../domain/model/appointmentEntity';
 import { DiscountsService } from '../../domain/infrastructure/discounts.service';
 import { IDiscountEntity } from '../../domain/model/discountEntity';
 import { AppStateService } from 'src/app/common/app-state/app-state.service';
-import { IAppState } from 'src/app/common/app-state/app-state';
+import { AppState, IAppState } from 'src/app/common/app-state/app-state';
 import { catchError, map, of, take } from 'rxjs';
+import { Role } from 'src/app/common/app-state/role';
 
 interface IScheduleFormData {
   appointmentID: string;
@@ -31,6 +32,7 @@ export class ScheduleFormComponent {
   public scheduleForm: FormGroup;
   public appointmentsCollection!: Array<IScheduleFormData>;
   public selectedAppointment?: IScheduleFormData;
+  public appState!: AppState;
 
   constructor(private service: AppointmentsFascadeService, private discountsSetvice: DiscountsService, 
     private appStateService: AppStateService) {
@@ -50,7 +52,14 @@ export class ScheduleFormComponent {
     this.appStateService.getAppState().pipe(
       take(1),
       map((appState: IAppState) => {
-        return this.getAppointmentsByPatientId(appState.userId as string);
+        this.appState = appState;
+
+        if (appState.hasRole(Role.Patient))
+          return this.getAppointmentsByPatientId(appState.userId as string);
+        if (appState.hasRole(Role.Doctor))
+          return this.getAppointmentsByDoctorId(appState.userId as string);
+        else
+          return this.getAllAppointments();
       }),
       catchError((err) => {
         window.alert('Failed to retrieve previous appointments.')
@@ -67,7 +76,21 @@ export class ScheduleFormComponent {
       this.appointmentsCollection = this.getFormDataFromAppointmentEntities(appointments);
     });
 
-    this.populateDiscounts(patientID);
+    return this.appointmentsCollection;
+  }
+
+  private getAppointmentsByDoctorId(doctorID: string): Array<IScheduleFormData> {
+    this.service.getAppointmentsByDoctorId(doctorID).subscribe((appointments: Array<IAppointmentEntity>) => {
+      this.appointmentsCollection = this.getFormDataFromAppointmentEntities(appointments);
+    });
+
+    return this.appointmentsCollection;
+  }
+
+  private getAllAppointments(): Array<IScheduleFormData> {
+    this.service.getAllAppointments().subscribe((appointments: Array<IAppointmentEntity>) => {
+      this.appointmentsCollection = this.getFormDataFromAppointmentEntities(appointments);
+    });
 
     return this.appointmentsCollection;
   }
@@ -109,12 +132,20 @@ export class ScheduleFormComponent {
     return uiDataCollection;
   }
 
+  public isStaffLoggedIn(appState: IAppState): boolean {
+    return appState?.hasRole(Role.Doctor) || appState?.hasRole(Role.Nurse);
+  }
+
+  public isDiscountNonZeroAndAppointmentApproved(): boolean
+  {
+    return this.selectedAppointment !== undefined && this.selectedAppointment.appointmentStatus === "Approved" && this.selectedAppointment.discount !== null && this.selectedAppointment.discount !== 0;
+  }
+
   public onSelectionChanged(): void {
     const data: IScheduleFormData = this.scheduleForm.value as IScheduleFormData;
     this.selectedAppointment = this.appointmentsCollection.filter(apt => apt.appointmentID === data.appointmentID)[0];
 
-    const element = document.getElementById('applyDiscountButton');
-    element!.hidden = this.selectedAppointment.discount === null || this.selectedAppointment.discount === 0;
+    this.populateDiscounts(this.selectedAppointment.patientId);
   }
 
   public onAppointmentCancelationRequested(): void {
@@ -125,7 +156,7 @@ export class ScheduleFormComponent {
     }
 
     if (window.confirm("Do you really want to cancel this appointment?\n\n Click OK to confirm or cancel to go back.")) {
-      this.service.cancelAppointment(this.selectedAppointment.patientId, this.selectedAppointment.appointmentTimeOriginalFormat).subscribe(
+      this.service.cancelAppointmentById(this.selectedAppointment.appointmentID).subscribe(
         (successfully: boolean) => {
           
           if (successfully)
@@ -183,7 +214,7 @@ export class ScheduleFormComponent {
       return;
     }
 
-    this.service.approveAppointment(this.selectedAppointment.patientId, this.selectedAppointment.appointmentTimeOriginalFormat).subscribe(
+    this.service.approveAppointmentById(this.selectedAppointment.appointmentID).subscribe(
       (successfully: boolean) => {
 
         if (successfully)
@@ -191,7 +222,7 @@ export class ScheduleFormComponent {
         else
           window.alert("Something went wrong.\nPlease try again.");
 
-          window.location.reload();
+          window.location.assign('/appointments/schedule');
       });
   }
 }

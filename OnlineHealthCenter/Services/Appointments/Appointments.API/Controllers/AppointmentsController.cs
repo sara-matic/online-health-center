@@ -53,19 +53,29 @@ namespace Appointments.API.Controllers
             return result != null ? Ok(result) : NotFound();
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        [ProducesResponseType(typeof(IEnumerable<Appointment>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<IEnumerable<Appointment>>> GetAllAppointments()
+        {
+            var result = await this.repository.GetAllAppointments();
+            return result != null ? Ok(result) : NotFound();
+        }
+
         [HttpPost]
         [Route("[action]")]
         [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> CreateAppointment([FromBody] CreateAppointmentDTO createAppointmentDTO)
+        public async Task<ActionResult<bool>> CreateAppointment([FromBody] CreateAppointmentDTO createAppointmentDTO)
         {
             bool canCreateAppointent = await this.repository.CheckCreateAppointmentRequestValidity(createAppointmentDTO);
 
             if (!canCreateAppointent)
                 return BadRequest();
 
-            await this.repository.CreateAppointment(createAppointmentDTO);
-            return Ok();
+            bool appointmentCreated = await this.repository.CreateAppointment(createAppointmentDTO);
+            return Ok(appointmentCreated);
         }
 
         [Route("[action]")]
@@ -77,6 +87,15 @@ namespace Appointments.API.Controllers
             return Ok(approveAction);
         }
 
+        [Route("[action]/{appointmentId}")]
+        [HttpPut]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<ActionResult<bool>> ApproveAppointment(string appointmentId)
+        {
+            bool approveAction = await this.repository.ApproveAppointment(appointmentId);
+            return Ok(approveAction);
+        }
+
         [Route("[action]")]
         [HttpPut]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
@@ -84,6 +103,15 @@ namespace Appointments.API.Controllers
         {
             bool approveActionResult = await this.repository.CancelAppointment(cancelAppointmentDTO);
             return Ok(approveActionResult);
+        }
+
+        [Route("[action]/{appointmentId}")]
+        [HttpPut]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+        public async Task<ActionResult<bool>> CancelAppointment(string appointmentId)
+        {
+            bool canceled = await this.repository.CancelAppointment(appointmentId);
+            return Ok(canceled);
         }
 
         [Route("[action]/{appointmentId}")]
