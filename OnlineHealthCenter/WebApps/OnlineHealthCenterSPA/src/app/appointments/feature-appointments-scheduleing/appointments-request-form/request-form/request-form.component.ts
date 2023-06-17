@@ -4,7 +4,7 @@ import { AppointmentsFascadeService } from 'src/app/appointments/domain/applicat
 import { EmployeesFascadeService } from 'src/app/common/domain/application-services/employees-fascade.service';
 import { IApointmentTime } from 'src/app/appointments/domain/model/appointmentTimeEntity';
 import { IDoctorEntity } from 'src/app/common/domain/model/doctorEntity';
-import { withNoXsrfProtection } from '@angular/common/http';
+import { HttpErrorResponse, withNoXsrfProtection } from '@angular/common/http';
 import { AppStateService } from 'src/app/common/app-state/app-state.service';
 import { Observable, catchError, map, of, take } from 'rxjs';
 import { IAppState } from 'src/app/common/app-state/app-state';
@@ -34,7 +34,7 @@ export class RequestFormComponent {
   public readonly doctorTimes: Array<IApointmentTime> = [{ time: "8:00:00" }, { time: "9:00:00" }, { time: "10:00:00" }, { time: "11:00:00" }, { time: "12:00:00" }, { time: "13:00:00" },
   { time: "14:00:00" }, { time: "15:00:00" }, { time: "16:00:00" }];
 
-  public appState$!: Observable<IAppState>;// = "8de0295d-75de-4bba-abc8-43abc66b3103"; //TODO: replace hard coded data with real patientID
+  public appState$!: Observable<IAppState>;
   public initialPrice?: number;
 
   constructor(private employeesService: EmployeesFascadeService, private appointmentsService: AppointmentsFascadeService,
@@ -71,16 +71,28 @@ export class RequestFormComponent {
     const selectedDoctor: IDoctorEntity = this.doctors.filter(doc => doc.id == data.doctor)[0];
 
     if (window.confirm(
-      "\nPatient ID: " + data.patientID + "\nPatient Name: " + data.patientName + "\nDoctor: " + data.doctor + "\nAppointment date: " + new Date(data.appointmentDate).toLocaleDateString() + "\nAppointment time: " + data.appointmentTime + "\nInitial price: " + this.initialPrice
+      "\nPatient ID: " + data.patientID + "\nPatient Name: " + data.patientName + "\nDoctor: " + selectedDoctor.firstName + " " + selectedDoctor.lastName + "\nAppointment date: " + new Date(data.appointmentDate).toLocaleDateString() + "\nAppointment time: " + data.appointmentTime + "\nInitial price: " + this.initialPrice
       + "\n\nClick OK to confirm request or Cancel it.")) 
     {
       const appointmentTime = data.appointmentDate + " " + data.appointmentTime;
       const selectedDoctorName = selectedDoctor.firstName + " " + selectedDoctor.lastName;
 
       this.appointmentsService.createAppointment(data.patientID, appointmentTime, selectedDoctor.medicalSpecialty, selectedDoctor.id, selectedDoctorName, data.patientName, "", this.initialPrice ?? 5000, appointmentTime, "WaitingForAnswer")
-        .subscribe();
-      
-      window.location.reload();
+        .pipe(take(1),
+          catchError((err) => {
+            if (err instanceof HttpErrorResponse) {
+              window.alert('Failed to create Appointment. \nPlease check your data validity.')
+              console.error(err);
+            }
+            else
+              window.alert('Failed to create Appointment. \nPlease try again later.')
+            return of(false)
+          }),
+        ).subscribe((appointmentCreated: boolean) => 
+        {
+          if (appointmentCreated != null && appointmentCreated)
+            window.alert("The appointment has been created successfully!");
+        });
     }
   }
 

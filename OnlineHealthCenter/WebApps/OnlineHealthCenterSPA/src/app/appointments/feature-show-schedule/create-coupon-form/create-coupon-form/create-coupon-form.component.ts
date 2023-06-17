@@ -1,6 +1,11 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { catchError, of, take } from 'rxjs';
 import { DiscountsFascadeService } from 'src/app/appointments/domain/application-services/discounts-fascade.service';
+import { AppState, IAppState } from 'src/app/common/app-state/app-state';
+import { AppStateService } from 'src/app/common/app-state/app-state.service';
+import { Role } from 'src/app/common/app-state/role';
 
 interface IDiscountFormData {
   patientId: string,
@@ -17,8 +22,9 @@ interface IDiscountFormData {
 export class CreateCouponFormComponent {
   public discountForm: FormGroup;
   public specialities: Array<string> = ["Cardiology", "Pulmology", "Neurology"]; 
+  public appState!: AppState;
 
-  constructor(private discountsService: DiscountsFascadeService) 
+  constructor(private discountsService: DiscountsFascadeService, private appStateService: AppStateService) 
   {
     this.discountForm = new FormGroup(
       {
@@ -27,6 +33,13 @@ export class CreateCouponFormComponent {
         amountInPercentage: new FormControl('')
       }
     );
+
+    this.appStateService.getAppState()
+      .subscribe((appState: IAppState) => { this.appState = appState; });
+  }
+
+  public isStaffLoggedIn(): boolean {
+    return this.appState?.hasRole(Role.Doctor) || this.appState?.hasRole(Role.Nurse);
   }
 
   public onSubmit(): void
@@ -37,7 +50,18 @@ export class CreateCouponFormComponent {
       return;
 
     this.discountsService.createDiscount(formData.patientId, formData.specialty, formData.amountInPercentage)
-      .subscribe(() => {window.location.reload()});
+      .pipe(
+        take(1),
+        catchError((err) => {
+          if (err instanceof HttpErrorResponse) {
+            window.alert('Failed to create Discount. \nPlease check your data validity.')
+            console.error(err);
+          }
+          else
+            window.alert('Failed to create Discount.')
+          return of([])
+        }),
+      ).subscribe();
   }
 
   private checkFormDataIsValid(formData: IDiscountFormData):boolean

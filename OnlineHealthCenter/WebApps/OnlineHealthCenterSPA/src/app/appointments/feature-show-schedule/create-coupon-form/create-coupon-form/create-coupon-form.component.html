@@ -1,4 +1,4 @@
-<form class = "disount-form" [formGroup]="discountForm" (ngSubmit)="onSubmit()">
+<form class = "disount-form" [formGroup]="discountForm" *ngIf="isStaffLoggedIn()" (ngSubmit)="onSubmit()">
 
     <label class="discount-label"><b>Create Discount:</b></label>
     

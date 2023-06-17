@@ -21,8 +21,19 @@ export class AppointmentsService {
 
   public getAppointmentsByPatientId(patientId: string): Observable<Array<IAppointmentEntity>>
   {
-    //TODO: Update the connection string to be like *localhost:8005* after setting up CORS
-    const connectionString = this.commonPath + 'GetAppointmentsByPatientId/' + patientId+"?patientId="+patientId;
+    const connectionString = this.commonPath + 'GetAppointmentsByPatientId/' + patientId+ "?patientId=" + patientId;
+    return this.httpClient.get<Array<IAppointmentEntity>>(connectionString);
+  }
+
+  public getAppointmentsByDoctorId(doctorId: string): Observable<Array<IAppointmentEntity>>
+  {
+    const connectionString = this.commonPath + 'GetAppointmentsByDoctorId/' + doctorId+ "?doctorId=" + doctorId;
+    return this.httpClient.get<Array<IAppointmentEntity>>(connectionString);
+  }
+
+  public getAllAppointments(): Observable<Array<IAppointmentEntity>>
+  {
+    const connectionString = this.commonPath + 'GetAllAppointments';
     return this.httpClient.get<Array<IAppointmentEntity>>(connectionString);
   }
   
@@ -34,12 +45,24 @@ export class AppointmentsService {
     return this.httpClient.put<boolean>(connectionString, approveRequest);
   }
 
+  public approveAppointmentById(appointmentId: string): Observable<boolean>
+  {
+    const connectionString = this.commonPath + 'ApproveAppointment/' + appointmentId + '?appointmentId=' + appointmentId;
+    return this.httpClient.put<boolean>(connectionString, appointmentId);
+  }
+
   public cancelAppointment(patientId: string, appointmentTime: string): Observable<boolean>
   {
     const connectionString = this.commonPath + 'CancelAppointment';
     const cancelRequest: IAppointmentCancelRequest = {patientId: patientId, appointmentTime: appointmentTime};
     
     return this.httpClient.put<boolean>(connectionString, cancelRequest);
+  }
+
+  public cancelAppointmentById(appointmentId: string): Observable<boolean>
+  {
+    const connectionString = this.commonPath + 'CancelAppointment/' + appointmentId + '?appointmentId=' + appointmentId;
+    return this.httpClient.put<boolean>(connectionString, appointmentId);
   }
 
   public applyDiscount(patientId: string, specialty: string): Observable<boolean>
@@ -51,7 +74,7 @@ export class AppointmentsService {
   }
 
   public createAppointment(patientId : string, appointmentTime: string, specialty: string, doctorId: string, doctorName: string, patientName: string,
-    requestCreatedBy: string, initialPrice: number, requestCreatedTime: string, requestStatus: string) : Observable<void>
+    requestCreatedBy: string, initialPrice: number, requestCreatedTime: string, requestStatus: string) : Observable<boolean>
   {
     const connectionString = this.commonPath + 'CreateAppointment';
     const createRequest: ICreateAppointmentRequest = {
@@ -68,7 +91,7 @@ export class AppointmentsService {
       requestStatus: requestStatus
     };
 
-    return this.httpClient.post<void>(connectionString, createRequest);
+    return this.httpClient.post<boolean>(connectionString, createRequest);
   }
 
   public deleteDiscount(appointmentId: string): Observable<boolean>
