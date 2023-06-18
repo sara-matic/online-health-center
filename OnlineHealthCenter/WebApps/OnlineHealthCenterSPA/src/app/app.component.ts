@@ -8,11 +8,4 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'SPA';
-
-  constructor(private router: Router) {
-    const currentPath = this.router.url;
-    if (currentPath === '') {
-      this.router.navigateByUrl('/start-page');
-    }
-  }
 }
