@@ -9,9 +9,10 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'SPA';
 
-  private firstTime = true;
-  constructor(private router: Router)
-  {
-      this.router.navigate(['/start-page']);
+  constructor(private router: Router) {
+    const currentPath = this.router.url;
+    if (currentPath === '') {
+      this.router.navigateByUrl('/start-page');
+    }
   }
 }
