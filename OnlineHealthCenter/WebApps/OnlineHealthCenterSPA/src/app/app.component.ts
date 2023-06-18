@@ -8,10 +8,4 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'SPA';
-
-  private firstTime = true;
-  constructor(private router: Router)
-  {
-      this.router.navigate(['/start-page']);
-  }
 }
