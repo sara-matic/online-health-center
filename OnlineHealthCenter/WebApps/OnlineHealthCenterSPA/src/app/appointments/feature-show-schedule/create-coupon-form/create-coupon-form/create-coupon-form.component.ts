@@ -61,7 +61,7 @@ export class CreateCouponFormComponent {
             window.alert('Failed to create Discount.')
           return of([])
         }),
-      ).subscribe();
+      ).subscribe(() => { window.location.reload() });
   }
 
   private checkFormDataIsValid(formData: IDiscountFormData):boolean

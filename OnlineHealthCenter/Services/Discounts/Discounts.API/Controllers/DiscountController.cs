@@ -1,10 +1,12 @@
 ﻿using Discount.Common.DTOs;
 using Discount.Common.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Discounts.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/v1/[controller]")]
     public class DiscountController : ControllerBase
     {
@@ -37,6 +39,7 @@ namespace Discounts.API.Controllers
 
         [Route("[action]")]
         [HttpPost]
+        [Authorize(Roles = "Doctor,Nurse")]
         [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateDiscount([FromBody] CreateCouponDTO createCouponDTO)
@@ -54,6 +57,7 @@ namespace Discounts.API.Controllers
 
         [Route("[action]")]
         [HttpPut]
+        [Authorize(Roles = "Doctor,Nurse")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<bool>> UpdateDiscount([FromBody] UpdateCouponDTO updateDiscountDTO)
@@ -69,6 +73,7 @@ namespace Discounts.API.Controllers
 
         [Route("[action]")]
         [HttpDelete]
+        [Authorize(Roles = "Doctor,Nurse")]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<bool>> DeleteDiscount(string patientId, string specialty)

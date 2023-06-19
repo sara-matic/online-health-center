@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddDiscountCommonServices();
+builder.Services.ConfigureJWT(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
@@ -25,6 +26,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.UseCors("CorsPolicy");
 app.MapControllers();
 app.Run();
