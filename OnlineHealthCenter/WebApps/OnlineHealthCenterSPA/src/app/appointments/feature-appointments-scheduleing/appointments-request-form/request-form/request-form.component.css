@@ -10,6 +10,12 @@
     background-color: darkcyan;
 }
 
+.submit-button:hover
+{
+    color: white;
+    background-color: rgb(4, 109, 109);
+}
+
 .title
 {
     color: rgb(29, 100, 99);
@@ -25,6 +31,7 @@
 
     color: white;
     background-color: rgb(100, 167, 167);
+    border:none;
 }
 
 .choose-doctor-dropdown
@@ -37,6 +44,7 @@
 
     color: white;
     background-color: rgb(100, 167, 167);
+    border:none;
 }
 
 .control-group

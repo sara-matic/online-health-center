@@ -13,12 +13,13 @@
 .dropdown
 {
     position: absolute;
-    left: 210px;
-    width: 500px;
+    left: 130px;
+    width: 610px;
     height: 40px;
 
     color: white;
     background-color: rgb(100, 167, 167);
+    border: none;
 }
 
 .show-impression-form

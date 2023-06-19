@@ -25,17 +25,22 @@
     border:none;
 }
 
+.submit-button:hover
+{
+    background-color: rgb(4, 109, 109);
+}
+
 .dropdown
 {
     position: relative;
     left: 10px;
 
     height: 40px;
-    width: 360px;
+    width: 356px;
 
     color: white;
     background-color: rgb(100, 167, 167);
-
+    border: none;
 }
 
 .discount-label

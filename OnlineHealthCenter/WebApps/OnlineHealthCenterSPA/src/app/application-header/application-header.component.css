@@ -55,24 +55,46 @@
     border-radius: 2px;
 }
 
-.rout-button
+.login-button:hover
 {
-    position: relative;
-    left: 2px;
-    width: 160px;
-    height: 50px;
-    margin-top: 2px;
-    margin-left: 5px;
+    color: #fff;
+    background-color: rgb(113, 204, 204);
+}
 
-    border: none;
-    
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 13px;
+.login-button:active
+{
+    color: #fff;
+    background-color: rgb(98, 179, 179);
+}
 
-    background-color: rgb(100, 167, 167);
-    color: white;
+.rout-button {
+  position: relative;
+  left: 2px;
+  width: 160px;
+  height: 50px;
+  margin-top: 2px;
+  margin-left: 5px;
 
-    border-radius: 2px;
+  border: none;
+
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 13px;
+
+  background-color: rgb(100, 167, 167);
+  color: white;
+  border-radius: 2px;
+}
+
+.rout-button:hover
+{
+    color: #fff;
+    background-color: rgb(113, 204, 204);
+}
+
+.rout-button:active
+{
+    color: #fff;
+    background-color: rgb(98, 179, 179);
 }
 
 .bounding-rectangle

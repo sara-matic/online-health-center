@@ -12,6 +12,7 @@
 
     color: white;
     background-color: rgb(100, 167, 167);
+    border: none;
 }
 
 .details
@@ -38,6 +39,11 @@
     background-color: darkcyan;
 }
 
+.button-cancel:hover
+{
+    background-color: rgb(4, 109, 109);
+}
+
 .button-apply-discount
 {
     position: relative;
@@ -48,6 +54,11 @@
 
     color: white;
     background-color: darkcyan;   
+}
+
+.button-apply-discount:hover
+{
+    background-color: rgb(4, 109, 109);
 }
 
 .button-delete
@@ -62,6 +73,11 @@
     background-color: darkcyan;   
 }
 
+.button-delete:hover
+{
+    background-color: rgb(149, 22, 22);
+}
+
 .button-approve
 {
     position: relative;
@@ -72,4 +88,9 @@
 
     color: white;
     background-color: darkcyan; 
+}
+
+.button-approve:hover
+{
+    background-color: rgb(4, 109, 109);
 }
