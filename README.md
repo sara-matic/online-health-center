@@ -3,6 +3,39 @@
 Online Health Center is a microservice application designed to enhance the healthcare experience for both patients and healthcare professionals.  
 <br>
 
+## Technologies Used
+- .NET 6
+- Angular
+- Docker
+
+<br>
+
+## Getting Started
+To get started with the Online Health Center, follow the instructions given bellow. 
+
+1. Run docker compose command in the solution directory: <br>
+    ```shell
+    docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d --build
+    ```
+
+2. Go to <strong> Tools > NuGet Package Manager > Package Manager Console </strong> to open the Package Manager Console. <br>
+Ensure that the default project selected in the Package Manager Console is the IdentityServer microservice project.
+
+3. Run the migration update command in the Package Manager Console: <br>
+    ```shell 
+    Update-Database
+    ``` 
+
+4. Open a terminal and navigate to the <strong>\WebApps\OnlineHealthCenterSPA\ </strong> directory.
+
+5. Run the following commands: <br>
+    ``` shell
+    npm install
+    ng serve
+    ```
+
+<br>
+
 ## Microservices
 
 #### IdentityServer: 
@@ -36,33 +69,6 @@ Main capabilities: ability to create and review patient medical reports
 
 #### Nurses
 Main capabilities: register new staff members, approve appointment requests, add employee information
-
-<br>
-
-## Technologies Used
-- .NET 6
-- Angular
-- Docker
-
-<br>
-
-## Getting Started
-To get started with the Online Health Center, follow the instructions given bellow. 
-
-1. Run docker compose command in the solution directory: <br>
-<strong> `docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d --build` </strong>
-
-2. Go to <strong> Tools > NuGet Package Manager > Package Manager Console </strong> to open the Package Manager Console. <br>
-Ensure that the default project selected in the Package Manager Console is the IdentityServer microservice project.
-
-3. Run the migration update command in the Package Manager Console: <br>
-<strong> `Update-Database` </strong> 
-
-4. Open a terminal and navigate to the <strong>\WebApps\OnlineHealthCenterSPA\ </strong> directory.
-
-5. Run the following commands: <br>
-<strong> `npm install
-ng serve ` </strong> 
 
 <br>
 
