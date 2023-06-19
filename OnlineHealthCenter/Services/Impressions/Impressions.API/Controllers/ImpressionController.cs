@@ -8,7 +8,6 @@ using System.Security.Claims;
 
 namespace Impressions.API.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/v1/[controller]")]
     public class ImpressionController : ControllerBase
@@ -211,7 +210,6 @@ namespace Impressions.API.Controllers
             return Ok(result);
         }
 
-        //[Authorize(Roles = "Nurse")]
         [Route("[action]/{id}")]
         [HttpDelete]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
