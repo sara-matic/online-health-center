@@ -7,7 +7,7 @@
 .dropdown {
     position: relative;
     left: 0;
-    width: 606px;
+    width: 732px;
     height: 40px;
     color: white;
     background-color: rgb(100, 167, 167);
@@ -49,4 +49,9 @@
 
     color: white;
     background-color: darkcyan;   
+}
+
+.button-delete:hover
+{
+    background-color: rgb(149, 22, 22);
 }

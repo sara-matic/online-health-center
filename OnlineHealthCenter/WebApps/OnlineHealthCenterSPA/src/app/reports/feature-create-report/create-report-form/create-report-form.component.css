@@ -51,3 +51,8 @@ p
     color: white;
     background-color: rgb(1, 133, 133);
 }
+
+.btn:hover
+{
+    background-color: rgb(4, 109, 109);
+}

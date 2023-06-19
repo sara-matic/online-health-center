@@ -1,7 +1,17 @@
 .submit-button
 {
+    position: relative;
+    left: 3px;
+    bottom: 2px;
+
     color: white;
     background-color: darkcyan;
+    border:none;
+}
+
+.submit-button:hover
+{
+    background-color: rgb(4, 109, 109);
 }
 
 .title
@@ -18,12 +28,13 @@
 .dropdown
 {
     position: absolute;
-    left: 210px;
-    width: 500px;
+    left: 120px;
+    width: 580px;
     height: 40px;
 
     color: white;
     background-color: rgb(100, 167, 167);
+    border: none;
 }
 
 .update-doctor
