@@ -34,8 +34,12 @@ export class EmployeeInformationFormComponent {
   public allImpressions: Array<IImpressionEntity> = this.getImpressions();
 
   public doctor? : IEmployeeInformationFormData;
+
   public impressions? : IImpressionEntity[];
+
   public appState$: Observable<IAppState>;
+
+  public doctorsMark?: number;
 
 
   constructor(private employeesService: EmployeesFascadeService, private impressionsService: ImpressionsFascadeService, private employeeInformationService: EmployeeInformationService, private appStateService: AppStateService) {
@@ -78,6 +82,7 @@ export class EmployeeInformationFormComponent {
       this.doctor = this.doctors.filter(d => d.id == data.id)[0] as IDoctorEntity;
       this.impressions = this.allImpressions.filter(imp => imp.doctorID == data.id)
       this.impressions.map(i => i.impressionDateTime = new Date(i.impressionDateTime).toLocaleString());
+      this.doctorsMark = Number(this.doctor.mark.toFixed(2));
   }
 
   public onDeleteDoctor(): void
