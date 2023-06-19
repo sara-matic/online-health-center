@@ -4,11 +4,13 @@ using Appointments.Application.Persistance;
 using Appointments.Domain.Aggregates;
 using Appointments.Domain.Exceptions;
 using Grpc.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Appointments.API.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/v1/[controller]")]
     public class AppointmentsController : ControllerBase
     {
@@ -34,6 +36,7 @@ namespace Appointments.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Doctor,Nurse")]
         [Route("[action]/{doctorId}")]
         [ProducesResponseType(typeof(IEnumerable<Appointment>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
@@ -54,6 +57,7 @@ namespace Appointments.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Nurse")]
         [Route("[action]")]
         [ProducesResponseType(typeof(IEnumerable<Appointment>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
@@ -79,6 +83,7 @@ namespace Appointments.API.Controllers
         }
 
         [Route("[action]")]
+        [Authorize(Roles = "Doctor,Nurse")]
         [HttpPut]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<ActionResult<bool>> ApproveAppointment([FromBody] ApproveAppointmentDTO approveAppointmentDTO)
@@ -88,6 +93,7 @@ namespace Appointments.API.Controllers
         }
 
         [Route("[action]/{appointmentId}")]
+        [Authorize(Roles = "Doctor,Nurse")]
         [HttpPut]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<ActionResult<bool>> ApproveAppointment(string appointmentId)
@@ -115,6 +121,7 @@ namespace Appointments.API.Controllers
         }
 
         [Route("[action]/{appointmentId}")]
+        [Authorize(Roles = "Doctor,Nurse")]
         [HttpDelete]
         [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         public async Task<ActionResult<bool>> DeleteAppointment(string appointmentId)

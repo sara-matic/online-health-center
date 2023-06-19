@@ -4,6 +4,7 @@ using Appointments.Infrastructure.Extensions;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAppointmentsInfrastructureServices();
+builder.Services.ConfigureJWT(builder.Configuration);
 
 builder.Services.AddCors(options => 
 {
@@ -30,6 +31,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseCors("CorsPolicy");
 app.MapControllers();

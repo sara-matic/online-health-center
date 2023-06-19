@@ -91,7 +91,10 @@ export class RequestFormComponent {
         ).subscribe((appointmentCreated: boolean) => 
         {
           if (appointmentCreated != null && appointmentCreated)
+          {
             window.alert("The appointment has been created successfully!");
+            window.location.reload();
+          }
         });
     }
   }
